@@ -159,6 +159,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-iOS开发之Pch预编译文件的创建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/23/iOS开发之Pch预编译文件的创建/">iOS开发之Pch预编译文件的创建</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/23/iOS开发之Pch预编译文件的创建/" class="archive-article-date">
+  	<time datetime="2019-02-22T16:01:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。</p>
+</blockquote>
+<h4 id="pch的作用："><a href="#pch的作用：" class="headerlink" title="pch的作用："></a>pch的作用：</h4><p>1.存放一些全局的宏(整个项目中都用得上的宏)</p>
+<p>2.用来包含一些全部的头文件(整个项目中都用得上的头文件)</p>
+<p>3.能自动打开或者关闭日志输出功能</p>
+<blockquote>
+<p>虽然用了很久的Xcode6但是项目是xcode5之前创建好的，所以一开始并没有发现缺少了这个pch文件。苹果为什么要这么做呢，原因可能是因为大家 把大量的头文件和宏定义放到pch里边，导致编译时间过长。苹果去掉他可能是要加快编译时间增加用户体验。虽然失去了编程的便利性。不得不佩服苹果的以用 户为中心的思考方式。更详细的讨论可以去Stackoverflow上去看<a href="http://stackoverflow.com/questions" target="_blank" rel="noopener">http://stackoverflow.com/questions</a> /24158648/why-isnt-projectname-prefix-pch-created-automatically-in- xcode-6。</p>
+</blockquote>
+<h5 id="如何在Xcode中添加pch文件："><a href="#如何在Xcode中添加pch文件：" class="headerlink" title="如何在Xcode中添加pch文件："></a>如何在Xcode中添加pch文件：</h5><p>1、Command+N，打开新建文件窗口：ios-&gt;other-&gt;PCH file，创建一个pch文件</p>
+<p> <a href="https://img-blog.csdn.net/20150313172323592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">创建PCH file</a></p>
+<p>2、在工程的TARGETS里边Building Setting中搜索Prefix Header，然后把Precompile Prefix Header右边的NO改为Yes：</p>
+<p> <a href="http://img.blog.csdn.net/20150428202241525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">修改配置</a></p>
+<p>3.然后在Precompile Prefix Header下边的Prefix Header右边双击，添加刚刚创建的pch文件的工程路径，添加格式：“$(SRCROOT)/项目名称/pch文件名” ，$(SRCROOT)的意思就是工程根目录的意思。如果还不太清楚的话可以右键pch文件，然后show in finder：<br><a href="http://img.blog.csdn.net/20150428202848968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a><br><a href="http://img.blog.csdn.net/20150428202907251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a></p>
+<p>上图中黄色圈出来的就是$(SRCROOT)，也就是工程的根目录，然后后边还有一个PchText和pch两个文件夹，所以完整的pch文件的路径就是：$(SRCROOT)/PchText/pch</p>
+<p><a href="http://img.blog.csdn.net/20150428203556222?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">设置路径</a></p>
+<p>添加完成后，点击Enter，他会自动帮你变成你工程所在的路径：</p>
+<p><a href="http://img.blog.csdn.net/20150428203631228?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">文件路径</a></p>
+<p>可以了，编译一下程序，如果有错误检查一下添加的路径是否正确。</p>
+<p>4，将Precompile Prefix Header为YES，预编译后的pch文件会被缓存起来，可以提高编译速度<br> <a href="http://img.blog.csdn.net/20150313172850705?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener"></a></p>
+<p>5、在PrefixHeader.pch文件里声明宏定义 ，例如：宏定义一个颜色</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111015295357022.png" target="_blank" rel="noopener">使用</a></p>
+<p>然后在其他类中不需要引入头文件就可以直接使用，例如在RootViewController中,当你需要时就可以直接使用。 </p>
+<p>6、如果出现如下错误，说明工程路径引入错误</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111019250517003.png" target="_blank" rel="noopener">错误提示</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/23/iOS开发之Pch预编译文件的创建/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-淘宝爬虫之自动登录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/22/淘宝爬虫之自动登录/">淘宝爬虫之自动登录</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/22/淘宝爬虫之自动登录/" class="archive-article-date">
+  	<time datetime="2019-02-22T15:52:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在做一些淘宝数据的定时抓取demo参考<a href="https://github.com/Running2snail/TaoBaoAutoLogin" target="_blank" rel="noopener">github</a>，关于定时任务的设置上一篇已经介绍过:<a href="https://www.jianshu.com/p/2ee990f76666" target="_blank" rel="noopener">APScheduler定时任务框架的使用</a>，作为亚洲第一大电商平台，淘宝的反爬机制是非常完善的，在用selenium登陆淘宝的时候发现淘宝能检测到并弹出滑块，然后无论怎么滑动都通过不了，在经过一番搜索后发现很多网站对selenium都有检测机制，如检测是否存在特有标识 $cdc_asdjflasutopfhvcZLmcfl 、navigator.webdriver等。根据这条线索，可以在淘宝的js里找到了相关的检测代码：</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/465805-0784f22cefa07bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="检测代码.png"></p>
+<p>在控制台下输入window.navigator.webdriver会发现和正常的浏览器打开的有所不同</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/465805-05c954fedf7b6174.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2019-02-14 下午5.38.45.png"></p>
+<p>如果浏览器是正常打开的话，navigator.webdriver大的值应该是undefined或者false，如果为true说明能检测到selenium<br>原因发现以后怎么去解决这个问题就比较头疼了，后来在一篇文章中发现，针对这个问题的两个解决方案，编辑chromedriver发现cdc_asdjflasutopfhvcZLmcfl是chromedriver里面的一个变量名，我们只需要将这个变量名改成其他的就好了，变量名修改教程在《<a href="https://banto.cn/go/g1uz7e" target="_blank" rel="noopener">Can a website detect when you are using selenium with chromedriver?</a>》<br>Mac版本的可以通过如下方法将 cdc_ 替换为 dog_</p>
+<pre><code>perl -pi -e &apos;s/cdc_/dog_/g&apos; /path/to/chromedriver
+//替换完成后查找下，如果查找不到说明替换成功了
+perl -ne &apos;while(/cdc_/g){print &quot;$&amp;\n&quot;;}&apos; /path/to/chromedriver
+</code></pre><p>Windows或者Linux版本可以利用Vim将 cdc_ 替换为 dog_</p>
+<pre><code>vim /path/to/chromedriver
+</code></pre><p>Mac和win已经修改好的最新版Chromedriver可以参考百度云链接: <a href="https://pan.baidu.com/s/1392txVPKDMczBIrUP3noIA" target="_blank" rel="noopener">https://pan.baidu.com/s/1392txVPKDMczBIrUP3noIA</a> 提取码: bnm3<br>其次针对navigator.webdriver 通过mitmproxy做中间人代理将对应的屏蔽代码注入到原网站中从而达到规避检测目的</p>
+<h4 id="首先是配置mitmproxy"><a href="#首先是配置mitmproxy" class="headerlink" title="首先是配置mitmproxy"></a>首先是配置mitmproxy</h4><p>注入屏蔽代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">TARGET_URL = &apos;https://g.alicdn.com/secdev/sufei_data/3.6.8/index.js&apos;</span><br><span class="line">INJECT_TEXT = &apos;Object.defineProperties(navigator,&#123;webdriver:&#123;get:() =&gt; false&#125;&#125;);&apos;</span><br><span class="line"></span><br><span class="line">def response(flow):</span><br><span class="line">    if flow.request.url.startswith(TARGET_URL):</span><br><span class="line">        flow.response.text = INJECT_TEXT + flow.response.text</span><br><span class="line">        print(&apos;注入成功&apos;)</span><br><span class="line"></span><br><span class="line">    if &apos;um.js&apos; in flow.request.url or &apos;115.js&apos; in flow.request.url:</span><br><span class="line">    # 屏蔽selenium检测</span><br><span class="line">        flow.response.text = flow.response.text + INJECT_TEXT</span><br></pre></td></tr></table></figure></p>
+<p>在运行前启动代理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmdump -s httpProxy.py -p 9000</span><br></pre></td></tr></table></figure></p>
+<h4 id="淘宝自动登录"><a href="#淘宝自动登录" class="headerlink" title="淘宝自动登录"></a>淘宝自动登录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:UTF-8 -*-</span><br><span class="line">import time</span><br><span class="line">import re</span><br><span class="line">from datetime import date, timedelta</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.common.exceptions import NoSuchElementException</span><br><span class="line">from selenium.webdriver import ActionChains</span><br><span class="line">from selenium.webdriver.chrome.options import Options</span><br><span class="line"></span><br><span class="line">TB_LOGIN_URL = &apos;https://login.taobao.com/member/login.jhtml&apos;</span><br><span class="line">CHROME_DRIVER = &apos;/usr/local/bin/chromedriver&apos;    # Windows和Mac的配置路径不一样</span><br><span class="line"></span><br><span class="line">class SessionException(Exception):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    会话异常类</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, message):</span><br><span class="line">        super().__init__(self)</span><br><span class="line">        self.message = message</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return self.message</span><br><span class="line"></span><br><span class="line">class Crawler:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.browser = None</span><br><span class="line"></span><br><span class="line">    def start(self, username, password):</span><br><span class="line">        print(&quot;初始化浏览器&quot;)</span><br><span class="line">        self.__init_browser()</span><br><span class="line">        print(&quot;切换至密码输入框&quot;)</span><br><span class="line">        self.__switch_to_password_mode()</span><br><span class="line">        time.sleep(0.5)</span><br><span class="line">        print(&quot;输入用户名&quot;)</span><br><span class="line">        self.__write_username(username)</span><br><span class="line">        time.sleep(2.5)</span><br><span class="line">        print(&quot;输入密码&quot;)</span><br><span class="line">        self.__write_password(password)</span><br><span class="line">        time.sleep(3.5)</span><br><span class="line">        print(&quot;程序模拟解锁&quot;)</span><br><span class="line">        if self.__lock_exist():</span><br><span class="line">            self.__unlock()</span><br><span class="line">        print(&quot;开始发起登录请求&quot;)</span><br><span class="line">        self.__submit()</span><br><span class="line">        time.sleep(4.5)</span><br><span class="line">        # 登录成功，直接请求页面</span><br><span class="line">        print(&quot;登录成功，跳转至目标页面&quot;)</span><br><span class="line">        self.__navigate_to_target_page()</span><br><span class="line">        time.sleep(6.5)</span><br><span class="line">        print(&quot;解析页面文本&quot;)</span><br><span class="line">        crawler_list = self.__parse_page_content();</span><br><span class="line">        # 连接数据库并保存数据</span><br><span class="line">        print(&quot;保存数据到mysql数据库&quot;)</span><br><span class="line">        self.__save_list_to_db(crawler_list)</span><br><span class="line"></span><br><span class="line">    def __switch_to_password_mode(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        切换到密码模式</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        if self.browser.find_element_by_id(&apos;J_QRCodeLogin&apos;).is_displayed():</span><br><span class="line">            self.browser.find_element_by_id(&apos;J_Quick2Static&apos;).click()</span><br><span class="line"></span><br><span class="line">    def __write_username(self, username):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        输入账号</span><br><span class="line">        :param username:</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        username_input_element = self.browser.find_element_by_id(&apos;TPL_username_1&apos;)</span><br><span class="line">        username_input_element.clear()</span><br><span class="line">        username_input_element.send_keys(username)</span><br><span class="line"></span><br><span class="line">    def __write_password(self, password):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        输入密码</span><br><span class="line">        :param password:</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        password_input_element = self.browser.find_element_by_id(&quot;TPL_password_1&quot;)</span><br><span class="line">        password_input_element.clear()</span><br><span class="line">        password_input_element.send_keys(password)</span><br><span class="line"></span><br><span class="line">    def __lock_exist(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        判断是否存在滑动验证</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        return self.__is_element_exist(&apos;#nc_1_wrapper&apos;) and self.browser.find_element_by_id(</span><br><span class="line">            &apos;nc_1_wrapper&apos;).is_displayed()</span><br><span class="line"></span><br><span class="line">    def __unlock(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        执行滑动解锁</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        bar_element = self.browser.find_element_by_id(&apos;nc_1_n1z&apos;)</span><br><span class="line">        ActionChains(self.browser).drag_and_drop_by_offset(bar_element, 800, 0).perform()</span><br><span class="line">        time.sleep(1.5)</span><br><span class="line">        self.browser.get_screenshot_as_file(&apos;error.png&apos;)</span><br><span class="line">        if self.__is_element_exist(&apos;.errloading &gt; span&apos;):</span><br><span class="line">            error_message_element = self.browser.find_element_by_css_selector(&apos;.errloading &gt; span&apos;)</span><br><span class="line">            error_message = error_message_element.text</span><br><span class="line">            self.browser.execute_script(&apos;noCaptcha.reset(1)&apos;)</span><br><span class="line">            raise SessionException(&apos;滑动验证失败, message = &apos; + error_message)</span><br><span class="line"></span><br><span class="line">    def __submit(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        提交登录</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        self.browser.find_element_by_id(&apos;J_SubmitStatic&apos;).click()</span><br><span class="line">        time.sleep(0.5)</span><br><span class="line">        if self.__is_element_exist(&quot;#J_Message&quot;):</span><br><span class="line">            error_message_element = self.browser.find_element_by_css_selector(&apos;#J_Message &gt; p&apos;)</span><br><span class="line">            error_message = error_message_element.text</span><br><span class="line">            raise SessionException(&apos;登录出错, message = &apos; + error_message)</span><br><span class="line"></span><br><span class="line">    #跳转至目标页面</span><br><span class="line">    def __navigate_to_target_page(self):</span><br><span class="line">        pass</span><br><span class="line">    # 解析网页数据</span><br><span class="line">    def __parse_page_content(self):</span><br><span class="line">        pass</span><br><span class="line">    #保存数据</span><br><span class="line">    def __save_list_to_db(self, crawler_list):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    def __init_browser(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        初始化selenium浏览器</span><br><span class="line">        :return:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        options = Options()</span><br><span class="line">        # options.add_argument(&quot;--headless&quot;)</span><br><span class="line">        prefs = &#123;&quot;profile.managed_default_content_settings.images&quot;: 1&#125;</span><br><span class="line">        options.add_experimental_option(&quot;prefs&quot;, prefs)</span><br><span class="line">        options.add_argument(&apos;--proxy-server=http://127.0.0.1:9000&apos;)</span><br><span class="line">        options.add_argument(&apos;disable-infobars&apos;)</span><br><span class="line">        options.add_argument(&apos;--no-sandbox&apos;)</span><br><span class="line"></span><br><span class="line">        self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER, options=options)</span><br><span class="line">        self.browser.implicitly_wait(3)</span><br><span class="line">        self.browser.maximize_window()</span><br><span class="line">        self.browser.get(TB_LOGIN_URL)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#执行命令行</span><br><span class="line">Crawler().start(&apos;username&apos;), &apos;password&apos;))</span><br></pre></td></tr></table></figure>
+<p>这篇文章主要用来记录自己在爬虫过程中遇到问题的解决方案demo参考<a href="https://github.com/Running2snail/TaoBaoAutoLogin" target="_blank" rel="noopener">github</a>，主要的参考文章是<a href="https://banto.cn/archives/245#comment-161" target="_blank" rel="noopener">python利用selenium实现淘宝自动登录</a></p>
+<p>当然也有一些其他的解决方案，例如cookie验证登录或是支付宝登录等，这些还没尝试过，另外这篇文章也可以作为参考实践一下<a href="https://www.jianshu.com/p/983f25817b13" target="_blank" rel="noopener">淘宝爬虫 之 登陆验证（二）</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/22/淘宝爬虫之自动登录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

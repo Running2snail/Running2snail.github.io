@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | 龙门客栈</title>
+  <title>iOS开发之Pch预编译文件的创建 | 龙门客栈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。  pch的作用：1.存放一些全局的宏(整个项目中都用得上的宏) 2.用来包含一些全部的头文件(整个项目中都用得上的头文件) 3.能自动打开或者关闭日志输出功能  虽然">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/02/22/hello-world/index.html">
+<meta property="og:title" content="iOS开发之Pch预编译文件的创建">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS开发之Pch预编译文件的创建/index.html">
 <meta property="og:site_name" content="龙门客栈">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。  pch的作用：1.存放一些全局的宏(整个项目中都用得上的宏) 2.用来包含一些全部的头文件(整个项目中都用得上的头文件) 3.能自动打开或者关闭日志输出功能  虽然">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-22T13:24:13.767Z">
+<meta property="og:updated_time" content="2019-02-22T16:13:04.037Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="iOS开发之Pch预编译文件的创建">
+<meta name="twitter:description" content="在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。  pch的作用：1.存放一些全局的宏(整个项目中都用得上的宏) 2.用来包含一些全部的头文件(整个项目中都用得上的头文件) 3.能自动打开或者关闭日志输出功能  虽然">
   
     <link rel="alternative" href="/atom.xml" title="龙门客栈" type="application/atom+xml">
   
@@ -158,35 +158,51 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-iOS开发之Pch预编译文件的创建" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      iOS开发之Pch预编译文件的创建
     </h1>
   
 
         
-        <a href="/2019/02/22/hello-world/" class="archive-article-date">
-  	<time datetime="2019-02-22T13:24:13.766Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-22</time>
+        <a href="/2019/02/23/iOS开发之Pch预编译文件的创建/" class="archive-article-date">
+  	<time datetime="2019-02-22T16:01:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <blockquote>
+<p>在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。</p>
+</blockquote>
+<h4 id="pch的作用："><a href="#pch的作用：" class="headerlink" title="pch的作用："></a>pch的作用：</h4><p>1.存放一些全局的宏(整个项目中都用得上的宏)</p>
+<p>2.用来包含一些全部的头文件(整个项目中都用得上的头文件)</p>
+<p>3.能自动打开或者关闭日志输出功能</p>
+<blockquote>
+<p>虽然用了很久的Xcode6但是项目是xcode5之前创建好的，所以一开始并没有发现缺少了这个pch文件。苹果为什么要这么做呢，原因可能是因为大家 把大量的头文件和宏定义放到pch里边，导致编译时间过长。苹果去掉他可能是要加快编译时间增加用户体验。虽然失去了编程的便利性。不得不佩服苹果的以用 户为中心的思考方式。更详细的讨论可以去Stackoverflow上去看<a href="http://stackoverflow.com/questions" target="_blank" rel="noopener">http://stackoverflow.com/questions</a> /24158648/why-isnt-projectname-prefix-pch-created-automatically-in- xcode-6。</p>
+</blockquote>
+<h5 id="如何在Xcode中添加pch文件："><a href="#如何在Xcode中添加pch文件：" class="headerlink" title="如何在Xcode中添加pch文件："></a>如何在Xcode中添加pch文件：</h5><p>1、Command+N，打开新建文件窗口：ios-&gt;other-&gt;PCH file，创建一个pch文件</p>
+<p> <a href="https://img-blog.csdn.net/20150313172323592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">创建PCH file</a></p>
+<p>2、在工程的TARGETS里边Building Setting中搜索Prefix Header，然后把Precompile Prefix Header右边的NO改为Yes：</p>
+<p> <a href="http://img.blog.csdn.net/20150428202241525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">修改配置</a></p>
+<p>3.然后在Precompile Prefix Header下边的Prefix Header右边双击，添加刚刚创建的pch文件的工程路径，添加格式：“$(SRCROOT)/项目名称/pch文件名” ，$(SRCROOT)的意思就是工程根目录的意思。如果还不太清楚的话可以右键pch文件，然后show in finder：<br><a href="http://img.blog.csdn.net/20150428202848968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a><br><a href="http://img.blog.csdn.net/20150428202907251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a></p>
+<p>上图中黄色圈出来的就是$(SRCROOT)，也就是工程的根目录，然后后边还有一个PchText和pch两个文件夹，所以完整的pch文件的路径就是：$(SRCROOT)/PchText/pch</p>
+<p><a href="http://img.blog.csdn.net/20150428203556222?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">设置路径</a></p>
+<p>添加完成后，点击Enter，他会自动帮你变成你工程所在的路径：</p>
+<p><a href="http://img.blog.csdn.net/20150428203631228?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">文件路径</a></p>
+<p>可以了，编译一下程序，如果有错误检查一下添加的路径是否正确。</p>
+<p>4，将Precompile Prefix Header为YES，预编译后的pch文件会被缓存起来，可以提高编译速度<br> <a href="http://img.blog.csdn.net/20150313172850705?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener"></a></p>
+<p>5、在PrefixHeader.pch文件里声明宏定义 ，例如：宏定义一个颜色</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111015295357022.png" target="_blank" rel="noopener">使用</a></p>
+<p>然后在其他类中不需要引入头文件就可以直接使用，例如在RootViewController中,当你需要时就可以直接使用。 </p>
+<p>6、如果出现如下错误，说明工程路径引入错误</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111019250517003.png" target="_blank" rel="noopener">错误提示</a></p>
 
       
 
@@ -266,7 +282,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/02/22/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/02/23/iOS开发之Pch预编译文件的创建/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,15 +296,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/02/22/淘宝爬虫之自动登录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          淘宝爬虫之自动登录
-        
-      </div>
-    </a>
   
+    <a href="/2019/02/22/淘宝爬虫之自动登录/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">淘宝爬虫之自动登录</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
