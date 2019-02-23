@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="引言 一个没有上过战场的士兵，不是一个真正的士兵，一个没有注册过开发者账号、发布过APP的开发者，也不是一个真正的iOS 开发者，在过去的几年里，发布app上架经常做，却没有亲自申请过开发者账号，虽然知道并不复杂，但却甚是遗憾，由于公司构架的调整，不得不重新注册一个新账号。 苹果对开发者主要分为3类：个人、组织（公司、企业）、教育机构 ，个人账号只能有一个开发者，公司账号可以允许多个开发者协作开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 公司开发者账号申请流程">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS-公司开发者账号申请流程/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="引言 一个没有上过战场的士兵，不是一个真正的士兵，一个没有注册过开发者账号、发布过APP的开发者，也不是一个真正的iOS 开发者，在过去的几年里，发布app上架经常做，却没有亲自申请过开发者账号，虽然知道并不复杂，但却甚是遗憾，由于公司构架的调整，不得不重新注册一个新账号。 苹果对开发者主要分为3类：个人、组织（公司、企业）、教育机构 ，个人账号只能有一个开发者，公司账号可以允许多个开发者协作开发">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-f488171692d31f81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-e4bf091ddba15430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-c2bcf78a47a639f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-b07c826a293d5e25.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-4f0adcdd21dca492.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-fddaedfea85694e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-3d1ad596dddaf2fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-3229d1c3bc02c228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-b9220cd3faf80cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-cb0eb0710a6dec5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-284f843fb508ff37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-ac3c31c989819d5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-969eae5421ff190f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-4a146d25d6727133.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-98724565216989ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-8b48400638ecea02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-23T06:59:07.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 公司开发者账号申请流程">
+<meta name="twitter:description" content="引言 一个没有上过战场的士兵，不是一个真正的士兵，一个没有注册过开发者账号、发布过APP的开发者，也不是一个真正的iOS 开发者，在过去的几年里，发布app上架经常做，却没有亲自申请过开发者账号，虽然知道并不复杂，但却甚是遗憾，由于公司构架的调整，不得不重新注册一个新账号。 苹果对开发者主要分为3类：个人、组织（公司、企业）、教育机构 ，个人账号只能有一个开发者，公司账号可以允许多个开发者协作开发">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/465805-f488171692d31f81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS-公司开发者账号申请流程/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS 公司开发者账号申请流程 | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-公司开发者账号申请流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 公司开发者账号申请流程
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 14:59:07" itemprop="dateCreated datePublished" datetime="2019-02-23T14:59:07+08:00">2019-02-23</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><p> 一个没有上过战场的士兵，不是一个真正的士兵，一个没有注册过开发者账号、发布过APP的开发者，也不是一个真正的iOS 开发者，在过去的几年里，发布app上架经常做，却没有亲自申请过开发者账号，虽然知道并不复杂，但却甚是遗憾，由于公司构架的调整，不得不重新注册一个新账号。<br> 苹果对开发者主要分为3类：个人、组织（公司、企业）、教育机构 ，个人账号只能有一个开发者，公司账号可以允许多个开发者协作开发，企业账号，其app只能用于内部员工使用，是无法对外公开的，另外“个人”开发者可以申请升级“公司”。本文主要用于总结自己申请公司开发者账号的经历，同时借鉴别人的经验，记录下来用于参考，希望能对你们有帮助。<br>个人和公司版开发者账号费用为99美元/年(688元)，企业开发者账号费用为299 美元/年。</p>
+<p>##### </p>
+<p>#####申请开发者Apple ID账号<br>（1）、进入苹果开发者官网<a href="https://developer.apple.com" target="_blank" rel="noopener">https://developer.apple.com</a><br><img src="http://upload-images.jianshu.io/upload_images/465805-f488171692d31f81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="苹果开发者官网.png"></p>
+<p>（2）、点击Account跳转Apple ID账号申请页面</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-e4bf091ddba15430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="申请Apple ID账号.png"></p>
+<p>（3）、创建Apple ID，注册时一定要把账号的姓名写成拼音模式，不要写成中文否则后期申请开发者时会出现邮件打回，如果你不幸的填写成了中文，不要慌张，只能打苹果咨开发者咨询热线：4006 701 855，而且必须声称你是账号上姓名的这个人，否则不予处理。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-c2bcf78a47a639f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建Apple ID账号.png"></p>
+<p>（4）、填写完之后，点击“Continue”进行下一步。在邮箱收取验证码，填写验证码，点击“Verify”，即可验证成功。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-b07c826a293d5e25.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="填写邮箱验证码.jpg"></p>
+<p>2、申请邓白氏<br>（1）、使用申请的账号登陆，会弹出如下协议，同意一下协议，并提交。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-4f0adcdd21dca492.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="提交协议.jpg"></p>
+<p>（2）、选择为“Company/Organization”（公司/组织）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-fddaedfea85694e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择公司.png"></p>
+<p>（3）、选择后弹出警告，大意就是申请苹果开发者证书之前需要申请邓白氏编码（美国的邓白氏编码用于企业的识别码），没有邓白氏编码是无法申请证书的。此处选择D-U-N-S Number下方的“Check now”进行邓白氏编码的申请。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-3d1ad596dddaf2fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="申请邓白氏.jpg"></p>
+<p>（4）、邓白氏申请页面上填写公司相关信息（均使用英文），填写完之后提交。先选择国籍，其次填写公司名称（英文名称，如果没有英文名称，中文名称直接翻译下就行，后续会进行验证的）座机需要填写能联系到本人的座机（中国区格式为86-区号+号码+分机号，如86-0755XXXXX-XX），稍后华夏邓白氏会打电话核对以上信息。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-3229d1c3bc02c228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="公司相关信息的填写.png"></p>
+<p>（5）等待，提交信息以后会出现以下页面，则表示信息提交成功。随后苹果公司会发送一封邮件，里面含有邓白氏申请下来的大致时间点以及该提交请求的响应码。操作到此步，需要暂时告一段落，等待邓白氏编码的申请完成，申请下来会以邮件的形式告知，注意查收邮件。时间大概是一周，如果没下来可以根据响应码咨询。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-b9220cd3faf80cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="信息提交成功.png"></p>
+<p>（6）在这个等待期间，华夏邓白氏的工作人员会跟你发邮件联系，核实下你们公司的企业信息，具体如下：<br><img src="http://upload-images.jianshu.io/upload_images/465805-cb0eb0710a6dec5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="企业信息核实.png"><br>确认以后大概一到两天，他们就会发来9位邓白氏编码，但是最好是在得到邓白氏编码后过14个工作日之后使用。</p>
+<p>（7）在大约14个工作日之后，登陆账号，选择公司和组织，然后点击继续。<br><img src="http://upload-images.jianshu.io/upload_images/465805-284f843fb508ff37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="继续.png"><br>（8）点击继续以后会进入一个填写信息的页面，首先是两个选项，如果账号的所有者也是公司的所有者的话选择第一个，其他的选择第二个公司授权，一般都是选择第二个。然后下面是核实联系人信息，你需要填写一个能给你提供证明的公司员工的信息，用英文填写，包括姓名、职位、工作邮箱和电话。电话最好是用公司座机。<br><img src="http://upload-images.jianshu.io/upload_images/465805-ac3c31c989819d5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="核实联系人信息.png"></p>
+<p>再往下是需要填写住址信息，包括公司英文名称、邓白氏编码、公司网址、总部电话和你的工作邮箱，电话最好是为座机，工作邮箱最好是填开发者账号的id邮箱，我之前填了一个另外的邮箱，提交以后才想起来，担心会影响审核，打客服电话资讯这个问题，他们说是这个邮箱只是用来作为备用联系用的，不会影响审核。然后再填写验证码，然后提交信息，会出现一个信息确认页面，确认无误后确认，之后会是一个登记成功页面，并且同时收到一个登记成功的邮件之后便是对注册信息的审核。<br><img src="http://upload-images.jianshu.io/upload_images/465805-969eae5421ff190f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组织信息.png"></p>
+<p>在等了大概三天以后收到苹果的反馈邮件，如下：<br><img src="http://upload-images.jianshu.io/upload_images/465805-4a146d25d6727133.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="反馈.png"><br>邮件显示的是验证联系人的姓名和账号所有者的手机号，这让我感觉很纳闷，这两个账号怎么联系在一块的，我查看了这个手机号，上面没有苹果客服的电话，但是有一个被腾讯拦截的骚扰电话，于是我就跟客服打电话询问原因，原来是他们直接给账号所有者的手机号打电话去找验证联系人，而没有打验证联系人的电话，这很套路，然后他说现在需要验证联系人用账号所有者的手机去跟苹果客服打电话，然后我就这样做了，他们只问了一个问题：账号所有者是不是你们公司的员工？获得肯定答案后询问就结束了，然后几乎在同时我就收到了，苹果发来的同意注册请求的邮件如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-98724565216989ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="同意注册.png"><br>点击Review now就是缴费的688元界面：<br><img src="http://upload-images.jianshu.io/upload_images/465805-8b48400638ecea02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="费用.png"><br>缴费后就可以用了，创建app了，至此公司苹果开发者账号申请宣告结束，历时将近一个月，总结如下：<br>1、申请并不复杂，申请之前多查询资料。<br>2、申请过程中，细致认真，记录填写的内容。<br>3、最重要的一点，不懂打客服电话， 4006-701-855，苹果客服是你最好的帮手。<br>希望对你有帮助。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/iOS-block详解/" rel="next" title="iOS block详解">
+                <i class="fa fa-chevron-left"></i> iOS block详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/iOS开发规范文档/" rel="prev" title="iOS开发规范文档">
+                iOS开发规范文档 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

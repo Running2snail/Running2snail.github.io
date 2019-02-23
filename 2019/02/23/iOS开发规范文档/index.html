@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="此文档根据apple，google以及行业中比较知名的OC编码规范整理归纳而成，旨在为大家的iOS开发规范提供一份简单，统一的执行标准。 1、格式和换行 使用Xcode默认的设置使用4个空格来缩进。 在 Xcode &amp;gt; Preferences &amp;gt; Text Editing 将 Tab 和自动缩进都设置为 4 个空格   80个字数限制，每一行的代码尽量不要超出80个字的长度，超出的回车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发规范文档">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS开发规范文档/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="此文档根据apple，google以及行业中比较知名的OC编码规范整理归纳而成，旨在为大家的iOS开发规范提供一份简单，统一的执行标准。 1、格式和换行 使用Xcode默认的设置使用4个空格来缩进。 在 Xcode &amp;gt; Preferences &amp;gt; Text Editing 将 Tab 和自动缩进都设置为 4 个空格   80个字数限制，每一行的代码尽量不要超出80个字的长度，超出的回车">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-23T06:59:28.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发规范文档">
+<meta name="twitter:description" content="此文档根据apple，google以及行业中比较知名的OC编码规范整理归纳而成，旨在为大家的iOS开发规范提供一份简单，统一的执行标准。 1、格式和换行 使用Xcode默认的设置使用4个空格来缩进。 在 Xcode &amp;gt; Preferences &amp;gt; Text Editing 将 Tab 和自动缩进都设置为 4 个空格   80个字数限制，每一行的代码尽量不要超出80个字的长度，超出的回车">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS开发规范文档/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS开发规范文档 | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS开发规范文档/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS开发规范文档
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 14:59:28" itemprop="dateCreated datePublished" datetime="2019-02-23T14:59:28+08:00">2019-02-23</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>此文档根据apple，google以及行业中比较知名的OC编码规范整理归纳而成，旨在为大家的iOS开发规范提供一份简单，统一的执行标准。</p>
+<h2 id="1、格式和换行"><a href="#1、格式和换行" class="headerlink" title="1、格式和换行"></a>1、格式和换行</h2><ul>
+<li>使用Xcode默认的设置使用4个空格来缩进。<ul>
+<li>在 Xcode &gt; Preferences &gt; Text Editing 将 Tab 和自动缩进都设置为 4 个空格</li>
+</ul>
+</li>
+<li>80个字数限制，每一行的代码尽量不要超出80个字的长度，超出的回车排版， 方法名的冒号对齐<ul>
+<li>xcode设置 屏幕左上角Xode-&gt;Perference-&gt;Text Editing-&gt;”Page guide at column: 80” 打上勾</li>
+</ul>
+</li>
+<li>方法-和方法+和返回值前面的左括号间隔一个空格，方法参数直接间隔一个空格。</li>
+<li>条件语句的格式采用苹果推荐的代码缩进方式。</li>
+</ul>
+<h2 id="2、命名规范"><a href="#2、命名规范" class="headerlink" title="2、命名规范"></a>2、命名规范</h2><ul>
+<li>基本原则<ul>
+<li>命名统一使用驼峰命名法，以清晰为主、简洁为辅，尽量使用单词的全称，所有命名和规范都应尽可能的与苹果API保持一致，</li>
+<li>例如枚举常量方法名的定义。</li>
+</ul>
+</li>
+<li>类命名<ul>
+<li>首字母大写，每个单词首字母大写</li>
+<li>尽量使用能够反映类功能的名词短语</li>
+<li>例如： UserManage ,UserData等</li>
+</ul>
+</li>
+<li>分类（类别）命名<ul>
+<li>与类命名相同，此外需添加要扩展的类名”+”</li>
+<li>eg：  NSString+Login UIView+XIB 等 </li>
+</ul>
+</li>
+<li>协议（委托）命名<ul>
+<li>与类命名相同，此外需添加“Delegate”后缀</li>
+<li>eg： UserManager 对应 UserManagerDelegate </li>
+</ul>
+</li>
+<li>方法命名<ul>
+<li>首字母小写，之后每个单词首字母都大写</li>
+<li>方法名使用动词短语，一些经典的操作应该使用约定的动词</li>
+<li>“-” 号后面有个空格</li>
+<li>传递参数的类型如果是指针，类与*号之间有空格</li>
+<li>重载系统方法的时候，如无特殊情况均需要先调用super的方法。</li>
+<li>例如：initWith,insert,remove,replace,add等等</li>
+</ul>
+</li>
+<li>方法参数命名<ul>
+<li>首字母小写，之后每个单词首字母都大写</li>
+<li>具有足够的说明性</li>
+<li>不需要添加类型前缀</li>
+<li>例如： - (void) setUserData:(NSDictionary *)userInfo</li>
+</ul>
+</li>
+<li><p>变量命名</p>
+<ul>
+<li>首字母小写，之后每个单词首字母都大写</li>
+<li>具有足够的说明性</li>
+<li>成员变量添加“_”前缀</li>
+<li>例如： NSMutableDictionary *_dataDic;</li>
+<li>如果该变量是属性不需要添加“_”</li>
+<li><p>例如： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSDictionary *dataDic;</span><br><span class="line">@property (nonatomic, copy) TestBlock testBlock;</span><br><span class="line">@property (nonatomic, assigh) NSinteger num;</span><br><span class="line">@property (nonatomic, weak) id&lt;delegate&gt; delegate;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>控件类型直接使用尾端的驼峰单词：<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UViewController -&gt; xxxViewController </span><br><span class="line">UIButton -&gt; xxxButton </span><br><span class="line">UILabel -&gt; xxxLabel </span><br><span class="line">UIImageView -&gt; xxxImageView </span><br><span class="line">UITableViewCell -&gt; xxxCell </span><br><span class="line">UIAlertView -&gt; xxxAlertView </span><br><span class="line">UIScrollView -&gt; xxxScrollView</span><br><span class="line"></span><br><span class="line">以下当属性名过长，可以把属性类型缩写作为尾端</span><br><span class="line">UIButton -&gt; xxxBtn </span><br><span class="line">UIImage -&gt; xxxImg</span><br><span class="line">UILabel -&gt; xxxL</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>常量</p>
+<ul>
+<li>常量（预定义，局部常量等）使用小写k开头的驼峰法</li>
+<li>例如:#define kSpace 20</li>
+<li>枚举类型参考系统API统一使用typedef NS_ENUM(类型, 名称)</li>
+<li>例如：下面是系统的 UISearchBarStyle 的枚举定义的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSUInteger, UISearchBarStyle) &#123;</span><br><span class="line">     UISearchBarStyleDefault,    // currently UISearchBarStyleProminent</span><br><span class="line">     UISearchBarStyleProminent,  // used my Mail, Messages and Contacts</span><br><span class="line">     UISearchBarStyleMinimal     // used by Calendar, Notes and Music</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>图片命名</p>
+<ul>
+<li>使用英文，全部小写，单词中间”_”隔开</li>
+<li>添加UI模块名作为前缀，避免冲突</li>
+<li>图片存放在 Images.xcassets 相关模块下下</li>
+<li>例如： home_search_img</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>单行注释：在方法的地方按 Command+/</li>
+<li>标注的功能，快捷键是Command + Option + /</li>
+<li>需要在方法名的上面（空白）的地方按 Command + Option + / 才管用</li>
+<li>方法名需要在.h文件中多行注释方法和参数详情</li>
+<li>文件下的方法区域分类，使用#pragma mark -，可以把在文件路径下的方法分类并标记</li>
+<li>例如：#pragma mark - delegate</li>
+</ul>
+</li>
+<li>宏 必须使用大写命名，”_”隔开<ul>
+<li>例如：SCREEN_WIDTH</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、代码优化"><a href="#3、代码优化" class="headerlink" title="3、代码优化"></a>3、代码优化</h2><ul>
+<li>避免相同的代码段出现在多个地方，相同的代码，必须归纳出来用一个方法或者类封装起来</li>
+<li>语句嵌套层次不得超过3层，超出的必须抽取出中间函数。例如：for，while循环 if，do等</li>
+<li>及时删除或注释掉无用的代码，删除没有意义的注释</li>
+<li>确定不使用的代码应该删除</li>
+<li>及时清除警告</li>
+<li>所有方法与方法之间空1行</li>
+<li>所有代码块之间空1行<h2 id="4-头文件-h-执行文件-m"><a href="#4-头文件-h-执行文件-m" class="headerlink" title="4. 头文件.h 执行文件.m"></a>4. 头文件.h 执行文件.m</h2></li>
+<li><p>.h文件</p>
+<ul>
+<li>所有的property 需要给出注释</li>
+<li>所有自定义的方法需要给出注释</li>
+<li>尽量减少公开的api接口数量</li>
+<li>import “xxxx.h” 部分头文件时候，如果只是内部使用，请放在.m文件下，.h使用@class xxxx 声明该类即可</li>
+<li>文件下有声明代理，把@protocol代理放在@interface 上面</li>
+<li>代理方法必须包含该类名</li>
+<li>例如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@class ImageOperation; </span><br><span class="line">@protocol ImageOperationDelegate&lt;NSObject&gt; </span><br><span class="line">- (void) operation:(ImageOperation *)op didLoadImage:(UIImage *)image; </span><br><span class="line">@end </span><br><span class="line">@interface ImageOperation : NSOperation </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>.m文件</p>
+<ul>
+<li>@implementation ViewController 上方使用 @interface ViewController() @end</li>
+<li>使用部分代理，并且代理不被外部使用，请把他们都放在.m的interface ()下</li>
+<li>所有自定义的方法需要给出注释</li>
+<li>比较大的代码块需要给出注释</li>
+<li>所有代码中出现的阿拉伯数字需要给出注释</li>
+<li>程序中出现加密／解密 逻辑的操作地方，需要给出注释说明过程（无论是系统还是自定义）</li>
+</ul>
+</li>
+<li><p>单例模式</p>
+<ul>
+<li>单例对象应该使用线程安全模式来创建共享实例。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance &#123;</span><br><span class="line">    static id sharedInstance = nil;</span><br><span class="line"></span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">     dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    sharedInstance = [[self alloc] init];</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line">    return sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p><a href="https://www.jianshu.com/p/23536482c194" target="_blank" rel="noopener">https://www.jianshu.com/p/23536482c194</a><br><a href="https://github.com/NYTimes/objective-c-style-guide" target="_blank" rel="noopener">https://github.com/NYTimes/objective-c-style-guide</a><br><a href="https://github.com/raywenderlich/objective-c-style-guide#language" target="_blank" rel="noopener">https://github.com/raywenderlich/objective-c-style-guide#language</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/iOS-公司开发者账号申请流程/" rel="next" title="iOS 公司开发者账号申请流程">
+                <i class="fa fa-chevron-left"></i> iOS 公司开发者账号申请流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/初识汇编/" rel="prev" title="初识汇编">
+                初识汇编 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、格式和换行"><span class="nav-number">1.</span> <span class="nav-text">1、格式和换行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、命名规范"><span class="nav-number">2.</span> <span class="nav-text">2、命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、代码优化"><span class="nav-number">3.</span> <span class="nav-text">3、代码优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-头文件-h-执行文件-m"><span class="nav-number">4.</span> <span class="nav-text">4. 头文件.h 执行文件.m</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">4.0.1.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

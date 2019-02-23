@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言 在iOS开发中必不可少的要用到数据存储，数据的处理是iOS开发中的核心技术，适当的对数据进行持久化存储可以实现应用的离线功能，以此提高用户体验。所谓数据持久化，就是将数据保存到硬盘中，使得在应用程序或手机重启后可以继续访问之前保存的数据。在iOS开发中，有很多持久化得方案，接下来我将总结以下5种持久化方案：1、plist（属性列表）2、preference（偏好设置）3、NSKeyedArc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS数据存储之偏好设置和属性列表">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS数据存储之偏好设置和属性列表/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="前言 在iOS开发中必不可少的要用到数据存储，数据的处理是iOS开发中的核心技术，适当的对数据进行持久化存储可以实现应用的离线功能，以此提高用户体验。所谓数据持久化，就是将数据保存到硬盘中，使得在应用程序或手机重启后可以继续访问之前保存的数据。在iOS开发中，有很多持久化得方案，接下来我将总结以下5种持久化方案：1、plist（属性列表）2、preference（偏好设置）3、NSKeyedArc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-2a78487573584498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-3a0648188d7f2726.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-9985b7569d2b73d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-23T06:56:53.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS数据存储之偏好设置和属性列表">
+<meta name="twitter:description" content="前言 在iOS开发中必不可少的要用到数据存储，数据的处理是iOS开发中的核心技术，适当的对数据进行持久化存储可以实现应用的离线功能，以此提高用户体验。所谓数据持久化，就是将数据保存到硬盘中，使得在应用程序或手机重启后可以继续访问之前保存的数据。在iOS开发中，有很多持久化得方案，接下来我将总结以下5种持久化方案：1、plist（属性列表）2、preference（偏好设置）3、NSKeyedArc">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/465805-2a78487573584498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS数据存储之偏好设置和属性列表/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS数据存储之偏好设置和属性列表 | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS数据存储之偏好设置和属性列表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS数据存储之偏好设置和属性列表
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 14:56:52 / Modified: 14:56:53" itemprop="dateCreated datePublished" datetime="2019-02-23T14:56:52+08:00">2019-02-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><blockquote>
+<p>在iOS开发中必不可少的要用到数据存储，数据的处理是iOS开发中的核心技术，适当的对数据进行持久化存储可以实现应用的离线功能，以此提高用户体验。所谓数据持久化，就是将数据保存到硬盘中，使得在应用程序或手机重启后可以继续访问之前保存的数据。在iOS开发中，有很多持久化得方案，接下来我将总结以下5种持久化方案：<br>1、plist（属性列表）<br>2、preference（偏好设置）<br>3、NSKeyedArchiver（归档）<br>4、SQList 3 （FMDB）<br>5、CoreData<br>由于偏好设置是将所有数据保存到preference目录下的一个以此应用包名来命名的plist文件中，所以将偏好设置和属性列表放到一块介绍。</p>
+</blockquote>
+<h4 id="沙盒机制"><a href="#沙盒机制" class="headerlink" title="沙盒机制"></a>沙盒机制</h4><ul>
+<li>在介绍各种存储方法之前，先说明下沙盒机制。iOS应用程序只能在为改程序创建的文件系统中读取文件，不可以去其他地方访问，此区域被称为沙盒，所以所有的非代码文件都要保持在此，例如图像，图标，声音，属性列表，文本文件等。<br>1、目录结构<pre><code>1、“应用程序包”
+2、Documents
+3、Library
+       Caches
+       Preferences
+4、tmp
+</code></pre>2、目录结构分析<ul>
+<li>应用程序包：包含所有的资源文件和可执行文件<pre><code>NSString *path = [[NSBundle mainBundle] bundlePath];
+NSLog(@&quot;%@&quot;, path);
+</code></pre></li>
+<li>Documents：保存应⽤运行时生成的需要持久化的数据,iTunes同步设备时会备份该目录。<pre><code>NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+NSString *path = [path objectAtIndex:0];
+NSLog(@&quot;%@&quot;, path);
+</code></pre></li>
+<li>Library/Caches: iTunes不会同步此文件夹，适合存储体积大，不需要备份的非重要数据。<pre><code>NSString *path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+NSLog(@&quot;%@&quot;, path);
+</code></pre></li>
+<li>Library/Preferences: iTunes同步该应用时会同步此文件夹中的内容，通常保存应用的设置信息。</li>
+<li>tmp: iTunes不会同步此文件夹，系统可能在应用没运行时就删除该目录下的文件，所以此目录适合保存应用中的一些临时文件，用完就删除<pre><code>NSString *path = NSTemporaryDirectory();
+NSLog(@&quot;%@&quot;, path);
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h5 id="属性列表-plist"><a href="#属性列表-plist" class="headerlink" title="属性列表(plist)"></a>属性列表(plist)</h5><p>　　iOS提供了一种plist格式的文件(属性列表)用于存储轻量级的数据，属性列表是一种XML格式的文件,拓展名为plist。如果对象是NSString、NSDictionary、NSArray、NSData、 NSNumber等类型,就可以使用writeToFile:atomically:⽅法 直接将对象写到属性列表文件中该格式保存的数据可以直接使用NSDictionary和NSArray读取 。plist文件在iOS开发中属于Write写入方式，可以以Property List列表形式显示，也可以以xml格式显示。对于数据管理是很方便的。掌握使用plist文件数据操作很有必要</p>
+<h6 id="一、将数据写入plist文件"><a href="#一、将数据写入plist文件" class="headerlink" title="一、将数据写入plist文件"></a>一、将数据写入plist文件</h6><ul>
+<li>获取文件路径<pre><code>NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+NSString *docPath = [path objectAtIndex:0];
+NSString *myFile = [docPath stringByAppendingPathComponent:@&quot;test.plist&quot;];
+</code></pre></li>
+<li>存储<pre><code>NSArray *array = @[@&quot;123&quot;, @&quot;456&quot;, @&quot;789&quot;];
+[array writeToFile:fileName atomically:YES];
+</code></pre></li>
+<li>读取<pre><code>NSArray *result = [NSArray arrayWithContentsOfFile:fileName];
+NSDictionary * result = [NSDictionary dictionaryWithContentsOfFile:fileName];
+NSLog(@&quot;%@&quot;, result);
+</code></pre><blockquote>
+<p>注意<br>只有NSString、NSDictionary、NSArray、NSData、 NSNumber等类型才能使用plist文件存储。<br>存储时使用writeToFile: atomically:方法。 其中atomically表示是否需要先写入一个辅助文件，再把辅助文件拷贝到目标文件地址。这是更安全的写入文件方法，一般都写YES。<br>plist文件的读写效率比较高，由于他的读写需要将所有的数据取出再全部保存，所以只适合小数据。</p>
+</blockquote>
+</li>
+</ul>
+<p>######二、手动添加plist文件</p>
+<ul>
+<li>创建.plist文件。<br>新建文件–&gt;Resource–&gt;Property List</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-2a78487573584498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plist.png"></p>
+<p>plist文件的根类型只能是NSArray或NSDictionary</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-3a0648188d7f2726.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GZO.jpg"></p>
+<p>可以在空白处右键“Add Row”添加数据或者点中“root”行，点击“+”号即可添加。一般数据类型（Type）可以选择Array、Dictionary、String等类型。同时也可以给添加的数据赋值（Value）。<br>      除了以Property List列表形式显示外，选中usersList.plist文件，右键“Open As”-“Source Code”可以以XML格式显示。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-9985b7569d2b73d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2016.png"></p>
+<ul>
+<li>将plist文件中的数据读入对应的根类型<pre><code>//1、获取文件所在的路径,Resource:文件名称、Type：文件格式
+NSString *filePath = [[NSBundle mainBundle] pathForResource:@&quot;userInfos&quot; ofType:@&quot;plist&quot;];
+// 2、从路径中获取对应格式的数据
+// 如果Root为NSArray，则使用数组保存
+NSArray *infos = [NSArray arrayWithContentsOfFile:filePath];
+NSLog(@&quot;%@&quot;,infos);
+// 如果Root为NSDictionary,则使用字典保存
+NSDictionary *infoDic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+NSLog(@&quot;%@&quot;,infoDic);
+</code></pre></li>
+</ul>
+<h5 id="偏好设置"><a href="#偏好设置" class="headerlink" title="偏好设置"></a>偏好设置</h5><h6 id="一、使用NSUserDefault-实现持久化"><a href="#一、使用NSUserDefault-实现持久化" class="headerlink" title="一、使用NSUserDefault 实现持久化"></a>一、使用NSUserDefault 实现持久化</h6><ul>
+<li>下面来看下 NSUserDefault 本地保存的位置，Library/Preferences 这个目录下的 plist 文件就是其保存的目录。</li>
+<li>NSUserDefault 的用法，主要是保存和读取数据<pre><code>//初始化一个 NSUserDefault
++ (NSUserDefaults *)standardUserDefaults;
+ //设置数据的方法
+- (void)setObject:(nullable id)value forKey:(NSString *)defaultName; 
+- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName; 
+- (void)setFloat:(float)value forKey:(NSString *)defaultName;
+- (void)setDouble:(double)value forKey:(NSString *)defaultName;
+- (void)setBool:(BOOL)value forKey:(NSString *)defaultName;
+- (void)setURL:(nullable NSURL *)url forKey:(NSString *)defaultName NS_AVAILABLE(10_6, 4_0);
+</code></pre></li>
+<li><p>读取数据的方法：</p>
+<pre><code>- (nullable id)objectForKey:(NSString *)defaultName; 
+- (nullable NSString *)stringForKey:(NSString *)defaultName;
+- (nullable NSArray *)arrayForKey:(NSString *)defaultName;
+- (nullable NSDictionary&lt;NSString *, id&gt; *)dictionaryForKey:(NSString *)defaultName;
+- (nullable NSData *)dataForKey:(NSString *)defaultName;
+- (nullable NSArray&lt;NSString *&gt; *)stringArrayForKey:(NSString *)defaultName;
+- (NSInteger)integerForKey:(NSString *)defaultName;
+- (float)floatForKey:(NSString *)defaultName;
+- (double)doubleForKey:(NSString *)defaultName;
+- (BOOL)boolForKey:(NSString *)defaultName;
+- (nullable NSURL *)URLForKey:(NSString *)defaultName NS_AVAILABLE(10_6, 4_0);
+</code></pre></li>
+<li><p>删除数据的方法：</p>
+<pre><code>- (void)removeObjectForKey:(NSString *)defaultName;
+</code></pre></li>
+</ul>
+<ul>
+<li><p>保存数据:</p>
+<pre><code>// 如果不手动调用，系统会自动保存，但时间不定
+ - (BOOL)synchronize;
+</code></pre></li>
+<li><p>使用方法</p>
+<pre><code>//1.获得NSUserDefaults文件
+NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//2.向文件中写入内容
+[userDefaults setObject:@&quot;AAA&quot; forKey:@&quot;a&quot;];
+[userDefaults setBool:YES forKey:@&quot;sex&quot;];
+[userDefaults setInteger:21 forKey:@&quot;age&quot;];
+//2.1立即同步
+[userDefaults synchronize];
+//3.读取文件
+NSString *name = [userDefaults objectForKey:@&quot;a&quot;];
+BOOL sex = [userDefaults boolForKey:@&quot;sex&quot;];
+NSInteger age = [userDefaults integerForKey:@&quot;age&quot;];
+</code></pre></li>
+<li><p>存储id类型数据</p>
+<pre><code>+ (void)setValue:(id)value andKey:(NSString *)key
+{
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+     [userDefaults setObject:value forKey:key];
+     [userDefaults synchronize];
+}
+// 获取数据
++ (NSString *)getValueByKey:(NSString *)key
+ {
+     NSUserDefaults * settings = [NSUserDefaults standardUserDefaults];
+     NSString *value = [settings objectForKey:key];
+     return value;
+ }
+</code></pre></li>
+</ul>
+<blockquote>
+<p>注意:</p>
+<ul>
+<li>偏好设置是专门用来保存应用程序的配置信息的，一般不要在偏好设置中保存其他数据。</li>
+<li>如果没有调用synchronize方法，系统会根据I/O情况不定时刻地保存到文件中。所以如果需要立即写入文件的就必须调用synchronize方法。</li>
+<li>偏好设置会将所有数据保存到同一个文件中。即preference目录下的一个以此应用包名来命名的plist文件。</li>
+</ul>
+</blockquote>
+<p>欢迎阅读下一篇：</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/6f39771de2de" target="_blank" rel="noopener">iOS数据存储之归档</a></li>
+</ul>
+<p>iOS-Ant-Bang互助社区 426981364<br>iOS技术交流群 461069757 欢迎加入！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/iOS开发数据库-FMDB/" rel="next" title="iOS开发数据库-FMDB">
+                <i class="fa fa-chevron-left"></i> iOS开发数据库-FMDB
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/iOS数据存储之归档/" rel="prev" title="iOS数据存储之归档">
+                iOS数据存储之归档 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#沙盒机制"><span class="nav-number">2.</span> <span class="nav-text">沙盒机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#属性列表-plist"><span class="nav-number">2.1.</span> <span class="nav-text">属性列表(plist)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#一、将数据写入plist文件"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、将数据写入plist文件</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#偏好设置"><span class="nav-number">2.2.</span> <span class="nav-text">偏好设置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#一、使用NSUserDefault-实现持久化"><span class="nav-number">2.2.1.</span> <span class="nav-text">一、使用NSUserDefault 实现持久化</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

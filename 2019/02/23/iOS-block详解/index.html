@@ -96,24 +96,27 @@
 
 
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="####块的基础知识块是C、C++、Objective-C中的词法闭包，块与函数类似，只不过是直接定义在另一个函数里的，和定义他的那个函数共享同一个范围内的东西。块用“^”(脱字符)符号来表示，后面跟着一对花括号，括号里面是块的实现代码。例如，下面就是个简单的块：123456789101112131415161718192021222324252627^ &amp;#123;      //Block i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/02/22/hello-world/index.html">
+<meta property="og:title" content="iOS block详解">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS-block详解/index.html">
 <meta property="og:site_name" content="七月">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="####块的基础知识块是C、C++、Objective-C中的词法闭包，块与函数类似，只不过是直接定义在另一个函数里的，和定义他的那个函数共享同一个范围内的东西。块用“^”(脱字符)符号来表示，后面跟着一对花括号，括号里面是块的实现代码。例如，下面就是个简单的块：123456789101112131415161718192021222324252627^ &amp;#123;      //Block i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-22T13:24:13.767Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-5f31cc7ca434f0e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/465805-16700c9b06b1dda7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-23T06:58:33.180Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="iOS block详解">
+<meta name="twitter:description" content="####块的基础知识块是C、C++、Objective-C中的词法闭包，块与函数类似，只不过是直接定义在另一个函数里的，和定义他的那个函数共享同一个范围内的东西。块用“^”(脱字符)符号来表示，后面跟着一对花括号，括号里面是块的实现代码。例如，下面就是个简单的块：123456789101112131415161718192021222324252627^ &amp;#123;      //Block i">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/465805-5f31cc7ca434f0e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/22/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS-block详解/">
 
 
 
@@ -123,7 +126,7 @@
   };
 </script>
 
-  <title>Hello World | 七月</title>
+  <title>iOS block详解 | 七月</title>
   
 
 
@@ -326,7 +329,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/22/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-block详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Running2snail">
@@ -343,7 +346,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World
+          <h1 class="post-title" itemprop="name headline">iOS block详解
 
               
             
@@ -369,9 +372,13 @@
                 
               
 
-              <time title="Created: 2019-02-22 21:24:13" itemprop="dateCreated datePublished" datetime="2019-02-22T21:24:13+08:00">2019-02-22</time>
+              <time title="Created: 2019-02-23 14:58:32 / Modified: 14:58:33" itemprop="dateCreated datePublished" datetime="2019-02-23T14:58:32+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -404,15 +411,21 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>####块的基础知识<br>块是C、C++、Objective-C中的词法闭包，块与函数类似，只不过是直接定义在另一个函数里的，和定义他的那个函数共享同一个范围内的东西。块用“^”(脱字符)符号来表示，后面跟着一对花括号，括号里面是块的实现代码。例如，下面就是个简单的块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">^ &#123;</span><br><span class="line">      //Block implementation here</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">块其实就是个值，而且自有其相关类型，与int、float或者对象一样，可以把块赋给变量，然后像使用其他变量那样使用它，块类型的语法与函数指针近似。下面列出的这个块很简单，没有参数，也不返回值。</span><br><span class="line">``` </span><br><span class="line">void (^someBlock)() = ^&#123;</span><br><span class="line">       //Block implementation here</span><br><span class="line">&#125;;</span><br><span class="line">``` </span><br><span class="line">这段代码定义了一个名为someBlock的变量。由于变量名写在正中间，所以看上去也许有点怪，不过一旦理解了语法，很容易就能读懂。块类型的语法结构如下：</span><br><span class="line"></span><br><span class="line">#####return_type (^block_name)(parameters)</span><br><span class="line"></span><br><span class="line">下面这种写法所定义的块，返回int值，并且接受两个int做参数：</span><br><span class="line">``` </span><br><span class="line">int (^addBlock)(int a, int b) = ^(int a, int b) &#123;</span><br><span class="line">      return a+ b;</span><br><span class="line">&#125;;</span><br><span class="line">``` </span><br><span class="line">定义好之后，就可以想函数那样使用了，比方说，addBlock块可以这样使用：</span><br><span class="line">``` </span><br><span class="line">int add = addBlock(2, 5);           // add = 7</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">块的强大之处是：在声明它的范围里，所有变量都可以为其所捕获。这也就是说，那个范围里的所有变量在块里依然可用。比如，下面这段代码所定义的块，就是使用了块以外的变量：</span><br></pre></td></tr></table></figure></p>
+<p>int additional = 5;<br>int (^addBlock)(int a, int b) = ^(int a, int b) {<br>  return a + b + additional;<br>};<br>int add = addBlock(2, 5);              //add = 12<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">默认情况下，为块所捕获的变量，是不可以在块里修改的，在本例中，假如快内的代码改动了additional变量的值，那么编译器就会报错。不过，声明变量的时候，可以加上__block修饰符，这样就可以在块内修改了。</span><br><span class="line">如果块所捕获的变量是对象类型，那么就会自动保留它，系统在释放这个块的时候也会将其一并释放，这就引出一个与块有关的重要问题。块本身可视为对象。块本身也和其他对象一样，有引用计数，当最后一个指向块的引用移走之后，块就回收了，回收时也会释放块所捕获的变量，以便平衡捕获时所执行的操作。</span><br><span class="line">如果将块定义在Objective-C类的实例方法中，那么除了可以访问类的所有实例变量外，还可以使用self变量，块总能修改实例变量，所以在声明时无需加__block。不过，如果通过读取或者写入操作捕获了实例变量，那么也会自动把self变量一并捕获了。因为实例变量是与self所指代的实例关联在一起的。例如下面这个块声明在EOCClass类的方法中：</span><br></pre></td></tr></table></figure></p>
+<p>@interface</p>
+<ul>
+<li>(void)anInstanceMethod {<br>  void (^someBlock)() = ^{<pre><code>_anInstanceVariable = @&quot;something&quot;;
+NSLog(@&quot;_anInstanceVariable = %@&quot;, _anInstanceVariable);
+</code></pre>  };<br>}<br>/<em><br>self-&gt;_anInstanceVariable = @”something”;
+</em>/<br><code>`</code><br>如果某个EOCClass实例正在执行anInstanceMethod方法，那么self变量就指向此实例。由于块里没有明确使用self变量，所以很容易忘记self变量其实也为块所捕获了，直接访问实例变量和通过self来访问是等效的。<br>然而，一定要记住：self也是一个对象，因而块在捕获它时也会将其保留。如果self所指代的那个对象同时也保留了块，那么这种情况通常就会导致“保留环”，从而引起内存泄露。所以当在快内部访问实例变量时候—</li>
+</ul>
+<p>####块的内部结构</p>
+<p>每个Objective-C对象都占据着某个内存区域。因为实例变量的个数及对象所包含的关联数据互不相同，所以每个对象所占的内存区域也有大有小。块本身也是对象，在存放块对象的内存区域中，首个变量是指向Class对象的指针，该指针叫做isa，其余内存里还有块对象正常运转所需的各种信息。借鉴下图来详细描述块对象的内存布局。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-5f31cc7ca434f0e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="块对象的内存结构.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/465805-16700c9b06b1dda7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="块对象的内存结构.png"></p>
+<p>在内存布局中，最重要的就是invoke变量，这是个函数指针，指向块的实现代码。函数原型至少要接受一个void*型的参数，此参数代表块。<br>descriptor变量是指向结构体的指针，每个快里都包含此结构体，其中声明了块对象的总体大小，还声明了copy与dispose这两个辅助函数所对应的函数指针。辅助函数在拷贝及丢弃块对象时运行，其中会执行一些操作，比方说，前者要保留捕获的对象，而后者则将之释放。<br>块还会把它所捕获的所有变量都拷贝一份。这些拷贝放在descriptor变量后面，捕获了多少个变量，就要占据多少内存空间。请注意，拷贝的并不是对象本身，而是指向这些对象的指针变量。invoke函数为何需要把块对象作为参数传进来呢？原因就在于，执行块时，要从内存中把这些捕获到的变量读出来。</p>
+<p>####全局块、栈块及堆块</p>
 
       
     </div>
@@ -443,14 +456,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/02/23/iOS数据存储之归档/" rel="next" title="iOS数据存储之归档">
+                <i class="fa fa-chevron-left"></i> iOS数据存储之归档
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/23/iOS开发之Pch预编译文件的创建/" rel="prev" title="iOS开发之Pch预编译文件的创建">
-                iOS开发之Pch预编译文件的创建 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/23/iOS-公司开发者账号申请流程/" rel="prev" title="iOS 公司开发者账号申请流程">
+                iOS 公司开发者账号申请流程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -496,17 +513,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -578,23 +586,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

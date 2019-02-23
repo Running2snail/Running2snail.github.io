@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在开发SaaS的过程中，小票打印的功能主要是通过App来跟打印机进行连接，并使用打印机指令对订单信息进行排版和打印的，在进行蓝牙开发的过程中，首先先要链接的就是蓝牙相关的基础知识。下面我主要介绍下蓝牙的基础知识和蓝牙连接的一些流程。  一、蓝牙版本和使用限制蓝牙2.0为传统蓝牙,传统蓝牙也称为经典蓝牙. 使用限制：蓝牙2.0,不上架，使用私有API,手机需要越狱. 蓝牙4.0因为低耗电,所以也叫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 蓝牙打印总结">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS-蓝牙打印总结/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="在开发SaaS的过程中，小票打印的功能主要是通过App来跟打印机进行连接，并使用打印机指令对订单信息进行排版和打印的，在进行蓝牙开发的过程中，首先先要链接的就是蓝牙相关的基础知识。下面我主要介绍下蓝牙的基础知识和蓝牙连接的一些流程。  一、蓝牙版本和使用限制蓝牙2.0为传统蓝牙,传统蓝牙也称为经典蓝牙. 使用限制：蓝牙2.0,不上架，使用私有API,手机需要越狱. 蓝牙4.0因为低耗电,所以也叫">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-d454e36058fc5c4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-7a9c3792ebd4bdfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-23T07:00:13.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 蓝牙打印总结">
+<meta name="twitter:description" content="在开发SaaS的过程中，小票打印的功能主要是通过App来跟打印机进行连接，并使用打印机指令对订单信息进行排版和打印的，在进行蓝牙开发的过程中，首先先要链接的就是蓝牙相关的基础知识。下面我主要介绍下蓝牙的基础知识和蓝牙连接的一些流程。  一、蓝牙版本和使用限制蓝牙2.0为传统蓝牙,传统蓝牙也称为经典蓝牙. 使用限制：蓝牙2.0,不上架，使用私有API,手机需要越狱. 蓝牙4.0因为低耗电,所以也叫">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/465805-d454e36058fc5c4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS-蓝牙打印总结/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS 蓝牙打印总结 | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-蓝牙打印总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 蓝牙打印总结
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 15:00:13" itemprop="dateCreated datePublished" datetime="2019-02-23T15:00:13+08:00">2019-02-23</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在开发SaaS的过程中，小票打印的功能主要是通过App来跟打印机进行连接，并使用打印机指令对订单信息进行排版和打印的，在进行蓝牙开发的过程中，首先先要链接的就是蓝牙相关的基础知识。下面我主要介绍下蓝牙的基础知识和蓝牙连接的一些流程。</p>
+</blockquote>
+<h2 id="一、蓝牙版本和使用限制"><a href="#一、蓝牙版本和使用限制" class="headerlink" title="一、蓝牙版本和使用限制"></a>一、蓝牙版本和使用限制</h2><p>蓝牙2.0为传统蓝牙,传统蓝牙也称为经典蓝牙.</p>
+<p>使用限制：蓝牙2.0,不上架，使用私有API,手机需要越狱.</p>
+<p>蓝牙4.0因为低耗电,所以也叫做低功耗蓝(BLE).它将三种规格集一体，包括传统蓝牙技术、高速技术和低耗能技术.</p>
+<p>使用限制：iOS6以上，使用CoreBluetooth框架,手机不需要越狱.(CoreBluetooth是基于BLE来开发的)所以我们主要是基于蓝牙4.0版本使用CoreBluetooth框架进行开发</p>
+<h2 id="二、蓝牙的基础知识"><a href="#二、蓝牙的基础知识" class="headerlink" title="二、蓝牙的基础知识"></a>二、蓝牙的基础知识</h2><h5 id="CoreBluetooth框架的核心其实是两个东西，peripheral和central-可以理解成外设和中心。对应他们分别有一组相关的API和类"><a href="#CoreBluetooth框架的核心其实是两个东西，peripheral和central-可以理解成外设和中心。对应他们分别有一组相关的API和类" class="headerlink" title="CoreBluetooth框架的核心其实是两个东西，peripheral和central, 可以理解成外设和中心。对应他们分别有一组相关的API和类"></a>CoreBluetooth框架的核心其实是两个东西，peripheral和central, 可以理解成外设和中心。对应他们分别有一组相关的API和类</h5><p><img src="https://upload-images.jianshu.io/upload_images/465805-d454e36058fc5c4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CoreBluetooth.png"></p>
+<p>这两组api分别对应不同的业务场景，左侧叫做中心模式，就是以你的app作为中心，连接其他的外设的场景，而右侧称为外设模式，使用手机作为外设别其他中心设备操作的场景。（在开发过程中我们主要是使用中心模式，以App为中心，来扫描周围的设备，然后进行连接）<br>服务和特征，特征的属性(service and characteristic):<br>一个外设包含多个服务,而每一个服务中又包含多个特征,特征包括特征的值和特征的描述.每个服务包含多个字段,字段的权限有read(读)、write(写)、notify(通知).</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/465805-7a9c3792ebd4bdfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="中心模式.png"></p>
+<h2 id="三、蓝牙中心模式流程"><a href="#三、蓝牙中心模式流程" class="headerlink" title="三、蓝牙中心模式流程"></a>三、蓝牙中心模式流程</h2><h4 id="1、建立中心角色-CBCentralManager-alloc-initWithDelegate-self-queue-nil"><a href="#1、建立中心角色-CBCentralManager-alloc-initWithDelegate-self-queue-nil" class="headerlink" title="1、建立中心角色  [[CBCentralManager alloc] initWithDelegate:self queue:nil]"></a>1、建立中心角色  [[CBCentralManager alloc] initWithDelegate:self queue:nil]</h4><h4 id="2、扫描外设-scanForPeripherals"><a href="#2、扫描外设-scanForPeripherals" class="headerlink" title="2、扫描外设 scanForPeripherals"></a>2、扫描外设 scanForPeripherals</h4><h4 id="3、发现设备-didDiscoverPeripheral"><a href="#3、发现设备-didDiscoverPeripheral" class="headerlink" title="3、发现设备 didDiscoverPeripheral"></a>3、发现设备 didDiscoverPeripheral</h4><h4 id="4、连接外设-connectPeripheral"><a href="#4、连接外设-connectPeripheral" class="headerlink" title="4、连接外设 connectPeripheral"></a>4、连接外设 connectPeripheral</h4><pre><code>连接失败 didFailToConnectPeripheral
+
+连接断开 didDisconnectPeripheral
+
+连接成功 didConnectPeripheral
+</code></pre><h4 id="5、扫描外设中的服务-discoverServices"><a href="#5、扫描外设中的服务-discoverServices" class="headerlink" title="5、扫描外设中的服务 discoverServices"></a>5、扫描外设中的服务 <code>discoverServices</code></h4><pre><code>发现并获取外设中的服务 `didDiscoverServices`
+</code></pre><h4 id="6、扫描外设对应服务的特征-discoverCharacteristics"><a href="#6、扫描外设对应服务的特征-discoverCharacteristics" class="headerlink" title="6、扫描外设对应服务的特征 discoverCharacteristics"></a>6、扫描外设对应服务的特征 <code>discoverCharacteristics</code></h4><pre><code>发现并获取外设对应服务的特征 `didDiscoverCharacteristicsForService`
+
+给对应特征写数据 `writeValue:forCharacteristic:type:`
+</code></pre><h4 id="7、订阅特征的通知-setNotifyValue-forCharacteristic"><a href="#7、订阅特征的通知-setNotifyValue-forCharacteristic" class="headerlink" title="7、订阅特征的通知 setNotifyValue:forCharacteristic:"></a>7、订阅特征的通知 <code>setNotifyValue:forCharacteristic:</code></h4><pre><code>根据特征读取数据 `didUpdateValueForCharacteristic`
+</code></pre><h4 id="8、断开连接-centralManager-didDisconnectPeripheral"><a href="#8、断开连接-centralManager-didDisconnectPeripheral" class="headerlink" title="8、断开连接  centralManager: didDisconnectPeripheral"></a>8、断开连接  centralManager: didDisconnectPeripheral</h4><h2 id="四、蓝牙连接外设的实现流程"><a href="#四、蓝牙连接外设的实现流程" class="headerlink" title="四、蓝牙连接外设的实现流程"></a>四、蓝牙连接外设的实现流程</h2><h3 id="1、打印采用中心模式"><a href="#1、打印采用中心模式" class="headerlink" title="1、打印采用中心模式"></a>1、打印采用中心模式</h3><p>导入CoreBluetooth框架,<code>#import &lt;CoreBluetooth/CoreBluetooth.h&gt;</code></p>
+<h3 id="2、遵守CBCentralManagerDelegate-CBPeripheralDelegate协议"><a href="#2、遵守CBCentralManagerDelegate-CBPeripheralDelegate协议" class="headerlink" title="2、遵守CBCentralManagerDelegate,CBPeripheralDelegate协议"></a>2、遵守<code>CBCentralManagerDelegate,CBPeripheralDelegate</code>协议</h3><p>实现下面方法</p>
+<pre><code>- (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central{}
+</code></pre><h3 id="3、添加属性"><a href="#3、添加属性" class="headerlink" title="3、添加属性"></a>3、添加属性</h3><h5 id="中心管理者-管理设备的扫描和连接"><a href="#中心管理者-管理设备的扫描和连接" class="headerlink" title="// 中心管理者(管理设备的扫描和连接)"></a>// 中心管理者(管理设备的扫描和连接)</h5><pre><code>@property (nonatomic, strong) CBCentralManager *manager;
+</code></pre><h5 id="存储扫描到的设备"><a href="#存储扫描到的设备" class="headerlink" title="// 存储扫描到的设备"></a>// 存储扫描到的设备</h5><pre><code>@property (nonatomic, strong) NSMutableArray *peripherals;
+</code></pre><h5 id="可写入数据的特性"><a href="#可写入数据的特性" class="headerlink" title="// 可写入数据的特性"></a>// 可写入数据的特性</h5><pre><code>@property (nonatomic, strong) NSMutableArray *writeChatacters;
+</code></pre><h5 id="当前连接的外设"><a href="#当前连接的外设" class="headerlink" title="//当前连接的外设"></a>//当前连接的外设</h5><pre><code>@property (nonatomic, strong) CBPeripheral *connectedPerpheral;
+</code></pre><h5 id="当前蓝牙设备的状态"><a href="#当前蓝牙设备的状态" class="headerlink" title="//当前蓝牙设备的状态"></a>//当前蓝牙设备的状态</h5><pre><code>@property (nonatomic, assign) CBManagerState peripheralState;
+</code></pre><p>4、创建中心管理者</p>
+<h5 id="初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程"><a href="#初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程" class="headerlink" title="//初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程"></a>//初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程</h5><pre><code>self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
+</code></pre><h4 id="初始化设备存储数组"><a href="#初始化设备存储数组" class="headerlink" title="初始化设备存储数组"></a>初始化设备存储数组</h4><pre><code>- (NSMutableArray *)peripherals {
+     if (!_peripherals) {
+         self.peripherals = [NSMutableArray array];
+     }
+     return _peripherals;
+ }
+</code></pre><h4 id="初始化可写入数据特征数组"><a href="#初始化可写入数据特征数组" class="headerlink" title="初始化可写入数据特征数组"></a>初始化可写入数据特征数组</h4><pre><code>- (NSMutableArray *)writeChatacters {
+    if (!_writeChatacters) {
+        self.writeChatacters = [NSMutableArray array];
+    }
+    return _writeChatacters;
+}
+</code></pre><h3 id="5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。"><a href="#5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。" class="headerlink" title="5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。"></a>5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。</h3><h5 id="获取中心管理者的状态"><a href="#获取中心管理者的状态" class="headerlink" title="//获取中心管理者的状态"></a>//获取中心管理者的状态</h5><pre><code> - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)central
+ {
+     switch (central.state) {
+         case CBManagerStateUnknown:{
+             NSLog(@&quot;未知状态&quot;);
+             self.peripheralState = central.state;
+         }
+             break;
+         case CBManagerStateResetting:
+         {
+            NSLog(@&quot;重置状态&quot;);
+             self.peripheralState = central.state;
+         }
+             break;
+         case CBManagerStateUnsupported:
+         {
+             NSLog(@&quot;不支持的状态&quot;);
+             self.peripheralState = central.state;
+         }
+             break;
+         case CBManagerStateUnauthorized:
+         {
+            NSLog(@&quot;未授权的状态&quot;);
+             self.peripheralState = central.state;
+         }
+             break;
+         case CBManagerStatePoweredOff:
+         {
+             NSLog(@&quot;关闭状态&quot;);
+             self.peripheralState = central.state;
+         }
+             break;
+         case CBManagerStatePoweredOn:
+         {
+              NSLog(@&quot;开启状态－可用状态&quot;);
+              self.peripheralState = central.state;
+               //蓝牙状态打开，开始扫描外设，第一个参数nil就是扫描周围所有的外设
+              [_manager scanForPeripheralsWithServices:nil options:nil];
+         }
+              break;
+         default:
+              break;
+}
+</code></pre><p>}</p>
+<h3 id="6、扫描到设备并开始连接"><a href="#6、扫描到设备并开始连接" class="headerlink" title="6、扫描到设备并开始连接"></a>6、扫描到设备并开始连接</h3><pre><code>/** 扫描到设备会进入方法
+ @param central 中心管理者
+ @param peripheral 扫描到的设备
+ @param advertisementData 广告信息
+ @param RSSI 信号强度
+ */
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral
+     advertisementData:(NSDictionary&lt;NSString *,id&gt; *)advertisementData RSSI:(NSNumber *)RSSI {
+    // 当设备名称开头为P的时候并且没有被添加到数组中的时候添加到设备存储中
+    if ([peripheral.name hasPrefix:@&quot;P&quot;] &amp;&amp; ![self.peripherals containsObject:peripheral])  {
+        //找到的设备必须持有它，否则CBCentralManager中也不会保存peripheral，那么CBPeripheralDelegate中的方法也不会被调用！！
+        [self.peripherals addObject:peripheral];
+        //自动连接设备
+        [_manager connectPeripheral:peripheral options:nil];
+    }
+}
+</code></pre><h3 id="7、连接的三种状态-如果连接成功-则扫描所有服务-也可以扫描指定服务"><a href="#7、连接的三种状态-如果连接成功-则扫描所有服务-也可以扫描指定服务" class="headerlink" title="7、连接的三种状态,如果连接成功,则扫描所有服务(也可以扫描指定服务)"></a>7、连接的三种状态,如果连接成功,则扫描所有服务(也可以扫描指定服务)</h3><h4 id="连接失败重连"><a href="#连接失败重连" class="headerlink" title="连接失败重连"></a>连接失败重连</h4><pre><code>/** 连接失败
+ @param central 中心管理者
+ @param peripheral 连接失败的设备
+ @param error 错误信息
+ */
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+
+{
+    NSLog(@&quot;&gt;&gt;&gt;连接到名称为（%@）的设备-失败,原因:%@&quot;,[peripheral name],[error localizedDescription]);
+}
+</code></pre><h4 id="连接断开重连"><a href="#连接断开重连" class="headerlink" title="连接断开重连"></a>连接断开重连</h4><pre><code>/** 连接断开
+ @param central 中心管理者
+ @param peripheral 连接断开的设备
+ @param error 错误信息
+ */
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    NSLog(@&quot;&gt;&gt;&gt;外设连接断开连接 %@: %@\n&quot;, [peripheral name], [error localizedDescription]);
+}
+</code></pre><h4 id="连接成功并扫描服务"><a href="#连接成功并扫描服务" class="headerlink" title="连接成功并扫描服务"></a>连接成功并扫描服务</h4><pre><code>/** 连接成功
+ @param central 中心管理者
+ @param peripheral 连接成功的设备
+ */
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+{
+    NSLog(@&quot;&gt;&gt;&gt;连接到名称为（%@）的设备-成功&quot;,[peripheral.name](http://peripheral.name/));
+    self.connectedPerpheral = peripheral;
+    // 设置设备的代理
+    peripheral.delegate = self;
+    // 扫描外设Services:传入nil代表扫描所有服务，成功后会进入方法：-(void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error{}
+    [peripheral discoverServices:nil];
+}
+</code></pre><h3 id="8、发现服务并扫描服务对应的特征"><a href="#8、发现服务并扫描服务对应的特征" class="headerlink" title="8、发现服务并扫描服务对应的特征"></a>8、发现服务并扫描服务对应的特征</h3><pre><code>/** 扫描到服务
+ @param peripheral 服务对应的设备
+ @param error 扫描错误信息
+ */
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
+    //  NSLog(@&quot;&gt;&gt;&gt;扫描到服务：%@&quot;,peripheral.services);
+    if (error) {
+        NSLog(@&quot;&gt;&gt;&gt;Discovered services for %@ with error: %@&quot;, peripheral.name, [error localizedDescription]);
+        return;
+    }
+    // 遍历所有的服务
+    for (CBService *service in peripheral.services)
+    {
+        NSLog(@&quot;服务:%@&quot;,service.UUID.UUIDString);
+       //扫描每个service的Characteristics，扫描到后会进入方法： -(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error{}
+        [peripheral discoverCharacteristics:nil forService:service];
+    }
+}
+</code></pre><h3 id="9、扫描到对应的特征-并存储"><a href="#9、扫描到对应的特征-并存储" class="headerlink" title="9、扫描到对应的特征,并存储"></a>9、扫描到对应的特征,并存储</h3><pre><code>/** 扫描到对应的特征
+ @param peripheral 设备
+ @param service 特征对应的服务
+ @param error 错误信息
+ */
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
+{
+    if (error) {
+        NSLog(@&quot;error Discovered characteristics for %@ with error: %@&quot;, service.UUID, [error localizedDescription]);
+        return;
+    }
+   for (CBCharacteristic *characteristic in service.characteristics) {
+        NSLog(@&quot;service:%@ 的 Characteristic: %@&quot;,service.UUID,characteristic.UUID);
+        //只有 characteristic.properties 有write的权限才可以写
+        if(characteristic.properties &amp; CBCharacteristicPropertyWrite){
+            NSDictionary *dic = @{@&quot;character&quot;:characteristic,@&quot;type&quot;:@(CBCharacteristicWriteWithResponse)};
+            [self.writeChatacters addObject:dic];
+        }
+    }
+}
+</code></pre><h4 id="10、把数据写到Characteristic中和写入回调"><a href="#10、把数据写到Characteristic中和写入回调" class="headerlink" title="10、把数据写到Characteristic中和写入回调"></a>10、把数据写到Characteristic中和写入回调</h4><pre><code>        //写数据
+        -(void)writeCharacteristic:(CBPeripheral *)peripheral characteristic:(CBCharacteristic *)characteristic  value:(NSData *)value {
+            //打印出 characteristic 的权限，可以看到有很多种，这是一个NS_OPTIONS，就是可以同时用于好几个值，常见的有read，write，notify，indicate，知知道这几个基本就够用了，前连个是读写权限，后两个都是通知，两种不同的通知方式。
+            /*
+             typedef NS_OPTIONS(NSUInteger, CBCharacteristicProperties) {
+             CBCharacteristicPropertyBroadcast                                                  = 0x01,
+             CBCharacteristicPropertyRead                                                       = 0x02,
+             CBCharacteristicPropertyWriteWithoutResponse                                       = 0x04,
+             CBCharacteristicPropertyWrite                                                      = 0x08,
+             CBCharacteristicPropertyNotify                                                     = 0x10,
+             CBCharacteristicPropertyIndicate                                                   = 0x20,
+             CBCharacteristicPropertyAuthenticatedSignedWrites                                  = 0x40,
+             CBCharacteristicPropertyExtendedProperties                                         = 0x80,
+             CBCharacteristicPropertyNotifyEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)        = 0x100,
+             CBCharacteristicPropertyIndicateEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)      = 0x200
+             };     
+             */
+            NSLog(@&quot;%lu&quot;, (unsigned long)characteristic.properties);
+            //只有 characteristic.properties 有write的权限才可以写
+            if(characteristic.properties &amp; CBCharacteristicPropertyWrite){
+                /*  最好一个type参数可以为CBCharacteristicWriteWithResponse或type:CBCharacteristicWriteWithResponse,区别是是否会有反馈 */
+              [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+            } else {
+                NSLog(@&quot;该字段不可写！&quot;);
+}
+</code></pre><p>}</p>
+<pre><code>//写入数据的回调
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error
+{
+    if (error) {
+        NSLog(@&quot;发送失败&quot;);
+    } else {
+        NSLog(@&quot;已成功发送至蓝牙设备&quot;);
+    }
+}
+</code></pre><p>####11、断开连接(disconnect)</p>
+<pre><code>//停止扫描并断开连接
+-(void)disconnectPeripheral:(CBCentralManager *)centralManager peripheral:(CBPeripheral *)peripheral {
+    //停止扫描
+    [centralManager stopScan];
+    //断开连接
+    [centralManager cancelPeripheralConnection:peripheral];
+}
+</code></pre><p>在需要打印的时候通过已经存储的数据特征来调用数据的写入进行打印。</p>
+<p>后续会汇总小票打印的一些主要功能</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://liuyanwei.jumppo.com/2015/08/14/ios-BLE-2.html" target="_blank" rel="noopener">ios蓝牙开发（二）ios连接外设的代码实现</a></p>
+<p><a href="https://github.com/coolnameismy/BabyBluetooth" target="_blank" rel="noopener">https://github.com/coolnameismy/BabyBluetooth</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/初识汇编/" rel="next" title="初识汇编">
+                <i class="fa fa-chevron-left"></i> 初识汇编
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/iOS-使用fastlane自动化打包/" rel="prev" title="iOS 使用fastlane自动化打包">
+                iOS 使用fastlane自动化打包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、蓝牙版本和使用限制"><span class="nav-number">1.</span> <span class="nav-text">一、蓝牙版本和使用限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、蓝牙的基础知识"><span class="nav-number">2.</span> <span class="nav-text">二、蓝牙的基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CoreBluetooth框架的核心其实是两个东西，peripheral和central-可以理解成外设和中心。对应他们分别有一组相关的API和类"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">CoreBluetooth框架的核心其实是两个东西，peripheral和central, 可以理解成外设和中心。对应他们分别有一组相关的API和类</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#三、蓝牙中心模式流程"><span class="nav-number">3.</span> <span class="nav-text">三、蓝牙中心模式流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、建立中心角色-CBCentralManager-alloc-initWithDelegate-self-queue-nil"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、建立中心角色  [[CBCentralManager alloc] initWithDelegate:self queue:nil]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、扫描外设-scanForPeripherals"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、扫描外设 scanForPeripherals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、发现设备-didDiscoverPeripheral"><span class="nav-number">3.0.3.</span> <span class="nav-text">3、发现设备 didDiscoverPeripheral</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、连接外设-connectPeripheral"><span class="nav-number">3.0.4.</span> <span class="nav-text">4、连接外设 connectPeripheral</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、扫描外设中的服务-discoverServices"><span class="nav-number">3.0.5.</span> <span class="nav-text">5、扫描外设中的服务 discoverServices</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、扫描外设对应服务的特征-discoverCharacteristics"><span class="nav-number">3.0.6.</span> <span class="nav-text">6、扫描外设对应服务的特征 discoverCharacteristics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7、订阅特征的通知-setNotifyValue-forCharacteristic"><span class="nav-number">3.0.7.</span> <span class="nav-text">7、订阅特征的通知 setNotifyValue:forCharacteristic:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8、断开连接-centralManager-didDisconnectPeripheral"><span class="nav-number">3.0.8.</span> <span class="nav-text">8、断开连接  centralManager: didDisconnectPeripheral</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、蓝牙连接外设的实现流程"><span class="nav-number">4.</span> <span class="nav-text">四、蓝牙连接外设的实现流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、打印采用中心模式"><span class="nav-number">4.1.</span> <span class="nav-text">1、打印采用中心模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、遵守CBCentralManagerDelegate-CBPeripheralDelegate协议"><span class="nav-number">4.2.</span> <span class="nav-text">2、遵守CBCentralManagerDelegate,CBPeripheralDelegate协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加属性"><span class="nav-number">4.3.</span> <span class="nav-text">3、添加属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#中心管理者-管理设备的扫描和连接"><span class="nav-number">4.3.0.1.</span> <span class="nav-text">// 中心管理者(管理设备的扫描和连接)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#存储扫描到的设备"><span class="nav-number">4.3.0.2.</span> <span class="nav-text">// 存储扫描到的设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可写入数据的特性"><span class="nav-number">4.3.0.3.</span> <span class="nav-text">// 可写入数据的特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当前连接的外设"><span class="nav-number">4.3.0.4.</span> <span class="nav-text">//当前连接的外设</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当前蓝牙设备的状态"><span class="nav-number">4.3.0.5.</span> <span class="nav-text">//当前蓝牙设备的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程"><span class="nav-number">4.3.0.6.</span> <span class="nav-text">//初始化并设置委托和线程队列，一个线程的参数可以为nil，默认会就main线程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化设备存储数组"><span class="nav-number">4.3.1.</span> <span class="nav-text">初始化设备存储数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化可写入数据特征数组"><span class="nav-number">4.3.2.</span> <span class="nav-text">初始化可写入数据特征数组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。"><span class="nav-number">4.4.</span> <span class="nav-text">5、扫描外设（discover），扫描外设的方法我们放在centralManager成功打开的委托中，因为只有设备成功打开，才能开始扫描，否则会报错。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取中心管理者的状态"><span class="nav-number">4.4.0.1.</span> <span class="nav-text">//获取中心管理者的状态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、扫描到设备并开始连接"><span class="nav-number">4.5.</span> <span class="nav-text">6、扫描到设备并开始连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、连接的三种状态-如果连接成功-则扫描所有服务-也可以扫描指定服务"><span class="nav-number">4.6.</span> <span class="nav-text">7、连接的三种状态,如果连接成功,则扫描所有服务(也可以扫描指定服务)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接失败重连"><span class="nav-number">4.6.1.</span> <span class="nav-text">连接失败重连</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接断开重连"><span class="nav-number">4.6.2.</span> <span class="nav-text">连接断开重连</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接成功并扫描服务"><span class="nav-number">4.6.3.</span> <span class="nav-text">连接成功并扫描服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、发现服务并扫描服务对应的特征"><span class="nav-number">4.7.</span> <span class="nav-text">8、发现服务并扫描服务对应的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、扫描到对应的特征-并存储"><span class="nav-number">4.8.</span> <span class="nav-text">9、扫描到对应的特征,并存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10、把数据写到Characteristic中和写入回调"><span class="nav-number">4.8.1.</span> <span class="nav-text">10、把数据写到Characteristic中和写入回调</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.9.</span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

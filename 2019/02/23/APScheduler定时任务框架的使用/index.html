@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言 APScheduler基于Quartz的一个Python定时任务框架，实现了Quartz的所有功能，使用起来十分方便。提供了基于日期、固定时间间隔以及crontab类型的任务，不仅可以添加、删除定时任务，还可以将任务存储到数据库中、实现任务的持久化。基于这些功能，我们可以很方便的实现一个python定时任务系统。  安装1、利用pip进行安装1$ pip install apschedule">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APScheduler定时任务框架的使用">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/APScheduler定时任务框架的使用/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="前言 APScheduler基于Quartz的一个Python定时任务框架，实现了Quartz的所有功能，使用起来十分方便。提供了基于日期、固定时间间隔以及crontab类型的任务，不仅可以添加、删除定时任务，还可以将任务存储到数据库中、实现任务的持久化。基于这些功能，我们可以很方便的实现一个python定时任务系统。  安装1、利用pip进行安装1$ pip install apschedule">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-23T07:02:21.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="APScheduler定时任务框架的使用">
+<meta name="twitter:description" content="前言 APScheduler基于Quartz的一个Python定时任务框架，实现了Quartz的所有功能，使用起来十分方便。提供了基于日期、固定时间间隔以及crontab类型的任务，不仅可以添加、删除定时任务，还可以将任务存储到数据库中、实现任务的持久化。基于这些功能，我们可以很方便的实现一个python定时任务系统。  安装1、利用pip进行安装1$ pip install apschedule">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/APScheduler定时任务框架的使用/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>APScheduler定时任务框架的使用 | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/APScheduler定时任务框架的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">APScheduler定时任务框架的使用
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 15:02:21" itemprop="dateCreated datePublished" datetime="2019-02-23T15:02:21+08:00">2019-02-23</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>APScheduler基于Quartz的一个Python定时任务框架，实现了Quartz的所有功能，使用起来十分方便。提供了基于日期、固定时间间隔以及crontab类型的任务，不仅可以添加、删除定时任务，还可以将任务存储到数据库中、实现任务的持久化。基于这些功能，我们可以很方便的实现一个python定时任务系统。</p>
+</blockquote>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><h5 id="1、利用pip进行安装"><a href="#1、利用pip进行安装" class="headerlink" title="1、利用pip进行安装"></a>1、利用pip进行安装</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install apscheduler</span><br></pre></td></tr></table></figure>
+<p>（python3版本要留意pip和pip3）</p>
+<h5 id="2、源码安装"><a href="#2、源码安装" class="headerlink" title="2、源码安装"></a>2、<a href="https://pypi.python.org/pypi/APScheduler/" target="_blank" rel="noopener">源码安装</a></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
+<h4 id="APScheduler有四种组成部分："><a href="#APScheduler有四种组成部分：" class="headerlink" title="APScheduler有四种组成部分："></a><code>APScheduler</code>有四种组成部分：</h4><p>triggers（触发器）：触发器包含调度逻辑，每一个作业有它自己的触发器，用于决定接下来哪一个作业会运行，除了他们自己初始化配置外，触发器完全是无状态的。<br>job stores（作业存储）：用来存储被调度的作业，默认的作业存储器是简单地把作业任务保存在内存中，其它作业存储器可以将任务作业保存到各种数据库中，支持MongoDB、Redis、SQLAlchemy存储方式。当对作业任务进行持久化存储的时候，作业的数据将被序列化，重新读取作业时在反序列化。<br>executors（执行器）：执行器用来执行定时任务，只是将需要执行的任务放在新的线程或者线程池中运行。当作业任务完成时，执行器将会通知调度器。对于执行器，默认情况下选择ThreadPoolExecutor就可以了，但是如果涉及到一下特殊任务如比较消耗CPU的任务则可以选择ProcessPoolExecutor，当然根据根据实际需求可以同时使用两种执行器。<br>schedulers（调度器）：调度器是将其它部分联系在一起，一般在应用程序中只有一个调度器，应用开发者不会直接操作触发器、任务存储以及执行器，相反调度器提供了处理的接口。通过调度器完成任务的存储以及执行器的配置操作，如可以添加。修改、移除任务作业。</p>
+<h4 id="APScheduler提供了七种调度器："><a href="#APScheduler提供了七种调度器：" class="headerlink" title="APScheduler提供了七种调度器："></a><code>APScheduler</code>提供了七种调度器：</h4><p><code>BlockingScheduler</code>：适合于只在进程中运行单个任务的情况，通常在调度器是你唯一要运行的东西时使用。<br><code>BackgroundScheduler</code>: 适合于要求任何在程序后台运行的情况，当希望调度器在应用后台执行时使用。<br><code>AsyncIOScheduler</code>：适合于使用asyncio异步框架的情况<br><code>GeventScheduler</code>: 适合于使用gevent框架的情况<br><code>TornadoScheduler</code>: 适合于使用Tornado框架的应用<br><code>TwistedScheduler</code>: 适合使用Twisted框架的应用<br><code>QtScheduler</code>: 适合使用QT的情况</p>
+<h4 id="APScheduler提供了四种存储方式："><a href="#APScheduler提供了四种存储方式：" class="headerlink" title="APScheduler提供了四种存储方式："></a><code>APScheduler</code>提供了四种存储方式：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MemoryJobStore</span><br><span class="line">sqlalchemy</span><br><span class="line">mongodb</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
+<h4 id="APScheduler提供了三种任务触发器："><a href="#APScheduler提供了三种任务触发器：" class="headerlink" title="APScheduler提供了三种任务触发器："></a><code>APScheduler</code>提供了三种任务触发器：</h4><p>data：固定日期触发器：任务只运行一次，运行完毕自动清除；若错过指定运行时间，任务不会被创建<br>interval：时间间隔触发器，每隔多长时间触发一次<br>cron：cron风格的任务触发 ，可以每天早上固定时间点执行一次任务</p>
+<h4 id="data"><a href="#data" class="headerlink" title="data"></a>data</h4><p>固定时间调度（作业只会执行一次）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">from apscheduler.schedulers.blocking import BlockingScheduler</span><br><span class="line"></span><br><span class="line">def my_job():</span><br><span class="line">    print(time.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;, time.localtime(time.time())))</span><br><span class="line">sched = BlockingScheduler()</span><br><span class="line">## 采用dete固定时间模式，在特定时间只执行一次</span><br><span class="line">sched.add_job(my_job, &apos;date&apos;, run_date=&apos;2019-01-01 00:00:00)</span><br><span class="line">sched.start()</span><br></pre></td></tr></table></figure></p>
+<h4 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h4><p>例如每隔五秒执行一次：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">from apscheduler.schedulers.blocking import BlockingScheduler</span><br><span class="line"></span><br><span class="line">def my_job():</span><br><span class="line">    print(time.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;, time.localtime(time.time())))</span><br><span class="line">#### 采用interval固定间隔模式，每隔五秒只执行一次</span><br><span class="line">sched.add_job(my_job, &apos;interval&apos;, seconds=5)</span><br><span class="line">sched.start()</span><br></pre></td></tr></table></figure></p>
+<p>间隔调度，参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">weeks (int)  –  间隔几周 </span><br><span class="line">days (int)  –  间隔几天 </span><br><span class="line">hours (int)  –  间隔几小时 </span><br><span class="line">minutes (int)  –  间隔几分钟 </span><br><span class="line">seconds (int)  –  间隔多少秒 </span><br><span class="line">start_date (datetime|str)  –  开始日期 </span><br><span class="line">end_date (datetime|str)  –  结束日期 </span><br><span class="line">timezone (datetime.tzinfo|str)  –  时区</span><br></pre></td></tr></table></figure></p>
+<h4 id="cron"><a href="#cron" class="headerlink" title="cron"></a>cron</h4><p>定时调度（例如在每一天上午八点半或者12点半执行任务）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">from apscheduler.schedulers.blocking import BlockingScheduler</span><br><span class="line"></span><br><span class="line">scheduler = BlockingScheduler()</span><br><span class="line"></span><br><span class="line">def everyday_crawler_job():</span><br><span class="line">    print(time.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;, time.localtime(time.time())))</span><br><span class="line">    # subprocess.call(&quot;python Crawler.py&quot;)</span><br><span class="line"></span><br><span class="line">sched = BlockingScheduler()</span><br><span class="line">#每隔一天 执行抓包程序</span><br><span class="line"># sched.add_job(everyday_crawler_job, &apos;interval&apos;, days=1)days</span><br><span class="line">#每天早上八点半和十二点半各执行一次抓包程序</span><br><span class="line">sched.add_job(everyday_crawler_job, &apos;cron&apos;, hour=&apos;8, 12&apos;, minute=&apos;30&apos;)</span><br><span class="line">sched.start()</span><br></pre></td></tr></table></figure>
+<p>参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(int|str) 表示参数既可以是int类型，也可以是str类型</span><br><span class="line">(datetime | str) 表示参数既可以是datetime类型，也可以是str类型</span><br><span class="line">year (int|str) – 4-digit year -（表示四位数的年份，如2008年）</span><br><span class="line">month (int|str) – month (1-12) -（表示取值范围为1-12月）</span><br><span class="line">day (int|str) – day of the (1-31) -（表示取值范围为1-31日）</span><br><span class="line">week (int|str) – ISO week (1-53) -（格里历2006年12月31日可以写成2006年-W52-7（扩展形式）或2006W527（紧凑形式））</span><br><span class="line">day_of_week (int|str) – number or name of weekday (0-6 or mon,tue,wed,thu,fri,sat,sun) - （表示一周中的第几天，既可以用0-6表示也可以用其英语缩写表示）</span><br><span class="line">hour (int|str) – hour (0-23) - （表示取值范围为0-23时）</span><br><span class="line">minute (int|str) – minute (0-59) - （表示取值范围为0-59分）</span><br><span class="line">second (int|str) – second (0-59) - （表示取值范围为0-59秒）</span><br><span class="line">start_date (datetime|str) – earliest possible date/time to trigger on (inclusive) - （表示开始时间）</span><br><span class="line">end_date (datetime|str) – latest possible date/time to trigger on (inclusive) - （表示结束时间）</span><br><span class="line">timezone (datetime.tzinfo|str) – time zone to use for the date/time calculations (defaults to scheduler timezone) -（表示时区取值）</span><br></pre></td></tr></table></figure></p>
+<p>cron其他参数格式用法示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#表示2017年3月22日17时19分07秒执行该程序</span><br><span class="line">sched.add_job(my_job, &apos;cron&apos;, year=2017,month = 03,day = 22,hour = 17,minute = 19,second = 07)</span><br><span class="line"> </span><br><span class="line">#表示任务在6,7,8,11,12月份的第三个星期五的00:00,01:00,02:00,03:00 执行该程序</span><br><span class="line">sched.add_job(my_job, &apos;cron&apos;, month=&apos;6-8,11-12&apos;, day=&apos;3rd fri&apos;, hour=&apos;0-3&apos;)</span><br><span class="line"> </span><br><span class="line">#表示从星期一到星期五5:30（AM）直到2014-05-30 00:00:00</span><br><span class="line">sched.add_job(my_job(), &apos;cron&apos;, day_of_week=&apos;mon-fri&apos;, hour=5, minute=30,end_date=&apos;2014-05-30&apos;)</span><br><span class="line"> </span><br><span class="line">#表示每5秒执行该程序一次，相当于interval 间隔调度中seconds = 5</span><br><span class="line">sched.add_job(my_job, &apos;cron&apos;,second = &apos;*/5&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>在设置定时调度任务时遇到一个问题，定时任务未执行打印的log如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Run time of job &quot;everyday_crawler_job (trigger: cron[hour=&apos;8,12&apos;, minute=&apos;30&apos;], next run at: 2019-01-30 08:30:00 CST)&quot; was missed by 0:00:01.084138</span><br></pre></td></tr></table></figure></p>
+<p>这个log的意思是：距离下次运行时间，错过了1秒，所有第二次就没有执行任务<br>解决方法：<br>在add_job()中添加参数：<br><code>misfire_grace_time</code>: 主要就是为了解决这个was missed by 这个报错，添加允许容错的时间，单位为：s<br><code>coalesce</code>：如果系统因某些原因没有执行任务，导致任务累计，为True则只运行最后一次，为False 则累计的任务全部跑一遍</p>
+<h4 id="定时任务的停止"><a href="#定时任务的停止" class="headerlink" title="定时任务的停止"></a>定时任务的停止</h4><p>如果我们在终端中直接执行的话，关闭终端窗口，Python任务就会中断，Python进程会被杀死,程序将停止运行。如果我们用编辑器直接运行python脚本，这样执行后，如果未正确取消进程，关闭编辑器后，程序依旧运行。 </p>
+<h6 id="如何停止呢，可使用如下方法："><a href="#如何停止呢，可使用如下方法：" class="headerlink" title="如何停止呢，可使用如下方法："></a>如何停止呢，可使用如下方法：</h6><p>如果知道进程id直接只用kill命令结束即可，例如：<br>进程id：3057<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kill 3057</span><br></pre></td></tr></table></figure></p>
+<p>如果运行后忘记进程ID，则可遵循下面的方法进行停止<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep python</span><br></pre></td></tr></table></figure></p>
+<p>这样将会在终端列出python相关的进程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps -e | grep python</span><br><span class="line"> 1025 ??         0:00.41 </span><br><span class="line"> 1602 ??         0:00.37 </span><br><span class="line">17699 ttys001    0:00.00 grep python</span><br></pre></td></tr></table></figure></p>
+<p>然后分别执行kill就可以了</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/Python基础（一）/" rel="next" title="Python基础（一）">
+                <i class="fa fa-chevron-left"></i> Python基础（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/Python爬虫相关框架集合/" rel="prev" title="Python爬虫相关框架集合">
+                Python爬虫相关框架集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、利用pip进行安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、利用pip进行安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、源码安装"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、源码安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#APScheduler有四种组成部分："><span class="nav-number">1.2.</span> <span class="nav-text">APScheduler有四种组成部分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#APScheduler提供了七种调度器："><span class="nav-number">1.3.</span> <span class="nav-text">APScheduler提供了七种调度器：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#APScheduler提供了四种存储方式："><span class="nav-number">1.4.</span> <span class="nav-text">APScheduler提供了四种存储方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#APScheduler提供了三种任务触发器："><span class="nav-number">1.5.</span> <span class="nav-text">APScheduler提供了三种任务触发器：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data"><span class="nav-number">1.6.</span> <span class="nav-text">data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interval"><span class="nav-number">1.7.</span> <span class="nav-text">interval</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cron"><span class="nav-number">1.8.</span> <span class="nav-text">cron</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定时任务的停止"><span class="nav-number">1.9.</span> <span class="nav-text">定时任务的停止</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#如何停止呢，可使用如下方法："><span class="nav-number">1.9.0.1.</span> <span class="nav-text">如何停止呢，可使用如下方法：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

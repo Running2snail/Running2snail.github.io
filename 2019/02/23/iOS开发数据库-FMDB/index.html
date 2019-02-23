@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言 FMDB是以OC的方式封装了SQLite的C语言API，使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码；对比苹果自带的Core Data框架，更加轻量级和灵活；提供了多线程安全的数据库操作方法，有效地防止数据混乱；FMDB同时兼容ARC和非ARC工程，在编译的时候会自动根据工程配置来调整相关的内存管理代码。  使用方法FMDB有三个主要的类  FMDatabase    表示一个单独">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发数据库-FMDB">
+<meta property="og:url" content="http://yoursite.com/2019/02/23/iOS开发数据库-FMDB/index.html">
+<meta property="og:site_name" content="七月">
+<meta property="og:description" content="前言 FMDB是以OC的方式封装了SQLite的C语言API，使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码；对比苹果自带的Core Data框架，更加轻量级和灵活；提供了多线程安全的数据库操作方法，有效地防止数据混乱；FMDB同时兼容ARC和非ARC工程，在编译的时候会自动根据工程配置来调整相关的内存管理代码。  使用方法FMDB有三个主要的类  FMDatabase    表示一个单独">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-23T06:57:15.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发数据库-FMDB">
+<meta name="twitter:description" content="前言 FMDB是以OC的方式封装了SQLite的C语言API，使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码；对比苹果自带的Core Data框架，更加轻量级和灵活；提供了多线程安全的数据库操作方法，有效地防止数据混乱；FMDB同时兼容ARC和非ARC工程，在编译的时候会自动根据工程配置来调整相关的内存管理代码。  使用方法FMDB有三个主要的类  FMDatabase    表示一个单独">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/23/iOS开发数据库-FMDB/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS开发数据库-FMDB | 七月</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">七月</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不醉不归</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-首页">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-关于">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-分类">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-归档">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS开发数据库-FMDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="纵有疾风起,人生不言弃">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS开发数据库-FMDB
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 14:51:19 / Modified: 14:57:15" itemprop="dateCreated datePublished" datetime="2019-02-23T14:51:19+08:00">2019-02-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><blockquote>
+<p>FMDB是以OC的方式封装了SQLite的C语言API，使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码；对比苹果自带的Core Data框架，更加轻量级和灵活；提供了多线程安全的数据库操作方法，有效地防止数据混乱；FMDB同时兼容ARC和非ARC工程，在编译的时候会自动根据工程配置来调整相关的内存管理代码。</p>
+</blockquote>
+<h5 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h5><p>FMDB有三个主要的类</p>
+<ul>
+<li>FMDatabase    表示一个单独的SQLite数据库。 用来执行SQLite的命令。</li>
+<li>FMResultSet    表示FMDatabase执行查询后的结果集</li>
+<li>FMDatabaseQueue    如果你想在多线程中执行多个查询或更新，你应该使用该类。这是线程安全的。</li>
+</ul>
+<p>######数据库创建<br>通过指定SQLite数据库文件路径来创建FMDatabase对象</p>
+<pre><code>FMDatabase *db = [FMDatabase databaseWithPath:path];
+if (![db open]) {
+  NSLog(@&quot;数据库打开失败！&quot;);
+}
+</code></pre><p>创建FMDatabase对象时参数为SQLite数据库文件路径。该路径可以是以下三种之一：</p>
+<p>1、具体文件路径</p>
+<ul>
+<li>该文件路径无需真实存，如果不存在会自动创建。</li>
+</ul>
+<p>2、空字符串@””</p>
+<ul>
+<li>表示会在临时目录创建一个空的数据库，当FMDatabase 链接关闭时，数据库文件也被删除。</li>
+</ul>
+<p>3、NULL</p>
+<ul>
+<li>会创建一个内存中临时数据库，当FMDatabase连接关闭时，数据库会被销毁</li>
+</ul>
+<p>######打开数据库<br>在和数据库交互 之前，数据库必须是打开的。如果资源或权限不足无法打开或创建数据库，都会导致打开失败，返回BOOL类型</p>
+<pre><code>if (![db open]) {    
+        [db release];   
+        return;    
+ }  
+</code></pre><h6 id="执行更新"><a href="#执行更新" class="headerlink" title="执行更新"></a>执行更新</h6><ul>
+<li>一切不是SELECT命令的命令都视为更新。这包括  CREATE, UPDATE, INSERT,ALTER,COMMIT, BEGIN, DETACH, DELETE, DROP, END, EXPLAIN, VACUUM, and REPLACE  （等）。<br>简单来说，只要不是以SELECT开头的命令都是UPDATE命令。</li>
+<li>执行更新返回一个BOOL值。YES表示执行成功，否则表示有那些错误 。你可以调用 -lastErrorMessage 和 -lastErrorCode方法来得到更多信息。</li>
+</ul>
+<p>使用executeUpdate:方法执行更新</p>
+<pre><code>- (BOOL)executeUpdate:(NSString*)sql, ...
+- (BOOL)executeUpdateWithFormat:(NSString*)format, ...
+- (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments
+</code></pre><p>示例</p>
+<pre><code>[db executeUpdate:@&quot;UPDATE t_student SET age = ? WHERE name = ?;&quot;, @20, @&quot;Jack&quot;]
+</code></pre><p>######执行查询<br>SELECT命令就是查询，执行查询的方法是以 -excuteQuery开头的。</p>
+<p>查询方法</p>
+<pre><code>- (FMResultSet *)executeQuery:(NSString*)sql, ...
+- (FMResultSet *)executeQueryWithFormat:(NSString*)format, ...
+- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments
+</code></pre><p>执行查询时，如果成功返回FMResultSet对象， 错误返回nil. 与执行更新相当，支持使用 NSError**参数。同时，你也可以使用 -lastErrorCode和-lastErrorMessage获知错误信息。</p>
+<p>为了遍历查询结果，你可以使用while循环。你还需要知道怎么跳到下一个记录。使用FMDB，很简单实现，就像这样：</p>
+<pre><code>FMResultSet *s = [db executeQuery:@&quot;SELECT * FROM myTable&quot;];   
+while ([s next]) {   
+    //retrieve values for each record   
+} 
+</code></pre><p>你必须一直调用   -[FMResultSet next]   在你访问查询返回值之前，甚至你只想要一个记录：</p>
+<pre><code>FMResultSet *s = [db executeQuery:@&quot;SELECT COUNT(*) FROM myTable&quot;];   
+if ([s next]) {    
+    int totalCount = [s intForColumnIndex:0];   
+} 
+</code></pre><p>FMResultSet  提供了很多方法来获得所需的格式的值：<br>    intForColumn:<br>    longForColumn:<br>    longLongIntForColumn:<br>    boolForColumn:<br>    doubleForColumn:<br>    stringForColumn:<br>    dataForColumn:<br>    dataNoCopyForColumn:<br>    UTF8StringForColumnIndex:<br>    objectForColumn:</p>
+<p>这些方法也都包括 {type}ForColumnIndex 的这样子的方法，参数是查询结果集的列的索引位置。<br>你无需调用  [FMResultSet close]来关闭结果集, 当新的结果集产生，或者其数据库关闭时，会自动关闭。</p>
+<p>######关闭数据库<br>当使用完数据库，你应该 -close 来关闭数据库连接来释放SQLite使用的资源。<br>    [db close];</p>
+<p>######使用FMDatabaseQueue 及线程安全<br>在多个线程中同时使用一个FMDatabase实例是不明智的。现在你可以为每个线程创建一个FMDatabase对象。 不要让多个线程分享同一个实例，它无法在多个线程中同时使用。 若此，坏事会经常发生，程序会时不时崩溃，或者报告异常，或者陨石会从天空中掉下来砸到你Mac Pro.  总之很崩溃。所以，不要初始化FMDatabase对象，然后在多个线程中使用。请使用 FMDatabaseQueue，它是你的朋友而且会帮助你。以下是使用方法：<br>首先创建队列</p>
+<pre><code>FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:aPath]; 
+</code></pre><p>这样使用</p>
+<pre><code>[queue inDatabase:^(FMDatabase *db) {    
+      [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];    
+      [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];    
+      [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];    
+      FMResultSet *rs = [db executeQuery:@&quot;select * from foo&quot;];    
+      while([rs next]) {   
+         …    
+      }    
+}];   
+</code></pre><p>像这样，轻松地把简单任务包装到事务里</p>
+<pre><code>[queue inTransaction:^(FMDatabase *db, BOOL *rollback) {    
+        [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];    
+        [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];    
+        [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];    
+        if (whoopsSomethingWrongHappened) {    
+                *rollback = YES; return;    
+        }   
+        // etc…    
+        [db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:4]];    
+}]; 
+</code></pre><p>FMDatabaseQueue将运行在一个序列化队列块。所以如果你从多个线程在同一时间调用FMDatabaseQueue的方法，他们将执行他们收到的指令。这样查询和更新不会相互影响，每一个都是快乐的。</p>
+<p>######代码示例</p>
+<p>FMDBDataBase.h</p>
+<pre><code>//  FMDBDataBase.h
+#import &lt;Foundation/Foundation.h&gt;
+@interface FMDBDataBase : NSObject
+
+// 获取数据库管理对象单例的方法
++ (FMDBDataBase *)sharedDataBase;
+// 关闭数据库
+- (void)closeDataBase;
+// 清空数据库
+//- (BOOL)deleteDataBase;
+// 向搜索记录表中插入新纪录
+- (BOOL)insertSearchText:(NSString *)searchText;
+// 查询数据库中是否包含当前搜索记录
+- (BOOL)isExistSearchText:(NSString *)searchText;
+// 获取所有搜素记录
+- (NSMutableArray *)getAllSearchText;
+// 删除所有搜索记录
+- (BOOL)deleteAllSearchText;
+
+@end
+</code></pre><p>FMDBDataBase.m</p>
+<pre><code>#import &quot;FMDBDataBase.h&quot;
+#import &quot;FMDB.h&quot;
+
+@interface FMDBDataBase ()
+
+@property (nonatomic, strong) FMDatabase *fmDataBase;
+
+@end
+@implementation FMDBDataBase
+
+
++ (FMDBDataBase *)sharedDataBase
+{
+    static FMDBDataBase *fmdbDataBase = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        fmdbDataBase = [[FMDBDataBase alloc] init];
+    });
+    return fmdbDataBase;
+}
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        _fmDataBase = [FMDatabase databaseWithPath:[self getDataBasePath]];
+        // 如果数据库打开失败返回空值
+        if (![_fmDataBase open]) {
+            return nil;
+        }
+    }
+    // 如果数据库打开成功 创建表
+    // 创建搜索历史记录表
+    NSString *searchHistorySql = @&quot;CREATE TABLE IF NOT EXISTS t_history(t_id integer PRIMARY KEY AUTOINCREMENT, searchText text NOT NULL, age integer NOT NULL)&quot;;
+    BOOL isSuc = [_fmDataBase executeUpdate:searchHistorySql];
+
+    if (isSuc) {
+        NSLog(@&quot;创建成功！&quot;);
+    }
+    return self;
+}
+
+
+- (NSString *)getDataBasePath
+{
+    // 1.获得数据库文件的路径
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *doc = [NSHomeDirectory() stringByAppendingPathComponent:@&quot;Documents&quot;];
+    NSString *fileName = [doc stringByAppendingPathComponent:@&quot;fmdb.sqlite&quot;];
+    return fileName;
+}
+
+// 关闭数据库
+- (void)closeDataBase
+{
+    if (_fmDataBase) {
+        [_fmDataBase close];
+    }
+}
+
+
+// 查询数据库中是否包含当前搜索记录
+- (BOOL)isExistSearchText:(NSString *)searchText
+{
+    NSString *sql = @&quot;SELECT * FROM t_history&quot;;
+    FMResultSet *results = [_fmDataBase executeQuery:sql];
+    while (results.next) {
+        if ([searchText isEqualToString:[results stringForColumn:@&quot;searchText&quot;]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+// 搜索记录表中插入新记录
+- (BOOL)insertSearchText:(NSString *)searchText
+{
+    if (!searchText || [searchText isEqualToString:@&quot;&quot;] || [self isExistSearchText:searchText]) {
+        NSLog(@&quot;数据为空或已存在&quot;);
+        return NO;
+    }
+    NSString *sql = @&quot;INSERT INTO t_history(searchText) VALUES (?)&quot;;
+   // executeUpdate : 不确定的参数用?来占位
+    BOOL isInsertSuc = [_fmDataBase executeUpdate:sql, searchText];
+    if (isInsertSuc) {
+        NSLog(@&quot;%@插入成功&quot;, searchText);
+        return YES;
+    }
+    NSLog(@&quot;%@插入失败&quot;, searchText);
+    return NO;
+}
+
+// 获取所有的搜索记录
+- (NSMutableArray *)getAllSearchText
+{
+    NSString *sql = @&quot;SELECT * FROM t_history order by t_id desc&quot;;
+    // 保存所有数据的数组
+    NSMutableArray *searchTests = [NSMutableArray array];
+    FMResultSet *results = [_fmDataBase executeQuery:sql];
+    while (results.next) {
+        NSString *result = [results stringForColumn:@&quot;searchText&quot;];
+        [searchTests addObject:result];
+    }
+    return searchTests;
+}
+
+// 删除所有的搜索记录
+- (BOOL)deleteAllSearchText
+{
+    NSString *sql = @&quot;DELETE FROM t_history&quot;;
+    BOOL isDeleteSuc = [_fmDataBase executeUpdate:sql];
+    if (isDeleteSuc) {
+        NSLog(@&quot;删除成功&quot;);
+        return YES;
+    }
+    return NO;
+}
+
+@end
+</code></pre><h6 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h6><ul>
+<li>如果ID设置为逐渐，且设置为自动增长的话，那么把表中的数据删除后，重新插入新的数据，ID的编号不是从0开始，而是接着之前的ID进行编号。</li>
+</ul>
+<h5 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h5><ul>
+<li><a href="http://www.cocoachina.com/industry/20130819/6821.html" target="_blank" rel="noopener">FMDB官方使用文档（翻译）</a></li>
+<li><a href="http://www.cnblogs.com/wendingding/p/3871848.html" target="_blank" rel="noopener">iOS开发数据库篇—FMDB简单介绍</a></li>
+</ul>
+<p>######欢迎阅读上一篇：</p>
+<ul>
+<li><a href="http://www.jianshu.com/p/6f39771de2de" target="_blank" rel="noopener">iOS数据存储之归档</a></li>
+<li><a href="http://www.jianshu.com/p/e9a9844e5207" target="_blank" rel="noopener">iOS数据存储之偏好设置和属性列表</a></li>
+</ul>
+<p>iOS-Ant-Bang互助社区 426981364<br>iOS技术交流群 461069757 欢迎加入！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/23/iOS开发～CocoaPods使用详细说明/" rel="next" title="iOS开发～CocoaPods使用详细说明">
+                <i class="fa fa-chevron-left"></i> iOS开发～CocoaPods使用详细说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/iOS数据存储之偏好设置和属性列表/" rel="prev" title="iOS数据存储之偏好设置和属性列表">
+                iOS数据存储之偏好设置和属性列表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Running2snail">
+            
+              <p class="site-author-name" itemprop="name">Running2snail</p>
+              <p class="site-description motion-element" itemprop="description">纵有疾风起,人生不言弃</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Running2snail" title="GitHub &rarr; https://github.com/Running2snail" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/a912c35ef9fa" title="简书 &rarr; https://www.jianshu.com/u/a912c35ef9fa" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#执行更新"><span class="nav-number">2.1.</span> <span class="nav-text">执行更新</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#注意"><span class="nav-number">2.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文章"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Running2snail</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
