@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-2117b7d0fc272731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-9710126eb44fc10c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-aa4aba54c5fee678.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-23T07:00:36.676Z">
+<meta property="og:updated_time" content="2019-02-23T09:48:34.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 使用fastlane自动化打包">
 <meta name="twitter:description" content="前言 由于在项目的测试阶段，为了快速的测试需要频繁的打包发布，会耗费很多的时间。而且需要自己手动去配置很多证书和环境，在每次等待都备受煎熬，为了从这种折磨中脱离而出，便考虑使用持续化集成来进行自动打包。持续集成是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早">
@@ -345,9 +345,13 @@
                 
               
 
-              <time title="Created: 2019-02-23 15:00:36" itemprop="dateCreated datePublished" datetime="2019-02-23T15:00:36+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 15:00:36 / Modified: 17:48:34" itemprop="dateCreated datePublished" datetime="2019-02-23T15:00:36+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -381,7 +385,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>由于在项目的测试阶段，为了快速的测试需要频繁的打包发布，会耗费很多的时间。而且需要自己手动去配置很多证书和环境，在每次等待都备受煎熬，为了从这种折磨中脱离而出，便考虑使用持续化集成来进行自动打包。<br>持续集成是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。、<br>目前比较流行的自动化流程工具是Fastlane，Fastlane是用Ruby语言编写的一套自动化工具集和框架，每一个工具实际都对应一个Ruby脚本，用来执行某一个特定的任务，而Fastlane核心框架则允许使用者通过类似配置文件的形式，将不同的工具有机而灵活的结合在一起，从而形成一个个完整的自动化流程。到目前为止，Fastlane的工具集基本上涵盖了打包，签名，测试，部署，发布，库管理等等移动开发中涉及到的内容。同时该套件也支持与 Jenkins 、CocoaPods、xctools 等其他第三方工具的集成。而且蒲公英和fir为开发者提供了Fastlane的插件，允许开发者通过Fastlane上传ipa包到蒲公英，fir，由于我们主要使用蒲公英作为应用分发平台，所以本文主要介绍下打包发布到蒲公英的设置，fir同理。<br>在参考了一些资料后我把持续化集成的方案定为：Jenkins + Fastlane + GitLab + 蒲公英。而本文主要先介绍下使用fastlane进行自动化打包。</p>
+<p>由于在项目的测试阶段，为了快速的测试需要频繁的打包发布，会耗费很多的时间。而且需要自己手动去配置很多证书和环境，在每次等待都备受煎熬，为了从这种折磨中脱离而出，便考虑使用持续化集成来进行自动打包。<br>持续集成是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。、<br>目前比较流行的自动化流程工具是Fastlane，Fastlane是用Ruby语言编写的一套自动化工具集和框架，每一个工具实际都对应一个Ruby脚本，用来执行某一个特定的任务，而Fastlane核心框架则允许使用者通过类似配置文件的形式，将不同的工具有机而灵活的结合在一起，从而形成一个个完整的自动化流程。到目前为止，Fastlane的工具集基本上涵盖了打包，签名，测试，部署，发布，库管理等等移动开发中涉及到的内容。同时该套件也支持与 Jenkins 、CocoaPods、xctools 等其他第三方工具的集成。而且蒲公英和fir为开发者提供了Fastlane的插件，允许开发者通过Fastlane上传ipa包到蒲公英，fir，由于我们主要使用蒲公英作为应用分发平台，所以本文主要介绍下打包发布到蒲公英的设置，fir同理。<br>在参考了一些资料后我把持续化集成的方案定为：Jenkins + Fastlane + GitLab + 蒲公英。而本文主要先介绍下使用fastlane进行自动化打包。<br><a id="more"></a></p>
 </blockquote>
 <h2 id="一、Fastlane安装"><a href="#一、Fastlane安装" class="headerlink" title="一、Fastlane安装"></a>一、Fastlane安装</h2><p>Fastlane是一套使用Ruby写的自动化工具集，用于iOS和Android的自动化打包、发布等工作，可以节省大量的时间。</p>
 <p>安装过程如下：</p>

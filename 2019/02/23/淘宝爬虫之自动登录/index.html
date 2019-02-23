@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-0784f22cefa07bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-05c954fedf7b6174.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-23T07:03:16.892Z">
+<meta property="og:updated_time" content="2019-02-23T09:47:23.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="淘宝爬虫之自动登录">
 <meta name="twitter:description" content="最近在做一些淘宝数据的定时抓取demo参考github，关于定时任务的设置上一篇已经介绍过:APScheduler定时任务框架的使用，作为亚洲第一大电商平台，淘宝的反爬机制是非常完善的，在用selenium登陆淘宝的时候发现淘宝能检测到并弹出滑块，然后无论怎么滑动都通过不了，在经过一番搜索后发现很多网站对selenium都有检测机制，如检测是否存在特有标识 $cdc_asdjflasutopfh">
@@ -338,9 +338,13 @@
                 
               
 
-              <time title="Created: 2019-02-23 15:03:16" itemprop="dateCreated datePublished" datetime="2019-02-23T15:03:16+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 15:03:16 / Modified: 17:47:23" itemprop="dateCreated datePublished" datetime="2019-02-23T15:03:16+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -374,9 +378,8 @@
 
       
         <blockquote>
-<p>最近在做一些淘宝数据的定时抓取demo参考<a href="https://github.com/Running2snail/TaoBaoAutoLogin" target="_blank" rel="noopener">github</a>，关于定时任务的设置上一篇已经介绍过:<a href="https://www.jianshu.com/p/2ee990f76666" target="_blank" rel="noopener">APScheduler定时任务框架的使用</a>，作为亚洲第一大电商平台，淘宝的反爬机制是非常完善的，在用selenium登陆淘宝的时候发现淘宝能检测到并弹出滑块，然后无论怎么滑动都通过不了，在经过一番搜索后发现很多网站对selenium都有检测机制，如检测是否存在特有标识 $cdc_asdjflasutopfhvcZLmcfl 、navigator.webdriver等。根据这条线索，可以在淘宝的js里找到了相关的检测代码：</p>
+<p>最近在做一些淘宝数据的定时抓取demo参考<a href="https://github.com/Running2snail/TaoBaoAutoLogin" target="_blank" rel="noopener">github</a>，关于定时任务的设置上一篇已经介绍过:<a href="https://www.jianshu.com/p/2ee990f76666" target="_blank" rel="noopener">APScheduler定时任务框架的使用</a>，作为亚洲第一大电商平台，淘宝的反爬机制是非常完善的，在用selenium登陆淘宝的时候发现淘宝能检测到并弹出滑块，然后无论怎么滑动都通过不了，在经过一番搜索后发现很多网站对selenium都有检测机制，如检测是否存在特有标识 $cdc_asdjflasutopfhvcZLmcfl 、navigator.webdriver等。根据这条线索，可以在淘宝的js里找到了相关的检测代码：<br><a id="more"></a><br><img src="https://upload-images.jianshu.io/upload_images/465805-0784f22cefa07bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="检测代码.png"></p>
 </blockquote>
-<p><img src="https://upload-images.jianshu.io/upload_images/465805-0784f22cefa07bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="检测代码.png"></p>
 <p>在控制台下输入window.navigator.webdriver会发现和正常的浏览器打开的有所不同</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/465805-05c954fedf7b6174.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2019-02-14 下午5.38.45.png"></p>
 <p>如果浏览器是正常打开的话，navigator.webdriver大的值应该是undefined或者false，如果为true说明能检测到selenium<br>原因发现以后怎么去解决这个问题就比较头疼了，后来在一篇文章中发现，针对这个问题的两个解决方案，编辑chromedriver发现cdc_asdjflasutopfhvcZLmcfl是chromedriver里面的一个变量名，我们只需要将这个变量名改成其他的就好了，变量名修改教程在《<a href="https://banto.cn/go/g1uz7e" target="_blank" rel="noopener">Can a website detect when you are using selenium with chromedriver?</a>》<br>Mac版本的可以通过如下方法将 cdc_ 替换为 dog_</p>

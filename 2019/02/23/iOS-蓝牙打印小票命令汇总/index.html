@@ -96,12 +96,12 @@
 
 
 
-  <meta name="description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。  蓝牙打印机命令在蓝牙打印过程中，首先要保证蓝牙链接的及时和稳定性，其次比较麻烦的不是搜索、连接蓝牙设备，而是小票的排版。">
+  <meta name="description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 蓝牙打印小票命令汇总">
 <meta property="og:url" content="http://yoursite.com/2019/02/23/iOS-蓝牙打印小票命令汇总/index.html">
 <meta property="og:site_name" content="七月">
-<meta property="og:description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。  蓝牙打印机命令在蓝牙打印过程中，首先要保证蓝牙链接的及时和稳定性，其次比较麻烦的不是搜索、连接蓝牙设备，而是小票的排版。">
+<meta property="og:description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-4234bcf04a584dc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-878abffc64e68a24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -123,10 +123,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-e5dc4fff3f5d50ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-86bbe3a90cc80270.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/465805-01db4521015713e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-23T07:00:59.777Z">
+<meta property="og:updated_time" content="2019-02-23T09:48:25.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 蓝牙打印小票命令汇总">
-<meta name="twitter:description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。  蓝牙打印机命令在蓝牙打印过程中，首先要保证蓝牙链接的及时和稳定性，其次比较麻烦的不是搜索、连接蓝牙设备，而是小票的排版。">
+<meta name="twitter:description" content="在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/465805-4234bcf04a584dc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -356,9 +356,13 @@
                 
               
 
-              <time title="Created: 2019-02-23 15:00:59" itemprop="dateCreated datePublished" datetime="2019-02-23T15:00:59+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 15:00:59 / Modified: 17:48:25" itemprop="dateCreated datePublished" datetime="2019-02-23T15:00:59+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -392,7 +396,7 @@
 
       
         <blockquote>
-<p>在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。</p>
+<p>在SaaS App中有很多地方需要通过连接蓝牙打印机打印结算及订单小票，而且在结算的时候使用打印机的的频率比较高，这就需要保证蓝牙的链接，同时支持各种类型的排版，这篇文章主要是通过蓝牙链接打印机通过排版和组合各种指令来进行打印，过程比较繁琐，所以做了一个汇总，以备后续查询。<br><a id="more"></a></p>
 </blockquote>
 <h2 id="蓝牙打印机命令"><a href="#蓝牙打印机命令" class="headerlink" title="蓝牙打印机命令"></a>蓝牙打印机命令</h2><p>在蓝牙打印过程中，首先要保证蓝牙链接的及时和稳定性，其次比较麻烦的不是搜索、连接蓝牙设备，而是小票的排版。要做出样式整齐好看的小票排版，就得先熟知蓝牙打印机的各种命令。在查找资料后，收集到蓝牙打印的命令表，每个品牌的打印机，一般在官网或者技术支持哪里可以找到打印机的操作和指令文档。</p>
 <p>打印机分了很多型号，不同的打印机所使用的指令集可能不同，比如Star打印机和Epson打印机，他们的所使用的指令集就不太一样。我们常用的一般是佳博热敏打印机使用的是：ESC/POS打印命令集。而一般的打印机支持三种格式：ASCII、十进制、十六进制（一般使用十六进制格式较多）。<br>这份PDF文件说明了各个命令的作用和对应的三种格式：<a href="http://www.xmjjdz.com/downloads/manual/cn/ESC(POS" target="_blank" rel="noopener">打印命令集</a>打印控制命令.pdf)</p>

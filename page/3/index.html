@@ -292,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS开发规范文档/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS开发～CocoaPods使用详细说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Running2snail">
@@ -312,7 +312,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/23/iOS开发规范文档/" class="post-title-link" itemprop="url">iOS开发规范文档</a>
+                <a href="/2019/02/23/iOS开发～CocoaPods使用详细说明/" class="post-title-link" itemprop="url">iOS开发～CocoaPods使用详细说明</a>
               
             
           </h1>
@@ -337,9 +337,13 @@
                 
               
 
-              <time title="Created: 2019-02-23 14:59:28" itemprop="dateCreated datePublished" datetime="2019-02-23T14:59:28+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 14:47:00 / Modified: 14:50:20" itemprop="dateCreated datePublished" datetime="2019-02-23T14:47:00+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -374,143 +378,34 @@
       
         
           
-            <p>此文档根据apple，google以及行业中比较知名的OC编码规范整理归纳而成，旨在为大家的iOS开发规范提供一份简单，统一的执行标准。</p>
-<h2 id="1、格式和换行"><a href="#1、格式和换行" class="headerlink" title="1、格式和换行"></a>1、格式和换行</h2><ul>
-<li>使用Xcode默认的设置使用4个空格来缩进。<ul>
-<li>在 Xcode &gt; Preferences &gt; Text Editing 将 Tab 和自动缩进都设置为 4 个空格</li>
-</ul>
-</li>
-<li>80个字数限制，每一行的代码尽量不要超出80个字的长度，超出的回车排版， 方法名的冒号对齐<ul>
-<li>xcode设置 屏幕左上角Xode-&gt;Perference-&gt;Text Editing-&gt;”Page guide at column: 80” 打上勾</li>
-</ul>
-</li>
-<li>方法-和方法+和返回值前面的左括号间隔一个空格，方法参数直接间隔一个空格。</li>
-<li>条件语句的格式采用苹果推荐的代码缩进方式。</li>
-</ul>
-<h2 id="2、命名规范"><a href="#2、命名规范" class="headerlink" title="2、命名规范"></a>2、命名规范</h2><ul>
-<li>基本原则<ul>
-<li>命名统一使用驼峰命名法，以清晰为主、简洁为辅，尽量使用单词的全称，所有命名和规范都应尽可能的与苹果API保持一致，</li>
-<li>例如枚举常量方法名的定义。</li>
-</ul>
-</li>
-<li>类命名<ul>
-<li>首字母大写，每个单词首字母大写</li>
-<li>尽量使用能够反映类功能的名词短语</li>
-<li>例如： UserManage ,UserData等</li>
-</ul>
-</li>
-<li>分类（类别）命名<ul>
-<li>与类命名相同，此外需添加要扩展的类名”+”</li>
-<li>eg：  NSString+Login UIView+XIB 等 </li>
-</ul>
-</li>
-<li>协议（委托）命名<ul>
-<li>与类命名相同，此外需添加“Delegate”后缀</li>
-<li>eg： UserManager 对应 UserManagerDelegate </li>
-</ul>
-</li>
-<li>方法命名<ul>
-<li>首字母小写，之后每个单词首字母都大写</li>
-<li>方法名使用动词短语，一些经典的操作应该使用约定的动词</li>
-<li>“-” 号后面有个空格</li>
-<li>传递参数的类型如果是指针，类与*号之间有空格</li>
-<li>重载系统方法的时候，如无特殊情况均需要先调用super的方法。</li>
-<li>例如：initWith,insert,remove,replace,add等等</li>
-</ul>
-</li>
-<li>方法参数命名<ul>
-<li>首字母小写，之后每个单词首字母都大写</li>
-<li>具有足够的说明性</li>
-<li>不需要添加类型前缀</li>
-<li>例如： - (void) setUserData:(NSDictionary *)userInfo</li>
-</ul>
-</li>
-<li><p>变量命名</p>
-<ul>
-<li>首字母小写，之后每个单词首字母都大写</li>
-<li>具有足够的说明性</li>
-<li>成员变量添加“_”前缀</li>
-<li>例如： NSMutableDictionary *_dataDic;</li>
-<li>如果该变量是属性不需要添加“_”</li>
-<li><p>例如： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSDictionary *dataDic;</span><br><span class="line">@property (nonatomic, copy) TestBlock testBlock;</span><br><span class="line">@property (nonatomic, assigh) NSinteger num;</span><br><span class="line">@property (nonatomic, weak) id&lt;delegate&gt; delegate;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>控件类型直接使用尾端的驼峰单词：<br>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UViewController -&gt; xxxViewController </span><br><span class="line">UIButton -&gt; xxxButton </span><br><span class="line">UILabel -&gt; xxxLabel </span><br><span class="line">UIImageView -&gt; xxxImageView </span><br><span class="line">UITableViewCell -&gt; xxxCell </span><br><span class="line">UIAlertView -&gt; xxxAlertView </span><br><span class="line">UIScrollView -&gt; xxxScrollView</span><br><span class="line"></span><br><span class="line">以下当属性名过长，可以把属性类型缩写作为尾端</span><br><span class="line">UIButton -&gt; xxxBtn </span><br><span class="line">UIImage -&gt; xxxImg</span><br><span class="line">UILabel -&gt; xxxL</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>常量</p>
-<ul>
-<li>常量（预定义，局部常量等）使用小写k开头的驼峰法</li>
-<li>例如:#define kSpace 20</li>
-<li>枚举类型参考系统API统一使用typedef NS_ENUM(类型, 名称)</li>
-<li>例如：下面是系统的 UISearchBarStyle 的枚举定义的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSUInteger, UISearchBarStyle) &#123;</span><br><span class="line">     UISearchBarStyleDefault,    // currently UISearchBarStyleProminent</span><br><span class="line">     UISearchBarStyleProminent,  // used my Mail, Messages and Contacts</span><br><span class="line">     UISearchBarStyleMinimal     // used by Calendar, Notes and Music</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>图片命名</p>
-<ul>
-<li>使用英文，全部小写，单词中间”_”隔开</li>
-<li>添加UI模块名作为前缀，避免冲突</li>
-<li>图片存放在 Images.xcassets 相关模块下下</li>
-<li>例如： home_search_img</li>
-</ul>
-</li>
-<li>注释<ul>
-<li>单行注释：在方法的地方按 Command+/</li>
-<li>标注的功能，快捷键是Command + Option + /</li>
-<li>需要在方法名的上面（空白）的地方按 Command + Option + / 才管用</li>
-<li>方法名需要在.h文件中多行注释方法和参数详情</li>
-<li>文件下的方法区域分类，使用#pragma mark -，可以把在文件路径下的方法分类并标记</li>
-<li>例如：#pragma mark - delegate</li>
-</ul>
-</li>
-<li>宏 必须使用大写命名，”_”隔开<ul>
-<li>例如：SCREEN_WIDTH</li>
-</ul>
-</li>
-</ul>
-<h2 id="3、代码优化"><a href="#3、代码优化" class="headerlink" title="3、代码优化"></a>3、代码优化</h2><ul>
-<li>避免相同的代码段出现在多个地方，相同的代码，必须归纳出来用一个方法或者类封装起来</li>
-<li>语句嵌套层次不得超过3层，超出的必须抽取出中间函数。例如：for，while循环 if，do等</li>
-<li>及时删除或注释掉无用的代码，删除没有意义的注释</li>
-<li>确定不使用的代码应该删除</li>
-<li>及时清除警告</li>
-<li>所有方法与方法之间空1行</li>
-<li>所有代码块之间空1行<h2 id="4-头文件-h-执行文件-m"><a href="#4-头文件-h-执行文件-m" class="headerlink" title="4. 头文件.h 执行文件.m"></a>4. 头文件.h 执行文件.m</h2></li>
-<li><p>.h文件</p>
-<ul>
-<li>所有的property 需要给出注释</li>
-<li>所有自定义的方法需要给出注释</li>
-<li>尽量减少公开的api接口数量</li>
-<li>import “xxxx.h” 部分头文件时候，如果只是内部使用，请放在.m文件下，.h使用@class xxxx 声明该类即可</li>
-<li>文件下有声明代理，把@protocol代理放在@interface 上面</li>
-<li>代理方法必须包含该类名</li>
-<li>例如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@class ImageOperation; </span><br><span class="line">@protocol ImageOperationDelegate&lt;NSObject&gt; </span><br><span class="line">- (void) operation:(ImageOperation *)op didLoadImage:(UIImage *)image; </span><br><span class="line">@end </span><br><span class="line">@interface ImageOperation : NSOperation </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>.m文件</p>
-<ul>
-<li>@implementation ViewController 上方使用 @interface ViewController() @end</li>
-<li>使用部分代理，并且代理不被外部使用，请把他们都放在.m的interface ()下</li>
-<li>所有自定义的方法需要给出注释</li>
-<li>比较大的代码块需要给出注释</li>
-<li>所有代码中出现的阿拉伯数字需要给出注释</li>
-<li>程序中出现加密／解密 逻辑的操作地方，需要给出注释说明过程（无论是系统还是自定义）</li>
-</ul>
-</li>
-<li><p>单例模式</p>
-<ul>
-<li>单例对象应该使用线程安全模式来创建共享实例。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance &#123;</span><br><span class="line">    static id sharedInstance = nil;</span><br><span class="line"></span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">     dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">    sharedInstance = [[self alloc] init];</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line">    return sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p><a href="https://www.jianshu.com/p/23536482c194" target="_blank" rel="noopener">https://www.jianshu.com/p/23536482c194</a><br><a href="https://github.com/NYTimes/objective-c-style-guide" target="_blank" rel="noopener">https://github.com/NYTimes/objective-c-style-guide</a><br><a href="https://github.com/raywenderlich/objective-c-style-guide#language" target="_blank" rel="noopener">https://github.com/raywenderlich/objective-c-style-guide#language</a></p>
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>iOS开发时，项目中会引用许多第三方库，<a href="https://github.com/CocoaPods/CocoaPods" target="_blank" rel="noopener">CocoaPods</a>可以用来方便的统一管理这些第三方库。</p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>由于网上的教程基本都大同小异，但细节之处还不是很完善，所以借机会在这里补充下：</p>
+<p>注：要使用CocoaPods，那就要下载安装它，而下载安装CocoaPods需要Ruby环境</p>
+<h6 id="Ruby环境搭建"><a href="#Ruby环境搭建" class="headerlink" title="Ruby环境搭建"></a>Ruby环境搭建</h6><p>当前安装环境为Mac mini 10.8.5。Mac  OS本身自带Ruby，但还是更新一下保险，因为我第一次安装在没有更新Ruby的情况下就失败了。</p>
+<p>a 查看下当前ruby版本：打开终端输入 ruby -v（确实安装了，不过用这个版本接下来工作失败了，所以更新下ruby）</p>
+<p>ritekiMac-mini:PodTest lucky$ ruby -v<br>ruby 1.8.7 (2012-02-08 patchlevel 358) [universal-darwin12.0]<br>ritekiMac-mini:PodTest lucky$   </p>
+<p>b 更新ruby</p>
+<p>终端输入如下命令（把Ruby镜像指向taobao，避免被墙，你懂得）</p>
+<p>gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a><br>gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a><br>gem sources -l  （用来检查使用替换镜像位置成功）</p>
+<p>ritekiMac-mini:~ lucky$ gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a><br><a href="https://rubygems.org/" target="_blank" rel="noopener">https://rubygems.org/</a> removed from sources<br>ritekiMac-mini:~ lucky$ gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a><br><a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a> added to sources<br>ritekiMac-mini:~ lucky$ gem sources -l<br><strong><em> CURRENT SOURCES </em></strong>  </p>
+<h6 id="下载安装CocoaPods"><a href="#下载安装CocoaPods" class="headerlink" title="下载安装CocoaPods"></a>下载安装CocoaPods</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">终端输入：sudo gem install cocoapods </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ritekiMac-mini:~ lucky$ sudo gem install cocoapods  </span><br><span class="line">  </span><br><span class="line">CHANGELOG:  </span><br><span class="line">  </span><br><span class="line">## 0.32.1  </span><br><span class="line">  </span><br><span class="line">##### Bug Fixes  </span><br><span class="line">  </span><br><span class="line">* Fixed the Podfile `default_subspec` attribute in nested subspecs.    </span><br><span class="line">  [Fabio Pelosin][irrationalfab]  </span><br><span class="line"> \ [#2050](https://github.com/CocoaPods/CocoaPods/issues/2050)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">Successfully installed cocoapods-0.32.1  </span><br><span class="line">Installing ri documentation for cocoapods-0.32.1  </span><br><span class="line">/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rdoc/rdoc.rb:280: warning: conflicting chdir during another chdir block  </span><br><span class="line">/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rdoc/rdoc.rb:287: warning: conflicting chdir during another chdir block  </span><br><span class="line">Done installing documentation for cocoapods after 10 seconds  </span><br><span class="line">1 gem installed</span><br></pre></td></tr></table></figure>
+<p>这样就下载安装好了CocoaPods</p>
+<h6 id="使用CocoaPods"><a href="#使用CocoaPods" class="headerlink" title="使用CocoaPods"></a>使用CocoaPods</h6><p>a  新建一个项目，名字PodTest</p>
+<p>b  终端中，cd到项目总目录（注意：包含PodTest文件夹、PodTest.xcodeproj、PodTestTest的那个总目录）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">cd /Users/lucky/Desktop/PodTest</span><br></pre></td></tr></table></figure>
+<p>c  建立Podfile（配置文件）</p>
+<p>接着上一步，终端输入 <figure class="highlight vim"><figcaption><span>Podfile```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">键盘输入 i，进入编辑模式，输入</span><br></pre></td></tr></table></figure></p>
+<p>platform :ios, ‘7.0’<br>pod ‘MBProgressHUD’, ‘~&gt; 0.8’</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">然后按Esc，并且输入“ ：”号进入vim命令模式，然后在冒号后边输入wq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">注意：键盘输入 ：后，才能输入wq。回车后发现PodTest项目总目录中多一个Podfile文件</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">激动人心的时刻到了：确定终端cd到项目总目录，然后输入 pod install，等待一会，大约3分钟。</span><br><span class="line"></span><br><span class="line">查看项目根目录：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注意：现在打开项目不是点击 PodTest.xodeproj了，而是点击 PodTest.xcworkspace</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">打开项目后看到项目结构并且测试一下：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">运行结果：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">补充：</span><br><span class="line"></span><br><span class="line">1、CocoaPods的基本安装及使用都详细的说明了，但还有一些补充，当需要同时导入多个第三方时候怎么办 ？</span><br><span class="line"></span><br><span class="line">这就需要修改Podfile了，就是用vim编辑的那个保存在项目根目录中的文件，修改完了Podfile文件，需要重新执行一次pod install命令。</span><br><span class="line"></span><br><span class="line">例如：</span><br></pre></td></tr></table></figure>
+<p>platform :ios</p>
+<p>pod ‘JSONKit’,       ‘~&gt; 1.4’</p>
+<p>pod ‘AFNetworking’,  ‘~&gt; 2.0’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"></span><br><span class="line">2、CocoaPods可以查找你想要的第三方库</span><br><span class="line">终端输入命令：pod search UI</span><br><span class="line"></span><br><span class="line">疯了了，我怎么查找这么大众的关键字，好多库～～</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后重新编辑Podfile文件，按照之前的步骤，把更多的库都导入项目！</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">本博客盗窃自阿福的博客，地址：http://blog.csdn.net/lizhongfu2013/article/details/26384029</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">============================我是分割线==================================</span><br><span class="line"></span><br><span class="line"> CocoaPods更新了一下，然后：出现下面的警告</span><br></pre></td></tr></table></figure></p>
+<p>The dependency <code></code> is not used in any concrete target<br>The dependency <code>AFNetworking</code> is not used in any concrete target<br>CocoaPods更新了一下，然后：</p>
+<p>sudo gem install cocoapods –pre<br>安装cocoapods的预览版本，就会更新下来新的1.0.0.beta.2版本，如下所示：</p>
+<p>Successfully installed cocoapods-1.0.0.beta.2<br>Parsing documentation for cocoapods-1.0.0.beta.2<br>很高兴啊，更新了新的版本，然而pod install就出错了，悲了个剧！出错如下：</p>
+<p>Updating local specs repositories<br>Analyzing dependencies<br>[!] The dependency <code>FMDB (~&gt; 2.3)</code> is not used in any concrete target.<br>The dependency <code>SDWebImage (~&gt; 3.6)</code> is not used in any concrete target.<br>The dependency <code>AFNetworking (~&gt; 2.3.0)</code> is not used in any concrete target.<br>The dependency <code>DACircularProgress (~&gt; 2.2.0)</code> is not used in any concrete target.<br>The dependency <code>MBProgressHUD (~&gt; 0.8)</code> is not used in any concrete target.<br>The dependency <code>PSTCollectionView (~&gt; 1.2.1)</code> is not used in any concrete target.<br>The dependency <code>HPGrowingTextView (~&gt; 1.1)</code> is not used in any concrete target.<br>The dependency <code>ProtocolBuffers (= 1.9.3)</code> is not used in any concrete target.<br>The dependency <code>leveldb-library (~&gt; 1.18.1)</code> is not used in any concrete target.<br>The dependency <code>SCLAlertView-Objective-C (~&gt; 0.7.5)</code> is not used in any concrete target.<br>The dependency <code>MWPhotoBrowser (~&gt; 1.4.1)</code> is not used in any concrete target.<br>The dependency <code>MMMarkdown (~&gt; 0.5)</code> is not used in any concrete target.<br>The dependency <code>MJExtension (~&gt; 2.5.16)</code> is not used in any concrete target.<br>The dependency <code>MJRefresh (~&gt; 2.4.12)</code> is not used in any concrete target.<br>The dependency <code>Masonry (~&gt; 0.6.3)</code> is not used in any concrete target.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我用的三方库比较多，挺长的，出这个错是告诉我们我们所用的库没有指定target，它不知道用在哪里，所以就给报错了，然后我去了cocoapods的官网看了下，cocoapods官网地址</span><br><span class="line"></span><br><span class="line">官网是这样给推荐的： </span><br><span class="line">在创建Podfile的时候，用这种格式使用，</span><br></pre></td></tr></table></figure></p>
+<p>platform :ios, ‘8.0’<br>use_frameworks!</p>
+<p>target ‘MyApp’ do<br>  pod ‘AFNetworking’, ‘~&gt; 2.6’<br>  pod ‘ORStackView’, ‘~&gt; 3.0’<br>  pod ‘SwiftyJSON’, ‘~&gt; 2.3’<br>end<br><code>`</code><br>里面的 MyApp 记得替换为自己攻城里面的target。这样就基本OK了，执行pod install / pod update 就都可以了。</p>
 
           
         
@@ -569,7 +464,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-公司开发者账号申请流程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS实时监控网络状态的改变/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Running2snail">
@@ -589,7 +484,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/23/iOS-公司开发者账号申请流程/" class="post-title-link" itemprop="url">iOS 公司开发者账号申请流程</a>
+                <a href="/2019/02/23/iOS实时监控网络状态的改变/" class="post-title-link" itemprop="url">iOS实时监控网络状态的改变</a>
               
             
           </h1>
@@ -614,9 +509,13 @@
                 
               
 
-              <time title="Created: 2019-02-23 14:59:07" itemprop="dateCreated datePublished" datetime="2019-02-23T14:59:07+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 14:44:51 / Modified: 14:46:09" itemprop="dateCreated datePublished" datetime="2019-02-23T14:44:51+08:00">2019-02-23</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -651,30 +550,52 @@
       
         
           
-            <h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><p> 一个没有上过战场的士兵，不是一个真正的士兵，一个没有注册过开发者账号、发布过APP的开发者，也不是一个真正的iOS 开发者，在过去的几年里，发布app上架经常做，却没有亲自申请过开发者账号，虽然知道并不复杂，但却甚是遗憾，由于公司构架的调整，不得不重新注册一个新账号。<br> 苹果对开发者主要分为3类：个人、组织（公司、企业）、教育机构 ，个人账号只能有一个开发者，公司账号可以允许多个开发者协作开发，企业账号，其app只能用于内部员工使用，是无法对外公开的，另外“个人”开发者可以申请升级“公司”。本文主要用于总结自己申请公司开发者账号的经历，同时借鉴别人的经验，记录下来用于参考，希望能对你们有帮助。<br>个人和公司版开发者账号费用为99美元/年(688元)，企业开发者账号费用为299 美元/年。</p>
-<p>##### </p>
-<p>#####申请开发者Apple ID账号<br>（1）、进入苹果开发者官网<a href="https://developer.apple.com" target="_blank" rel="noopener">https://developer.apple.com</a><br><img src="http://upload-images.jianshu.io/upload_images/465805-f488171692d31f81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="苹果开发者官网.png"></p>
-<p>（2）、点击Account跳转Apple ID账号申请页面</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-e4bf091ddba15430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="申请Apple ID账号.png"></p>
-<p>（3）、创建Apple ID，注册时一定要把账号的姓名写成拼音模式，不要写成中文否则后期申请开发者时会出现邮件打回，如果你不幸的填写成了中文，不要慌张，只能打苹果咨开发者咨询热线：4006 701 855，而且必须声称你是账号上姓名的这个人，否则不予处理。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-c2bcf78a47a639f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建Apple ID账号.png"></p>
-<p>（4）、填写完之后，点击“Continue”进行下一步。在邮箱收取验证码，填写验证码，点击“Verify”，即可验证成功。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-b07c826a293d5e25.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="填写邮箱验证码.jpg"></p>
-<p>2、申请邓白氏<br>（1）、使用申请的账号登陆，会弹出如下协议，同意一下协议，并提交。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-4f0adcdd21dca492.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="提交协议.jpg"></p>
-<p>（2）、选择为“Company/Organization”（公司/组织）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-fddaedfea85694e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择公司.png"></p>
-<p>（3）、选择后弹出警告，大意就是申请苹果开发者证书之前需要申请邓白氏编码（美国的邓白氏编码用于企业的识别码），没有邓白氏编码是无法申请证书的。此处选择D-U-N-S Number下方的“Check now”进行邓白氏编码的申请。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-3d1ad596dddaf2fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="申请邓白氏.jpg"></p>
-<p>（4）、邓白氏申请页面上填写公司相关信息（均使用英文），填写完之后提交。先选择国籍，其次填写公司名称（英文名称，如果没有英文名称，中文名称直接翻译下就行，后续会进行验证的）座机需要填写能联系到本人的座机（中国区格式为86-区号+号码+分机号，如86-0755XXXXX-XX），稍后华夏邓白氏会打电话核对以上信息。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-3229d1c3bc02c228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="公司相关信息的填写.png"></p>
-<p>（5）等待，提交信息以后会出现以下页面，则表示信息提交成功。随后苹果公司会发送一封邮件，里面含有邓白氏申请下来的大致时间点以及该提交请求的响应码。操作到此步，需要暂时告一段落，等待邓白氏编码的申请完成，申请下来会以邮件的形式告知，注意查收邮件。时间大概是一周，如果没下来可以根据响应码咨询。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-b9220cd3faf80cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="信息提交成功.png"></p>
-<p>（6）在这个等待期间，华夏邓白氏的工作人员会跟你发邮件联系，核实下你们公司的企业信息，具体如下：<br><img src="http://upload-images.jianshu.io/upload_images/465805-cb0eb0710a6dec5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="企业信息核实.png"><br>确认以后大概一到两天，他们就会发来9位邓白氏编码，但是最好是在得到邓白氏编码后过14个工作日之后使用。</p>
-<p>（7）在大约14个工作日之后，登陆账号，选择公司和组织，然后点击继续。<br><img src="http://upload-images.jianshu.io/upload_images/465805-284f843fb508ff37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="继续.png"><br>（8）点击继续以后会进入一个填写信息的页面，首先是两个选项，如果账号的所有者也是公司的所有者的话选择第一个，其他的选择第二个公司授权，一般都是选择第二个。然后下面是核实联系人信息，你需要填写一个能给你提供证明的公司员工的信息，用英文填写，包括姓名、职位、工作邮箱和电话。电话最好是用公司座机。<br><img src="http://upload-images.jianshu.io/upload_images/465805-ac3c31c989819d5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="核实联系人信息.png"></p>
-<p>再往下是需要填写住址信息，包括公司英文名称、邓白氏编码、公司网址、总部电话和你的工作邮箱，电话最好是为座机，工作邮箱最好是填开发者账号的id邮箱，我之前填了一个另外的邮箱，提交以后才想起来，担心会影响审核，打客服电话资讯这个问题，他们说是这个邮箱只是用来作为备用联系用的，不会影响审核。然后再填写验证码，然后提交信息，会出现一个信息确认页面，确认无误后确认，之后会是一个登记成功页面，并且同时收到一个登记成功的邮件之后便是对注册信息的审核。<br><img src="http://upload-images.jianshu.io/upload_images/465805-969eae5421ff190f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组织信息.png"></p>
-<p>在等了大概三天以后收到苹果的反馈邮件，如下：<br><img src="http://upload-images.jianshu.io/upload_images/465805-4a146d25d6727133.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="反馈.png"><br>邮件显示的是验证联系人的姓名和账号所有者的手机号，这让我感觉很纳闷，这两个账号怎么联系在一块的，我查看了这个手机号，上面没有苹果客服的电话，但是有一个被腾讯拦截的骚扰电话，于是我就跟客服打电话询问原因，原来是他们直接给账号所有者的手机号打电话去找验证联系人，而没有打验证联系人的电话，这很套路，然后他说现在需要验证联系人用账号所有者的手机去跟苹果客服打电话，然后我就这样做了，他们只问了一个问题：账号所有者是不是你们公司的员工？获得肯定答案后询问就结束了，然后几乎在同时我就收到了，苹果发来的同意注册请求的邮件如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-98724565216989ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="同意注册.png"><br>点击Review now就是缴费的688元界面：<br><img src="http://upload-images.jianshu.io/upload_images/465805-8b48400638ecea02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="费用.png"><br>缴费后就可以用了，创建app了，至此公司苹果开发者账号申请宣告结束，历时将近一个月，总结如下：<br>1、申请并不复杂，申请之前多查询资料。<br>2、申请过程中，细致认真，记录填写的内容。<br>3、最重要的一点，不懂打客服电话， 4006-701-855，苹果客服是你最好的帮手。<br>希望对你有帮助。</p>
+            <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>在网络应用中，有的时候需要对用户设备的网络状态进行实时监控，有两个目的：</p>
+<p>（1）让用户了解自己的网络状态，防止一些误会（比如怪应用无能）</p>
+<p>（2）根据用户的网络状态进行智能处理，节省用户流量，提高用户体验</p>
+<p>　　WIFI网络：自动下载高清图片</p>
+<p>　　4G/3G网络：只下载缩略图</p>
+<p>　　没有网络：只显示离线的缓存数据</p>
+<p> 常用的有以下两种方法：</p>
+<p>　　（1）、使用苹果观法提供的检测iOS设备网络环境用的库 Reachablity</p>
+<p>　　（2）、使用AFN框架中的AFNetworkReachabilityManager来监听网络状态的改变</p>
+<p>一、苹果官方提供了一个叫Reachability的示例程序，便于开发者检测网络状态</p>
+<p>使用之前请从Apple网站下载示例：</p>
+<p><a href="https://developer.apple.com/library/ios/samplecode/Reachability/Reachability.zip" target="_blank" rel="noopener">https://developer.apple.com/library/ios/samplecode/Reachability/Reachability.zip</a></p>
+<p>然后将Reachability.h 和 Reachability.m 加到自己的项目中，并引用 SystemConfiguration.framework，就可以使用了。<br>Reachability 中定义了3种网络状态:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef enum : NSInteger &#123;</span><br><span class="line"></span><br><span class="line">    NotReachable = 0,  //无连接</span><br><span class="line">    ReachableViaWiFi,  //使用3G/GPRS网络</span><br><span class="line">    ReachableViaWWAN  //使用WiFi网络</span><br><span class="line"></span><br><span class="line">&#125; NetworkStatus;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以在程序启动以后启动实时监测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">// AppDelegate.m</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@interface AppDelegate ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) Reachability *reachability;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 程序启动器，启动网络监视</span><br><span class="line">- (void)applicationDidFinishLaunching:(UIApplication *)application &#123;</span><br><span class="line"></span><br><span class="line">    // 设置网络检测的站点</span><br><span class="line">       NSString *remoteHostName = @&quot;www.apple.com&quot;;</span><br><span class="line">    self.reachability = [Reachability reachabilityWithHostName:remoteHostName];</span><br><span class="line">    // 设置网络状态变化时的通知函数</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:)</span><br><span class="line">                                             name:@&quot;kNetworkReachabilityChangedNotification&quot; object:nil];</span><br><span class="line">    [self updateStatus];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)reachabilityStatusChange:(NSNotification *)notification</span><br><span class="line">&#123;</span><br><span class="line">    Reachability* curReach = [notification object];</span><br><span class="line">    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);</span><br><span class="line">    [self updateInterfaceWithReachability:curReach];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)updateInterfaceWithReachability:(Reachability *)reachability</span><br><span class="line">&#123;</span><br><span class="line">    if (reachability == _reachability)</span><br><span class="line">    &#123;</span><br><span class="line">        NetworkStatus netStatus = [reachability currentReachabilityStatus];</span><br><span class="line">        switch (netStatus)</span><br><span class="line">        &#123;</span><br><span class="line">            case NotReachable:      &#123;</span><br><span class="line">                NSLog(@&quot;没有网络！&quot;);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            case ReachableViaWWAN:  &#123;</span><br><span class="line">                NSLog(@&quot;4G/3G&quot;);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            case ReachableViaWiFi:  &#123;</span><br><span class="line">                NSLog(@&quot;WiFi&quot;);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)dealloc</span><br><span class="line">&#123;</span><br><span class="line">     [_reachability stopNotifier];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">二、使用AFN框架中的AFNetworkReachabilityManager来监听网络状态的改变</span><br></pre></td></tr></table></figure>
+<p>//使用AFN框架来检测网络状态的改变<br>-(void)AFNReachability<br>{<br>    //1.创建网络监听管理者<br>    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];</p>
+<pre><code>//2.监听网络状态的改变
+/*
+ AFNetworkReachabilityStatusUnknown          = 未知
+ AFNetworkReachabilityStatusNotReachable     = 没有网络
+ AFNetworkReachabilityStatusReachableViaWWAN = 3G
+ AFNetworkReachabilityStatusReachableViaWiFi = WIFI
+ */
+[manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    switch (status) {
+        case AFNetworkReachabilityStatusUnknown:
+            NSLog(@&quot;未知&quot;);
+            break;
+        case AFNetworkReachabilityStatusNotReachable:
+            NSLog(@&quot;没有网络&quot;);
+            break;
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+            NSLog(@&quot;3G&quot;);
+            break;
+        case AFNetworkReachabilityStatusReachableViaWiFi:
+            NSLog(@&quot;WIFI&quot;);
+            break;
+
+        default:
+            break;
+    }
+}];
+
+//3.开始监听
+[manager startMonitoring];
+</code></pre><p>}<br><code>`</code></p>
 
           
         
@@ -733,7 +654,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-block详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS-快速集成启动页广告/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Running2snail">
@@ -753,7 +674,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/23/iOS-block详解/" class="post-title-link" itemprop="url">iOS block详解</a>
+                <a href="/2019/02/23/iOS-快速集成启动页广告/" class="post-title-link" itemprop="url">iOS 快速集成启动页广告</a>
               
             
           </h1>
@@ -778,602 +699,7 @@
                 
               
 
-              <time title="Created: 2019-02-23 14:58:32 / Modified: 14:58:33" itemprop="dateCreated datePublished" datetime="2019-02-23T14:58:32+08:00">2019-02-23</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>####块的基础知识<br>块是C、C++、Objective-C中的词法闭包，块与函数类似，只不过是直接定义在另一个函数里的，和定义他的那个函数共享同一个范围内的东西。块用“^”(脱字符)符号来表示，后面跟着一对花括号，括号里面是块的实现代码。例如，下面就是个简单的块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">^ &#123;</span><br><span class="line">      //Block implementation here</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">块其实就是个值，而且自有其相关类型，与int、float或者对象一样，可以把块赋给变量，然后像使用其他变量那样使用它，块类型的语法与函数指针近似。下面列出的这个块很简单，没有参数，也不返回值。</span><br><span class="line">``` </span><br><span class="line">void (^someBlock)() = ^&#123;</span><br><span class="line">       //Block implementation here</span><br><span class="line">&#125;;</span><br><span class="line">``` </span><br><span class="line">这段代码定义了一个名为someBlock的变量。由于变量名写在正中间，所以看上去也许有点怪，不过一旦理解了语法，很容易就能读懂。块类型的语法结构如下：</span><br><span class="line"></span><br><span class="line">#####return_type (^block_name)(parameters)</span><br><span class="line"></span><br><span class="line">下面这种写法所定义的块，返回int值，并且接受两个int做参数：</span><br><span class="line">``` </span><br><span class="line">int (^addBlock)(int a, int b) = ^(int a, int b) &#123;</span><br><span class="line">      return a+ b;</span><br><span class="line">&#125;;</span><br><span class="line">``` </span><br><span class="line">定义好之后，就可以想函数那样使用了，比方说，addBlock块可以这样使用：</span><br><span class="line">``` </span><br><span class="line">int add = addBlock(2, 5);           // add = 7</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">块的强大之处是：在声明它的范围里，所有变量都可以为其所捕获。这也就是说，那个范围里的所有变量在块里依然可用。比如，下面这段代码所定义的块，就是使用了块以外的变量：</span><br></pre></td></tr></table></figure></p>
-<p>int additional = 5;<br>int (^addBlock)(int a, int b) = ^(int a, int b) {<br>  return a + b + additional;<br>};<br>int add = addBlock(2, 5);              //add = 12<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">默认情况下，为块所捕获的变量，是不可以在块里修改的，在本例中，假如快内的代码改动了additional变量的值，那么编译器就会报错。不过，声明变量的时候，可以加上__block修饰符，这样就可以在块内修改了。</span><br><span class="line">如果块所捕获的变量是对象类型，那么就会自动保留它，系统在释放这个块的时候也会将其一并释放，这就引出一个与块有关的重要问题。块本身可视为对象。块本身也和其他对象一样，有引用计数，当最后一个指向块的引用移走之后，块就回收了，回收时也会释放块所捕获的变量，以便平衡捕获时所执行的操作。</span><br><span class="line">如果将块定义在Objective-C类的实例方法中，那么除了可以访问类的所有实例变量外，还可以使用self变量，块总能修改实例变量，所以在声明时无需加__block。不过，如果通过读取或者写入操作捕获了实例变量，那么也会自动把self变量一并捕获了。因为实例变量是与self所指代的实例关联在一起的。例如下面这个块声明在EOCClass类的方法中：</span><br></pre></td></tr></table></figure></p>
-<p>@interface</p>
-<ul>
-<li>(void)anInstanceMethod {<br>  void (^someBlock)() = ^{<pre><code>_anInstanceVariable = @&quot;something&quot;;
-NSLog(@&quot;_anInstanceVariable = %@&quot;, _anInstanceVariable);
-</code></pre>  };<br>}<br>/<em><br>self-&gt;_anInstanceVariable = @”something”;
-</em>/<br><code>`</code><br>如果某个EOCClass实例正在执行anInstanceMethod方法，那么self变量就指向此实例。由于块里没有明确使用self变量，所以很容易忘记self变量其实也为块所捕获了，直接访问实例变量和通过self来访问是等效的。<br>然而，一定要记住：self也是一个对象，因而块在捕获它时也会将其保留。如果self所指代的那个对象同时也保留了块，那么这种情况通常就会导致“保留环”，从而引起内存泄露。所以当在快内部访问实例变量时候—</li>
-</ul>
-<p>####块的内部结构</p>
-<p>每个Objective-C对象都占据着某个内存区域。因为实例变量的个数及对象所包含的关联数据互不相同，所以每个对象所占的内存区域也有大有小。块本身也是对象，在存放块对象的内存区域中，首个变量是指向Class对象的指针，该指针叫做isa，其余内存里还有块对象正常运转所需的各种信息。借鉴下图来详细描述块对象的内存布局。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-5f31cc7ca434f0e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="块对象的内存结构.jpg"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-16700c9b06b1dda7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="块对象的内存结构.png"></p>
-<p>在内存布局中，最重要的就是invoke变量，这是个函数指针，指向块的实现代码。函数原型至少要接受一个void*型的参数，此参数代表块。<br>descriptor变量是指向结构体的指针，每个快里都包含此结构体，其中声明了块对象的总体大小，还声明了copy与dispose这两个辅助函数所对应的函数指针。辅助函数在拷贝及丢弃块对象时运行，其中会执行一些操作，比方说，前者要保留捕获的对象，而后者则将之释放。<br>块还会把它所捕获的所有变量都拷贝一份。这些拷贝放在descriptor变量后面，捕获了多少个变量，就要占据多少内存空间。请注意，拷贝的并不是对象本身，而是指向这些对象的指针变量。invoke函数为何需要把块对象作为参数传进来呢？原因就在于，执行块时，要从内存中把这些捕获到的变量读出来。</p>
-<p>####全局块、栈块及堆块</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS数据存储之归档/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Running2snail">
-      <meta itemprop="description" content="不醉不归">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="七月">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/23/iOS数据存储之归档/" class="post-title-link" itemprop="url">iOS数据存储之归档</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-23 14:58:05 / Modified: 14:58:06" itemprop="dateCreated datePublished" datetime="2019-02-23T14:58:05+08:00">2019-02-23</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>在上一篇的文章中我简单介绍了使用偏好设置和属性列表进行数据存储<a href="http://www.jianshu.com/p/e9a9844e5207" target="_blank" rel="noopener">iOS数据存储之偏好设置和属性列表</a>，今天总结下数据存储之归档的简单使用。归档是一种很常用的文件储存方法，几乎任何类型的对象都能够被归档储存（实际上是一种文件保存的形式）,与属性列表相反，同样作为轻量级存储的持久化方案，数据归档是进行加密处理的，数据在经过归档处理会转换成二进制数据，所以安全性要远远高于属性列表。我们可以将复杂的对象写入文件中，并且不管添加多少对象，将对象写入磁盘的方式都是一样的。收集了网上的一些资料并结合自己的一些经验，以下将从三个方面简单介绍下归档的使用：</p>
-</blockquote>
-<p>#####一、使用archiveRootObject进行简单的归档<br>使用NSKeyedArichiver进行归档、NSKeyedUnarchiver进行接档，这种方式会在写入、读出数据之前对数据进行序列化、反序列化操作。</p>
-<ul>
-<li><p>归档：</p>
-<pre><code>//1.获取文件路径
-NSString *docPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//2、添加储存的文件名
-NSString *path  = [docPath stringByAppendingPathComponent:@&quot;data.archiver&quot;];
-//3、将一个对象保存到文件中
-BOOL flag = [NSKeyedArchiver archiveRootObject:@”name” toFile:path]; 
-</code></pre></li>
-</ul>
-<p>这种方式可以对字符串、数字等进行归档，当然也可以对NSArray与NSDictionary进行归档。返回值Flag标志着是否归档成功，YES为成功，NO为失败。</p>
-<ul>
-<li>解档<pre><code>//1.获取文件路径
-NSString *docPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-NSString *path=[docPath stringByAppendingPathComponent:@&quot;data.archiver&quot;]; 
-NSLog(@&quot;path=%@&quot;,path);
-//2.从文件中读取对象
-[NSKeyedUnarchiver unarchiveObjectWithFile:path]  
-</code></pre></li>
-</ul>
-<p>使用NSKeyedUnarchiver进行接档（反序列化）。这种归档的方式存在一个缺点：只能把一个对象归档进一个文件中，那么怎么对多个对象进行归档呢？</p>
-<p>#####二、对多个对象的归档</p>
-<p>同样是使用NSKeyedArchiver进行归档，不同的是同时归档多个对象，这里我们举例放入了一个CGPoint点、字符串、整数（当然很多类型都可以的，例如UIImage、float等等），使用encodeObject:(nullable id)objv forKey:(NSString *)key方法进行归档，最后通过writeToFile方法写入文件。</p>
-<ul>
-<li><p>归档：写入数据</p>
-<pre><code>//准备数据
-CGPoint point = CGPointMake(1.0, 2.0);
-NSString *origin = @&quot;坐标原点&quot;;
-NSInteger value = 10;
-NSString *docPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-NSString *path = [docPath stringByAppendingPathComponent:@&quot;multi.archiver&quot;];
-NSMutableData *data = [[NSMutableData alloc] init];
-NSKeyedArchiver *archvier = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-//对多个对象进行归档
-[archvier encodeCGPoint:point forKey:@&quot;kPoint&quot;];
-[archvier encodeObject: origin forKey:@&quot;kOrigin&quot;];
-[archvier encodeInteger:value forKey:@&quot;kValue&quot;];
-[archvier finishEncoding];
-[data writeToFile:path atomically:YES];
-</code></pre></li>
-<li><p>解档：从路径中获得数据构造NSKeyedUnarchiver实例，使用encodeObject: forKey:方法获得文件中的对象。</p>
-<pre><code>NSMutableData *dataR = [[NSMutableData alloc] initWithContentsOfFile:multiHomePath];  
-NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:dateR];  
-CGPoint pointR = [unarchiver decodeCGPointForKey:@&quot;kPoint&quot;];  
-NSString *infoR = [unarchiver decodeObjectForKey:@&quot;kInfo&quot;];  
-NSInteger valueR = [unarchiver decodeIntegerForKey:@&quot;kValue&quot;];  
-[unarchiver finishDecoding];  
-NSLog(@&quot;%f,%f,%@,%d&quot;,pointR.x,pointR.y,infoR,valueR);
-</code></pre></li>
-</ul>
-<p>可以看出对多个对象进行归档还是挺方便的，这里又出现一个问题，这里的对象都是基本类型数据，那么怎么对自己定义类生成的实例对象进行归档呢？</p>
-<p>#####三、对自定义对象进行归档</p>
-<pre><code>//  YYViewController.m
-#import &quot;YYViewController.h&quot;
-#import &quot;YYPerson.h&quot;
-
-@interface YYViewController ()
-- (IBAction)saveBtnOnclick:(id)sender;
-- (IBAction)readBtnOnclick:(id)sender;
-
-@end
-
-@implementation YYViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (IBAction)saveBtnOnclick:(id)sender 
-{
-    //1.创建对象
-    YYPerson *person = [[YYPerson alloc] init];
-    person.name=@&quot;蜗牛&quot;;
-    person.age=23;
-    person.height=1.83;
-
-    //2.获取文件路径
-    NSString *docPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
-    NSString *path=[docPath stringByAppendingPathComponent:@&quot;person.archiver&quot;];
-    NSLog(@&quot;path=%@&quot;,path);
-
-    //3.将自定义的对象保存到文件中，调用NSKeyedArchiver的工厂方法 archiveRootObject: toFile: 方法
-    [NSKeyedArchiver archiveRootObject:p toFile:path];
-}
-
-- (IBAction)readBtnOnclick:(id)sender 
-{
-    //1.获取文件路径
-    NSString *docPath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
-    NSString *path=[docPath stringByAppendingPathComponent:@&quot;person.archiver&quot;];
-    NSLog(@&quot;path=%@&quot;,path);
-
-    //2.从文件中读取对象，解档对象就调用NSKeyedUnarchiver的一个工厂方法 unarchiveObjectWithFile: 即可。
-    YYPerson * person = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if (person) {
-       NSLog(@&quot;%@,%d,%.1f&quot;, person.name, person.age, person.height);
-    } 
-}
-@end
-</code></pre><p>YYPerson.h</p>
-<pre><code>//  YYPerson.h
-
-#import &lt;Foundation/Foundation.h&gt;
-
-// 如果想将一个自定义对象保存到文件中必须实现NSCoding协议
-@interface YYPerson : NSObject&lt;NSCoding&gt;
-//姓名
-@property(nonatomic,copy)NSString *name;
-//年龄
-@property(nonatomic,assign)int age;
-//身高
-@property(nonatomic,assign)double height;
-@end
-</code></pre><p>YYPerson.m</p>
-<pre><code>//  YYPerson.m
-
-#import &quot;YYPerson.h&quot;
-
-@implementation YYPerson
-
-// 当将一个自定义对象保存到文件的时候就会调用该方法
-// 在该方法中说明如何存储自定义对象的属性
-// 也就说在该方法中说清楚存储自定义对象的哪些属性
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-    NSLog(@&quot;调用了encodeWithCoder:方法&quot;);
-    [aCoder encodeObject:self.name forKey:@&quot;name&quot;];
-    [aCoder encodeInteger:self.age forKey:@&quot;age&quot;];
-    [aCoder encodeDouble:self.height forKey:@&quot;height&quot;];
-}
-
-// 当从文件中读取一个对象的时候就会调用该方法
-// 在该方法中说明如何读取保存在文件中的对象
-// 也就是说在该方法中说清楚怎么读取文件中的对象
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    NSLog(@&quot;调用了initWithCoder:方法&quot;);
-    //注意：在构造方法中需要先初始化父类的方法
-    if (self=[super init]) {
-        self.name=[aDecoder decodeObjectForKey:@&quot;name&quot;];
-        self.age=[aDecoder decodeIntegerForKey:@&quot;age&quot;];
-        self.height=[aDecoder decodeDoubleForKey:@&quot;height&quot;];
-    }
-    return self;
-}
-@end
-</code></pre><p>######注意</p>
-<ul>
-<li>如果需要归档的类是某个自定义类的子类时，就需要在归档和解档之前先实现父类的归档和解档方法。即 [super encodeWithCoder:aCoder] 和 [super initWithCoder:aDecoder] 方法;</li>
-<li>必须遵循并实现NSCoding协议</li>
-<li>归档和解归档其中任意对象都需要归档和解归档整个文件</li>
-<li>归档后的文件是加密的，保存文件的扩展名可以任意指定</li>
-</ul>
-<p>######下面分享一个项目中封装的基于归档创建的一个用于本地数据存储的类如下：</p>
-<pre><code>// LocalArchiverManager.h 文件
-
-#import &lt;Foundation/Foundation.h&gt;
-
-@interface LocalArchiverManager : NSObject
-
-/**单例模式，获取请求管理类
- *\param        param:   无
- *\returns      return:     无
- */
-+ (LocalArchiverManager *)shareManagement;
-
-/**清除本地的序列化的文件
- *\param        param:   无
- *\returns      return:     无
- */
-- (void)clearArchiverData;
-
-/**保存缓存数据
- *\param        obj:   数据源
- *\param        key:     接口的名称
- *\returns      无
- */
-- (void)saveDataArchiver:(id)obj andAPIKey:(NSString *)key;
-
-/**回去缓存数据
- *\param        obj:   api的key
- *\returns      id:     返回的数据源
- */
-- (id)archiverQueryAPIKey:(NSString *)key;
-@end
-</code></pre><p>LocalArchiverManager.m 文件</p>
-<pre><code>#import &quot;LocalArchiverManager.h&quot;
-
-#define Document [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
-#define ArchiverFile    [Document stringByAppendingPathComponent:@&quot;Archiver&quot;]
-
-@interface LocalArchiverManager()
-
-@property(nonatomic, strong) NSFileManager *fileManager;
-
-@end
-
-@implementation LocalArchiverManager+ (LocalArchiverManager *)shareManagement
-{
-    LocalArchiverManager *m_localArchiverMana = nil;
-    static dispatch_once_t onceTocken;
-    dispatch_once(&amp;onceTocken, ^
-    {
-        m_localArchiverMana = [[LocalArchiverManager alloc] init];
-    });
-    return m_localArchiverMana;
-}
-
-- (id)init
-{
-    self = [super init];
-    if(self)
-    {
-       self.fileManager = [NSFileManager defaultManager];
-    }
-    return self;
-}
-
-#pragma mark private methods
-// 检测path路径文件是否存在
-- (BOOL)checkPathIsExist:(NSString *)path
-{
-    return [_fileManager fileExistsAtPath:path isDirectory:nil];
-}
-
-// 创建文件
-- (void)createArchiverFile
-{
-    if (![self checkPathIsExist:ArchiverFile])
-    {
-        [self addNewFolder:ArchiverFile];
-    }
-}
-
-//新建目录,path为目录路径(包含目录名)
-- (void)addNewFolder:(NSString *)path
-{
-    [_fileManager createDirectoryAtPath:path
-             withIntermediateDirectories:YES
-                              attributes:nil
-                                   error:nil];
-}
-
-#pragma mark public methods
-
-- (void)clearArchiverData
-{
-    NSError *error;
-    if([m_fileManager removeItemAtPath:ArchiverFile error:&amp;error])
-    {
-
-    } else {
-        DLOG(@&quot;清除本地序列化的文件失败....:%@&quot;,error);
-    }
-}
-// 保存数据
-- (void)saveDataArchiver:(id)obj andAPIKey:(NSString *)key
-{
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [archiver encodeObject:obj forKey:key];
-    [archiver finishEncoding];
-    [self createArchiverFile];
-    key = [key stringByReplacingOccurrencesOfString:@&quot;/&quot; withString:@&quot;_&quot;];
-    NSString *path = [ArchiverFile stringByAppendingPathComponent:[NSString stringWithFormat:@&quot;%@.text&quot;,key]];　　　
-  　BOOL isSuc = [data writeToFile:path atomically:YES];
-if(!isSuc) {
-        DLOG(@&quot;本地序列化失败key....:%@&quot;,key);
-    }
-}
-// 获取数据
-- (id)archiverQueryAPIKey:(NSString *)key
-{
-    NSString *str = [key stringByReplacingOccurrencesOfString:@&quot;/&quot; withString:@&quot;_&quot;];
-    NSString *path = [ArchiverFile stringByAppendingPathComponent:[NSString stringWithFormat:@&quot;%@.text&quot;,str]];
-    NSMutableData *data = [[NSMutableData alloc] initWithContentsOfFile:path];
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    id content = [unarchiver decodeObjectForKey:key];
-    [unarchiver finishDecoding];
-    DLOG(@&quot;content.....:%@&quot;,content);
-    return content;
-}
-</code></pre><p>欢迎阅读：</p>
-<ul>
-<li><a href="http://www.jianshu.com/p/e9a9844e5207" target="_blank" rel="noopener">iOS数据存储之偏好设置和属性列表</a></li>
-</ul>
-<p>iOS技术交流群 461069757<br>iOS-Ant-Bang互助社区 426981364 欢迎加入！</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-      
-    </div>
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS数据存储之偏好设置和属性列表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Running2snail">
-      <meta itemprop="description" content="不醉不归">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="七月">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/23/iOS数据存储之偏好设置和属性列表/" class="post-title-link" itemprop="url">iOS数据存储之偏好设置和属性列表</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-23 14:56:52 / Modified: 14:56:53" itemprop="dateCreated datePublished" datetime="2019-02-23T14:56:52+08:00">2019-02-23</time>
+              <time title="Created: 2019-02-23 14:39:40 / Modified: 14:44:08" itemprop="dateCreated datePublished" datetime="2019-02-23T14:39:40+08:00">2019-02-23</time>
             
 
             
@@ -1415,148 +741,338 @@ if(!isSuc) {
         
           
             <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><blockquote>
-<p>在iOS开发中必不可少的要用到数据存储，数据的处理是iOS开发中的核心技术，适当的对数据进行持久化存储可以实现应用的离线功能，以此提高用户体验。所谓数据持久化，就是将数据保存到硬盘中，使得在应用程序或手机重启后可以继续访问之前保存的数据。在iOS开发中，有很多持久化得方案，接下来我将总结以下5种持久化方案：<br>1、plist（属性列表）<br>2、preference（偏好设置）<br>3、NSKeyedArchiver（归档）<br>4、SQList 3 （FMDB）<br>5、CoreData<br>由于偏好设置是将所有数据保存到preference目录下的一个以此应用包名来命名的plist文件中，所以将偏好设置和属性列表放到一块介绍。</p>
+<p>由于项目中要用到启动页广告，所以做了简单的研究，同时借鉴网易新闻和蘑菇街的交互写了一个简单的demo，现在写出来供大家参考，可能由于个人局限会有一些bug和不完善的地方，也希望大家能够友善提醒和指正。<br>github:<a href="https://github.com/Running2snail/LLFullScreenAd" target="_blank" rel="noopener">LLFullScreenAd</a></p>
 </blockquote>
-<h4 id="沙盒机制"><a href="#沙盒机制" class="headerlink" title="沙盒机制"></a>沙盒机制</h4><ul>
-<li>在介绍各种存储方法之前，先说明下沙盒机制。iOS应用程序只能在为改程序创建的文件系统中读取文件，不可以去其他地方访问，此区域被称为沙盒，所以所有的非代码文件都要保持在此，例如图像，图标，声音，属性列表，文本文件等。<br>1、目录结构<pre><code>1、“应用程序包”
-2、Documents
-3、Library
-       Caches
-       Preferences
-4、tmp
-</code></pre>2、目录结构分析<ul>
-<li>应用程序包：包含所有的资源文件和可执行文件<pre><code>NSString *path = [[NSBundle mainBundle] bundlePath];
-NSLog(@&quot;%@&quot;, path);
-</code></pre></li>
-<li>Documents：保存应⽤运行时生成的需要持久化的数据,iTunes同步设备时会备份该目录。<pre><code>NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-NSString *path = [path objectAtIndex:0];
-NSLog(@&quot;%@&quot;, path);
-</code></pre></li>
-<li>Library/Caches: iTunes不会同步此文件夹，适合存储体积大，不需要备份的非重要数据。<pre><code>NSString *path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-NSLog(@&quot;%@&quot;, path);
-</code></pre></li>
-<li>Library/Preferences: iTunes同步该应用时会同步此文件夹中的内容，通常保存应用的设置信息。</li>
-<li>tmp: iTunes不会同步此文件夹，系统可能在应用没运行时就删除该目录下的文件，所以此目录适合保存应用中的一些临时文件，用完就删除<pre><code>NSString *path = NSTemporaryDirectory();
-NSLog(@&quot;%@&quot;, path);
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<h5 id="属性列表-plist"><a href="#属性列表-plist" class="headerlink" title="属性列表(plist)"></a>属性列表(plist)</h5><p>　　iOS提供了一种plist格式的文件(属性列表)用于存储轻量级的数据，属性列表是一种XML格式的文件,拓展名为plist。如果对象是NSString、NSDictionary、NSArray、NSData、 NSNumber等类型,就可以使用writeToFile:atomically:⽅法 直接将对象写到属性列表文件中该格式保存的数据可以直接使用NSDictionary和NSArray读取 。plist文件在iOS开发中属于Write写入方式，可以以Property List列表形式显示，也可以以xml格式显示。对于数据管理是很方便的。掌握使用plist文件数据操作很有必要</p>
-<h6 id="一、将数据写入plist文件"><a href="#一、将数据写入plist文件" class="headerlink" title="一、将数据写入plist文件"></a>一、将数据写入plist文件</h6><ul>
-<li>获取文件路径<pre><code>NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-NSString *docPath = [path objectAtIndex:0];
-NSString *myFile = [docPath stringByAppendingPathComponent:@&quot;test.plist&quot;];
-</code></pre></li>
-<li>存储<pre><code>NSArray *array = @[@&quot;123&quot;, @&quot;456&quot;, @&quot;789&quot;];
-[array writeToFile:fileName atomically:YES];
-</code></pre></li>
-<li>读取<pre><code>NSArray *result = [NSArray arrayWithContentsOfFile:fileName];
-NSDictionary * result = [NSDictionary dictionaryWithContentsOfFile:fileName];
-NSLog(@&quot;%@&quot;, result);
-</code></pre><blockquote>
-<p>注意<br>只有NSString、NSDictionary、NSArray、NSData、 NSNumber等类型才能使用plist文件存储。<br>存储时使用writeToFile: atomically:方法。 其中atomically表示是否需要先写入一个辅助文件，再把辅助文件拷贝到目标文件地址。这是更安全的写入文件方法，一般都写YES。<br>plist文件的读写效率比较高，由于他的读写需要将所有的数据取出再全部保存，所以只适合小数据。</p>
+<p>效果图如下：</p>
+<h6 id="思路分析："><a href="#思路分析：" class="headerlink" title="思路分析："></a>思路分析：</h6><p>启动页广告是在启动页消失后添加在window上显示，过程为获取广告图信息，然后下载广告图，其次显示并相应相应的点击跳转等事件。过程并不复杂，主要的问题在于启动时期比较短暂而且图片信息的获取和下载时间的不确定等问题。在这里主要通过设置一个等待计时器来在避免长时间的等待，同时利用SDWebImage来缓存图片数据用于下次的显示。另外圆形进度条的实现也比较简单，这里就不做过多的介绍，下面具体看主要的代码实现。</p>
+<h6 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h6><p>上面主要展示了广告图提过按钮显示的两种方式，一种是常见的计数倒计时+跳过的样式（大部分的广告启动页都是这种方式），一种是通过环形倒计时+跳过的样式（仿网易新闻）。下面我将分别介绍两种样式的简单原理。</p>
+<p> 在AppDelegate.m文件中创建并添加到window上，同时下载广告图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> AppDelegate.m</span><br><span class="line"></span><br><span class="line"> @implementation AppDelegate</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</span><br><span class="line">    &#123;</span><br><span class="line">        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line">        self.window.backgroundColor = [UIColor whiteColor];</span><br><span class="line">        self.window.rootViewController = [[ViewController alloc] init];</span><br><span class="line">        [self.window makeKeyAndVisible];</span><br><span class="line">    </span><br><span class="line">        [self addADView];       // 添加广告图</span><br><span class="line">        [self getADImageURL];</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 添加广告图 */</span><br><span class="line">    - (void)addADView</span><br><span class="line">    &#123;</span><br><span class="line">        LLFullScreenAdView *adView = [[LLFullScreenAdView alloc] init];</span><br><span class="line">        adView.tag = 100;</span><br><span class="line">        adView.duration = 5;</span><br><span class="line">        adView.waitTime = 3;</span><br><span class="line">        adView.skipType = SkipButtonTypeCircleAnimationTest;</span><br><span class="line">        adView.adImageTapBlock = ^(NSString *content) &#123;</span><br><span class="line">            NSLog(@&quot;%@&quot;, content);</span><br><span class="line">        &#125;;</span><br><span class="line">        [self.window addSubview:adView];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 获取广告图URL */</span><br><span class="line">    - (void)getADImageURL</span><br><span class="line">    &#123;</span><br><span class="line">        // 此处推荐使用tag来获取adView，勿使用全局变量。因为在AppDelegate中将其设为全局变量时，不会被释放</span><br><span class="line">        LLFullScreenAdView *adView = (LLFullScreenAdView *)[self.window viewWithTag:100];</span><br><span class="line">    </span><br><span class="line">        // 模拟从服务器上获取广告图URL</span><br><span class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)),     dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        </span><br><span class="line">            NSString *urlString = @&quot;http://s8.mogucdn.com/p2/170223/28n_4eb3la6b6b0h78c23d2kf65dj1a92_750x1334.jpg&quot;;</span><br><span class="line">        </span><br><span class="line">            [adView reloadAdImageWithUrl:urlString]; // 加载广告图（如果没有设置广告图设置为空）</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">LLFullScreenAdView.h</span><br><span class="line"></span><br><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">    typedef NS_ENUM(NSUInteger, SkipButtonType) &#123;</span><br><span class="line">        SkipButtonTypeNormalTimeAndText = 0,      //普通的倒计时+跳过</span><br><span class="line">        SkipButtonTypeCircleAnimationTest,        //圆形动画+跳过</span><br><span class="line">        SkipButtonTypeNormalText,                 //只有普通的跳过</span><br><span class="line">        SkipButtonTypeNormalTime,                 //只有普通的倒计时</span><br><span class="line">        SkipButtonTypeNone                        //无</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    typedef void(^adImageBlock)(NSString *content);  //可以根据需要添加一些相应的参数</span><br><span class="line"></span><br><span class="line">    @interface LLFullScreenAdView : UIImageView</span><br><span class="line"></span><br><span class="line">    /** 广告图的显示时间（默认5秒）*/</span><br><span class="line">    @property (nonatomic, assign) NSUInteger duration;</span><br><span class="line"></span><br><span class="line">    /** 获取数据前，启动图的等待时间（若不设置则不启动等待机制）*/</span><br><span class="line">    @property (nonatomic, assign) NSUInteger waitTime;</span><br><span class="line"></span><br><span class="line">    /** 右上角按钮的样式（默认倒计时+跳过）*/</span><br><span class="line">    @property (nonatomic, assign) SkipButtonType skipType;</span><br><span class="line"></span><br><span class="line">    /** 广告图点击事件回调*/</span><br><span class="line">    @property (nonatomic, copy) adImageBlock adImageTapBlock;</span><br><span class="line">  </span><br><span class="line">    /** 加载广告图*/</span><br><span class="line">    - (void)reloadAdImageWithUrl:(NSString *)urlStr;</span><br><span class="line"></span><br><span class="line">    @end</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">LLFullScreenAdView.m</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  /** 获取启动图片 */</span><br><span class="line">    - (UIImage *)getLaunchImage</span><br><span class="line">    &#123;</span><br><span class="line">        CGSize viewSize = [UIScreen mainScreen].bounds.size;</span><br><span class="line">        NSString *viewOrientation = @&quot;Portrait&quot;;                // 横屏请设置成 @&quot;Landscape&quot;</span><br><span class="line">        UIImage *lauchImage = nil;</span><br><span class="line">        NSArray *imagesDictionary = [[[NSBundle mainBundle] infoDictionary] valueForKey:@&quot;UILaunchImages&quot;];</span><br><span class="line">        for (NSDictionary *dict in imagesDictionary)</span><br><span class="line">        &#123;</span><br><span class="line">            CGSize imageSize = CGSizeFromString(dict[@&quot;UILaunchImageSize&quot;]);</span><br><span class="line">            if (CGSizeEqualToSize(imageSize, viewSize) &amp;&amp; [viewOrientation isEqualToString:dict[@&quot;UILaunchImageOrientation&quot;]])</span><br><span class="line">            &#123;</span><br><span class="line">                lauchImage = [UIImage imageNamed:dict[@&quot;UILaunchImageName&quot;]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lauchImage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 广告图加载前等待计时器 */</span><br><span class="line">    - (void)scheduledWaitTimer</span><br><span class="line">    &#123;</span><br><span class="line">        if (_timerWait) dispatch_source_cancel(_timerWait);</span><br><span class="line">    </span><br><span class="line">        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">        _timerWait = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);</span><br><span class="line">        dispatch_source_set_timer(_timerWait, dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0);</span><br><span class="line">    </span><br><span class="line">        dispatch_source_set_event_handler(_timerWait, ^&#123;</span><br><span class="line">            if (_waitTime &lt;= 0) &#123;</span><br><span class="line">                _flag = YES;</span><br><span class="line">                dispatch_source_cancel(_timerWait);</span><br><span class="line">                dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                    [self dismiss];                         // 关闭界面</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                _waitTime--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_resume(_timerWait);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 获取广告图 */</span><br><span class="line">    - (void)reloadAdImageWithUrl:(NSString *)urlStr</span><br><span class="line">    &#123;</span><br><span class="line">        if (urlStr.length &lt;= 0) &#123;</span><br><span class="line">            if (_timerWait) dispatch_source_cancel(_timerWait);</span><br><span class="line">            [self removeFromSuperview];</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        NSURL *imageUrl = [NSURL URLWithString:urlStr];</span><br><span class="line">        __weak typeof(self) weakSelf = self;</span><br><span class="line">        UIImage *cacheImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:urlStr];</span><br><span class="line">        if (cacheImage) &#123;                                  //查看是否有缓存</span><br><span class="line">            NSLog(@&quot;cacheImage&quot;);</span><br><span class="line">            [weakSelf adImageShowWithImage:cacheImage];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            NSLog(@&quot;noCacheImage&quot;);</span><br><span class="line">            SDWebImageManager *manager = [SDWebImageManager sharedManager];</span><br><span class="line">            [manager downloadImageWithURL:imageUrl options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) &#123;</span><br><span class="line">            </span><br><span class="line">            &#125; completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) &#123;</span><br><span class="line">                if (image &amp;&amp; finished &amp;&amp; error == nil) &#123;</span><br><span class="line">                </span><br><span class="line">                    [weakSelf adImageShowWithImage:image];</span><br><span class="line">                    [[SDImageCache sharedImageCache] storeImage:image forKey:urlStr toDisk:YES];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 广告图显示倒计时 */</span><br><span class="line">    - (void)scheduledTimer</span><br><span class="line">    &#123;</span><br><span class="line">        if (_timerWait) dispatch_source_cancel(_timerWait);</span><br><span class="line">    </span><br><span class="line">        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">        _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);</span><br><span class="line">        dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0); // 每秒执行</span><br><span class="line">    </span><br><span class="line">        dispatch_source_set_event_handler(_timer, ^&#123;</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                if (_duration &lt;= 0) &#123;</span><br><span class="line">                    dispatch_source_cancel(_timer);</span><br><span class="line">                    [self dismiss];                         // 关闭界面</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    [self showSkipBtnTitleTime:_duration];</span><br><span class="line">                    _duration--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_resume(_timer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 消失广告图 */</span><br><span class="line">    - (void)dismiss</span><br><span class="line">    &#123;</span><br><span class="line">        NSLog(@&quot;dismiss&quot;);</span><br><span class="line">        [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^&#123;</span><br><span class="line"></span><br><span class="line">            self.transform = CGAffineTransformMakeScale(1.2, 1.2);</span><br><span class="line">            self.alpha = 0.0;</span><br><span class="line">        &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">        </span><br><span class="line">            [self removeFromSuperview];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>圆形进度条的简单实现</p>
+<p>使用了CAShapeLayer的strokeStart和strokeEnd属性，实现起来十分的简单方便，通过设置Path的中心点、起始和终止的位置，并利用strokeStart和strokeEnd这两个属性支持动画的特点，我们通过以下代码就可以实现圆形进度条的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">//懒加载一个计时器视图，并设置动画绘制的路径</span><br><span class="line">    - (UIView *)timerView</span><br><span class="line">    &#123;</span><br><span class="line">        if (!_timerView) &#123;</span><br><span class="line">            self.timerView = [[UIView alloc] initWithFrame:CGRectMake(MainScreenWidth - 62, 32, 40, 40)];</span><br><span class="line">            CAShapeLayer *layer = [CAShapeLayer layer];</span><br><span class="line">            layer.fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4].CGColor;    // 填充颜色</span><br><span class="line">            layer.strokeColor = [UIColor redColor].CGColor;                                 // 绘制颜色</span><br><span class="line">            layer.lineCap = kCALineCapRound;</span><br><span class="line">            layer.lineJoin = kCALineJoinRound;</span><br><span class="line">            layer.lineWidth = 2;</span><br><span class="line">            layer.frame = self.bounds;</span><br><span class="line">            layer.path = [self getCirclePath].CGPath;</span><br><span class="line">            layer.strokeStart = 0;</span><br><span class="line">            [_timerView.layer addSublayer:layer];</span><br><span class="line">            self.viewLayer = layer;</span><br><span class="line">        </span><br><span class="line">            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 3, 34, 34)];</span><br><span class="line">            titleLabel.text = @&quot;跳过&quot;;</span><br><span class="line">            titleLabel.textColor = [UIColor whiteColor];</span><br><span class="line">            [titleLabel setTextAlignment:NSTextAlignmentCenter];</span><br><span class="line">            titleLabel.font = [UIFont systemFontOfSize:15];</span><br><span class="line">            [_timerView addSubview:titleLabel];</span><br><span class="line">            _remain = _duration * 20;</span><br><span class="line">            _count = 0;</span><br><span class="line">            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(skipAction)];</span><br><span class="line">            [_timerView addGestureRecognizer:tap];</span><br><span class="line">        &#125;</span><br><span class="line">        return _timerView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /* 绘制路径</span><br><span class="line">     * path这个属性必须需要设置，不然是没有效果的/</span><br><span class="line">     */</span><br><span class="line">    - (UIBezierPath *)getCirclePath</span><br><span class="line">    &#123;</span><br><span class="line">        return [UIBezierPath bezierPathWithArcCenter:CGPointMake(20, 20) radius:19 startAngle:-0.5*M_PI endAngle:1.5*M_PI clockwise:YES];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /** 广告图显示倒计时 */</span><br><span class="line">    - (void)setCircleTimer</span><br><span class="line">    &#123;</span><br><span class="line">        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">        _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);</span><br><span class="line">        dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), 0.05 * NSEC_PER_SEC, 0); // 每秒执行</span><br><span class="line">    </span><br><span class="line">        dispatch_source_set_event_handler(_timer, ^&#123;</span><br><span class="line">            dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                if (_count &gt;= _remain) &#123;</span><br><span class="line">                    dispatch_source_cancel(_timer);</span><br><span class="line">                    self.viewLayer.strokeStart = 1;</span><br><span class="line">                    [self dismiss];                         // 关闭界面</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    self.viewLayer.strokeStart += 0.01;</span><br><span class="line">                    _count++;                               //剩余时间进行自加</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        dispatch_resume(_timer);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果想对CAShapeLayer做更多了解可参考这篇文章上手CAShapeLayer，动画其实并不难</p>
+<p>常用的计时器有两种一种是NSTimer，另一种是GCD，但NSTimer受runloop的影响，由于runloop需要处理很多任务，导致NSTimer的精度降低，在日常开发中，如果我们需要对定时器的精度要求很高的话，可以考虑dispatch_source_t去实现 。dispatch_source_t精度很高，系统自动触发，是系统级别的源。而且使用 NSTimer 时，如果使用不当就容易出现内存泄露，所以计时器建议使用GCD来实现。</p>
+<p>上面的实现比较简单，所以也没有用太多的解释，如果感兴趣可以看下源代码，如果有好的建议或者疑问可以留言探讨。另外如果喜欢或者感觉对你有帮助最好能给个Star，非常感谢。</p>
+<p>Github地址:<a href="https://github.com/Running2snail/LLFullScreenAd" target="_blank" rel="noopener">https://github.com/Running2snail/LLFullScreenAd</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/23/iOS开发之Pch预编译文件的创建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="不醉不归">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/23/iOS开发之Pch预编译文件的创建/" class="post-title-link" itemprop="url">iOS开发之Pch预编译文件的创建</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-23 00:01:59 / Modified: 00:13:04" itemprop="dateCreated datePublished" datetime="2019-02-23T00:01:59+08:00">2019-02-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>在Xcode6之前，创建一个新工程xcode会在Supporting files文件夹下面自动创建一个“工程名-Prefix.pch”文件，也是一个头文件，pch头文件的内容能被项目中的其他所有源文件共享和访问。是一个预编译文件。</p>
 </blockquote>
-</li>
-</ul>
-<p>######二、手动添加plist文件</p>
-<ul>
-<li>创建.plist文件。<br>新建文件–&gt;Resource–&gt;Property List</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-2a78487573584498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plist.png"></p>
-<p>plist文件的根类型只能是NSArray或NSDictionary</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-3a0648188d7f2726.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GZO.jpg"></p>
-<p>可以在空白处右键“Add Row”添加数据或者点中“root”行，点击“+”号即可添加。一般数据类型（Type）可以选择Array、Dictionary、String等类型。同时也可以给添加的数据赋值（Value）。<br>      除了以Property List列表形式显示外，选中usersList.plist文件，右键“Open As”-“Source Code”可以以XML格式显示。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/465805-9985b7569d2b73d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2016.png"></p>
-<ul>
-<li>将plist文件中的数据读入对应的根类型<pre><code>//1、获取文件所在的路径,Resource:文件名称、Type：文件格式
-NSString *filePath = [[NSBundle mainBundle] pathForResource:@&quot;userInfos&quot; ofType:@&quot;plist&quot;];
-// 2、从路径中获取对应格式的数据
-// 如果Root为NSArray，则使用数组保存
-NSArray *infos = [NSArray arrayWithContentsOfFile:filePath];
-NSLog(@&quot;%@&quot;,infos);
-// 如果Root为NSDictionary,则使用字典保存
-NSDictionary *infoDic = [NSDictionary dictionaryWithContentsOfFile:filePath];
-NSLog(@&quot;%@&quot;,infoDic);
-</code></pre></li>
-</ul>
-<h5 id="偏好设置"><a href="#偏好设置" class="headerlink" title="偏好设置"></a>偏好设置</h5><h6 id="一、使用NSUserDefault-实现持久化"><a href="#一、使用NSUserDefault-实现持久化" class="headerlink" title="一、使用NSUserDefault 实现持久化"></a>一、使用NSUserDefault 实现持久化</h6><ul>
-<li>下面来看下 NSUserDefault 本地保存的位置，Library/Preferences 这个目录下的 plist 文件就是其保存的目录。</li>
-<li>NSUserDefault 的用法，主要是保存和读取数据<pre><code>//初始化一个 NSUserDefault
-+ (NSUserDefaults *)standardUserDefaults;
- //设置数据的方法
-- (void)setObject:(nullable id)value forKey:(NSString *)defaultName; 
-- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName; 
-- (void)setFloat:(float)value forKey:(NSString *)defaultName;
-- (void)setDouble:(double)value forKey:(NSString *)defaultName;
-- (void)setBool:(BOOL)value forKey:(NSString *)defaultName;
-- (void)setURL:(nullable NSURL *)url forKey:(NSString *)defaultName NS_AVAILABLE(10_6, 4_0);
-</code></pre></li>
-<li><p>读取数据的方法：</p>
-<pre><code>- (nullable id)objectForKey:(NSString *)defaultName; 
-- (nullable NSString *)stringForKey:(NSString *)defaultName;
-- (nullable NSArray *)arrayForKey:(NSString *)defaultName;
-- (nullable NSDictionary&lt;NSString *, id&gt; *)dictionaryForKey:(NSString *)defaultName;
-- (nullable NSData *)dataForKey:(NSString *)defaultName;
-- (nullable NSArray&lt;NSString *&gt; *)stringArrayForKey:(NSString *)defaultName;
-- (NSInteger)integerForKey:(NSString *)defaultName;
-- (float)floatForKey:(NSString *)defaultName;
-- (double)doubleForKey:(NSString *)defaultName;
-- (BOOL)boolForKey:(NSString *)defaultName;
-- (nullable NSURL *)URLForKey:(NSString *)defaultName NS_AVAILABLE(10_6, 4_0);
-</code></pre></li>
-<li><p>删除数据的方法：</p>
-<pre><code>- (void)removeObjectForKey:(NSString *)defaultName;
-</code></pre></li>
-</ul>
-<ul>
-<li><p>保存数据:</p>
-<pre><code>// 如果不手动调用，系统会自动保存，但时间不定
- - (BOOL)synchronize;
-</code></pre></li>
-<li><p>使用方法</p>
-<pre><code>//1.获得NSUserDefaults文件
-NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//2.向文件中写入内容
-[userDefaults setObject:@&quot;AAA&quot; forKey:@&quot;a&quot;];
-[userDefaults setBool:YES forKey:@&quot;sex&quot;];
-[userDefaults setInteger:21 forKey:@&quot;age&quot;];
-//2.1立即同步
-[userDefaults synchronize];
-//3.读取文件
-NSString *name = [userDefaults objectForKey:@&quot;a&quot;];
-BOOL sex = [userDefaults boolForKey:@&quot;sex&quot;];
-NSInteger age = [userDefaults integerForKey:@&quot;age&quot;];
-</code></pre></li>
-<li><p>存储id类型数据</p>
-<pre><code>+ (void)setValue:(id)value andKey:(NSString *)key
-{
-     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-     [userDefaults setObject:value forKey:key];
-     [userDefaults synchronize];
-}
-// 获取数据
-+ (NSString *)getValueByKey:(NSString *)key
- {
-     NSUserDefaults * settings = [NSUserDefaults standardUserDefaults];
-     NSString *value = [settings objectForKey:key];
-     return value;
- }
-</code></pre></li>
-</ul>
+<h4 id="pch的作用："><a href="#pch的作用：" class="headerlink" title="pch的作用："></a>pch的作用：</h4><p>1.存放一些全局的宏(整个项目中都用得上的宏)</p>
+<p>2.用来包含一些全部的头文件(整个项目中都用得上的头文件)</p>
+<p>3.能自动打开或者关闭日志输出功能</p>
 <blockquote>
-<p>注意:</p>
-<ul>
-<li>偏好设置是专门用来保存应用程序的配置信息的，一般不要在偏好设置中保存其他数据。</li>
-<li>如果没有调用synchronize方法，系统会根据I/O情况不定时刻地保存到文件中。所以如果需要立即写入文件的就必须调用synchronize方法。</li>
-<li>偏好设置会将所有数据保存到同一个文件中。即preference目录下的一个以此应用包名来命名的plist文件。</li>
-</ul>
+<p>虽然用了很久的Xcode6但是项目是xcode5之前创建好的，所以一开始并没有发现缺少了这个pch文件。苹果为什么要这么做呢，原因可能是因为大家 把大量的头文件和宏定义放到pch里边，导致编译时间过长。苹果去掉他可能是要加快编译时间增加用户体验。虽然失去了编程的便利性。不得不佩服苹果的以用 户为中心的思考方式。更详细的讨论可以去Stackoverflow上去看<a href="http://stackoverflow.com/questions" target="_blank" rel="noopener">http://stackoverflow.com/questions</a> /24158648/why-isnt-projectname-prefix-pch-created-automatically-in- xcode-6。</p>
 </blockquote>
-<p>欢迎阅读下一篇：</p>
-<ul>
-<li><a href="http://www.jianshu.com/p/6f39771de2de" target="_blank" rel="noopener">iOS数据存储之归档</a></li>
-</ul>
-<p>iOS-Ant-Bang互助社区 426981364<br>iOS技术交流群 461069757 欢迎加入！</p>
+<h5 id="如何在Xcode中添加pch文件："><a href="#如何在Xcode中添加pch文件：" class="headerlink" title="如何在Xcode中添加pch文件："></a>如何在Xcode中添加pch文件：</h5><p>1、Command+N，打开新建文件窗口：ios-&gt;other-&gt;PCH file，创建一个pch文件</p>
+<p> <a href="https://img-blog.csdn.net/20150313172323592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">创建PCH file</a></p>
+<p>2、在工程的TARGETS里边Building Setting中搜索Prefix Header，然后把Precompile Prefix Header右边的NO改为Yes：</p>
+<p> <a href="http://img.blog.csdn.net/20150428202241525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">修改配置</a></p>
+<p>3.然后在Precompile Prefix Header下边的Prefix Header右边双击，添加刚刚创建的pch文件的工程路径，添加格式：“$(SRCROOT)/项目名称/pch文件名” ，$(SRCROOT)的意思就是工程根目录的意思。如果还不太清楚的话可以右键pch文件，然后show in finder：<br><a href="http://img.blog.csdn.net/20150428202848968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a><br><a href="http://img.blog.csdn.net/20150428202907251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">查看文件路径</a></p>
+<p>上图中黄色圈出来的就是$(SRCROOT)，也就是工程的根目录，然后后边还有一个PchText和pch两个文件夹，所以完整的pch文件的路径就是：$(SRCROOT)/PchText/pch</p>
+<p><a href="http://img.blog.csdn.net/20150428203556222?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">设置路径</a></p>
+<p>添加完成后，点击Enter，他会自动帮你变成你工程所在的路径：</p>
+<p><a href="http://img.blog.csdn.net/20150428203631228?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener">文件路径</a></p>
+<p>可以了，编译一下程序，如果有错误检查一下添加的路径是否正确。</p>
+<p>4，将Precompile Prefix Header为YES，预编译后的pch文件会被缓存起来，可以提高编译速度<br> <a href="http://img.blog.csdn.net/20150313172850705?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ3JhenlaaGFuZzE5OTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" target="_blank" rel="noopener"></a></p>
+<p>5、在PrefixHeader.pch文件里声明宏定义 ，例如：宏定义一个颜色</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111015295357022.png" target="_blank" rel="noopener">使用</a></p>
+<p>然后在其他类中不需要引入头文件就可以直接使用，例如在RootViewController中,当你需要时就可以直接使用。 </p>
+<p>6、如果出现如下错误，说明工程路径引入错误</p>
+<p><a href="https://images0.cnblogs.com/blog2015/741774/201506/111019250517003.png" target="_blank" rel="noopener">错误提示</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+      
+    </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/22/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Running2snail">
+      <meta itemprop="description" content="不醉不归">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七月">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/22/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-22 21:24:13" itemprop="dateCreated datePublished" datetime="2019-02-22T21:24:13+08:00">2019-02-22</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
         
@@ -1604,7 +1120,7 @@ NSInteger age = [userDefaults integerForKey:@&quot;age&quot;];
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
